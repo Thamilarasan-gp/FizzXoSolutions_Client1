@@ -1,0 +1,156 @@
+/* Event Page Styling */
+.event-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.event-page h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+/* Video Section */
+.video-container {
+    width: 100%;
+    max-width: 650px;
+    margin-bottom: 15px;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 360px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Image */
+.event-page img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Buttons Container */
+.video-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Buttons */
+.video-actions button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Like Button */
+.like-btn {
+    background: #007bff;
+    color: white;
+}
+
+.like-btn:hover {
+    background: #0056b3;
+}
+
+.like-btn.liked {
+    background: #4CAF50;
+    cursor: not-allowed;
+}
+
+.like-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Share Button */
+.share-btn {
+    background: #0c923d; /* WhatsApp green */
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.share-btn:hover {
+    background: #1da851;
+}
+
+.whatsapp-icon {
+    font-size: 20px;
+}
+
+
+/* Dislike Button */
+.dislike-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.dislike-btn:hover {
+    background: #b02a37;
+}
+
+.dislike-btn.disliked {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+.dislike-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Text */
+.event-page p {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .event-page {
+        padding: 15px;
+    }
+
+    .video-container iframe {
+        height: 280px;
+    }
+
+    .video-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
