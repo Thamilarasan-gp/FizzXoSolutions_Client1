@@ -1,0 +1,96 @@
+/* Prevent horizontal scrolling */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Gallery Container */
+.gallery-container {
+    width: 99vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+ 
+    overflow: hidden;
+
+}
+
+/* Hero Section */
+.hero-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Hero Image */
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures full coverage while maintaining aspect ratio */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Navigation Arrows */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s ease-in-out;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.left-arrow {
+    left: 10px;
+}
+
+.right-arrow {
+    right: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .arrow {
+        font-size: 16px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .arrow {
+        font-size: 14px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .left-arrow {
+        left: 5px;
+    }
+
+    .right-arrow {
+        right: 5px;
+    }
+}

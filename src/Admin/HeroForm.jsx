@@ -1,0 +1,106 @@
+import { useState } from "react";
+import axios from "axios";
+import { motion } from "framer-motion";
+import "./HeroForm.css"; // Separate CSS file for styles
+import { API_BASE_URL } from "../../api";
+const HeroForm = ({ posts = [], setPosts }) => { 
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!file) return alert("Please select an image.");
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("title", title);
+    formData.append("description", description);
+
+    try {
+      const res = await axios.post(`${API_BASE_URL}/heros/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setPosts([...posts, res.data.image]); // Update UI
+      setTitle("");
+      setDescription("");
+      setFile(null);
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed!");
+    }
+  };
+
+  // Delete a single image
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/heros/files/${id}`);
+      setPosts(posts.filter((post) => post._id !== id)); // Remove from UI
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Delete failed!");
+    }
+  };
+
+  // Delete all images
+  const handleDeleteAll = async () => {
+    try {
+      await axios.delete(`${API_BASE_URL}/heros/deleteAll`);
+      setPosts([]); // Clear UI
+    } catch (error) {
+      console.error("Delete all error:", error);
+      alert("Delete all failed!");
+    }
+  };
+
+  return (
+    <div className="upload-page1">
+      {/* Upload Form */}
+      <div className="upload-container1">
+        <h2>Upload Image</h2>
+        <form onSubmit={handleSubmit} className="upload-form">
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <textarea
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} required />
+          <button type="submit">Upload</button>
+        </form>
+      </div>
+
+      {/* Image Gallery */}
+      {posts.length > 0 && (
+        <div className="gallery-container">
+          <h2>Uploaded Images</h2>
+          <button className="delete-all-btn" onClick={handleDeleteAll}>Delete All</button>
+          <div className="gallery-grid">
+            {posts.map((post) => (
+              <motion.div key={post._id} className="image-card" whileHover={{ scale: 1.05 }}>
+                <img src={post.imageUrl} alt="Uploaded" />
+                <div className="image-info">
+                  <h3>{post.title}</h3>
+                  <p>{post.description}</p>
+                  <button onClick={() => handleDelete(post._id)}>Delete</button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HeroForm;
