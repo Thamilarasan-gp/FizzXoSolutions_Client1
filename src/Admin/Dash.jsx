@@ -1,10 +1,9 @@
-
-
 import React, { useState, useEffect } from "react";
 import { FaBell, FaSearch, FaBars, FaTh } from "react-icons/fa";
-
 import { useNavigate } from "react-router-dom";
-import Log_in from "../Authentication/Forget/Forget";
+import Log_in from "../Authentication/Login/Log_in";
+import Signup from "../Authentication/Sigup/Sign_up";
+import Forget from "../Authentication/Forget/Forget";
 
 export default function YouTubePlaylist() {
   const [activeTab, setActiveTab] = useState("HOME");
@@ -29,7 +28,11 @@ export default function YouTubePlaylist() {
           <header style={styles.header}>
             <div style={styles.headerLeft}>
               <FaBars style={styles.icon} />
-              <img src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg" alt="Logo" style={styles.logo} />
+              <img
+                src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
+                alt="Logo"
+                style={styles.logo}
+              />
             </div>
             <div style={styles.searchBar}>
               <input type="text" placeholder="Search" style={styles.searchInput} />
@@ -39,15 +42,25 @@ export default function YouTubePlaylist() {
               <FaBell style={styles.icon} />
               <FaTh style={styles.icon} />
             </div>
-            <button onClick={handleLogout} style={styles.logoutButton}>Log out</button>
+            <button onClick={handleLogout} style={styles.logoutButton}>
+              Log out
+            </button>
           </header>
 
           <div style={styles.banner}>
-            <img src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg" alt="Banner" style={styles.bannerImg} />
+            <img
+              src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
+              alt="Banner"
+              style={styles.bannerImg}
+            />
           </div>
 
           <div style={styles.profile}>
-            <img src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg" alt="Profile" style={styles.profileImg} />
+            <img
+              src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
+              alt="Profile"
+              style={styles.profileImg}
+            />
             <div style={styles.profileInfo}>
               <h1 style={styles.name}>Pongodi</h1>
               <p style={styles.role}>Admin1</p>
@@ -70,7 +83,7 @@ export default function YouTubePlaylist() {
           </nav>
 
           <div style={styles.contentSection}>
-            {activeTab === "HOME" ? (
+            {activeTab === "HOME" && (
               <div style={styles.playlists}>
                 <h2>Created</h2>
                 <div style={styles.boxes}>
@@ -89,9 +102,11 @@ export default function YouTubePlaylist() {
                   ))}
                 </div>
               </div>
-            ) : (
-              <Log_in/>
             )}
+
+            {activeTab === "BOOKS" && <Log_in />}
+            {activeTab === "ACHIEVEMENTS" && <Signup />}
+            {activeTab === "EVENTS" && <Forget />}
           </div>
         </>
       ) : (
@@ -188,3 +203,4 @@ const styles = {
     padding: "20px",
   },
 };
+
