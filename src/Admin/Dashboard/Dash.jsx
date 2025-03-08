@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { FaBell, FaSearch, FaBars, FaTh } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Log_in from "../../Authentication/Login/Log_in";
-import Signup from "../../Authentication/Sigup/Sign_up";
-import Forget from "../../Authentication/Forget/Forget";
+import Swal from "sweetalert2";
 import AddBooks from "../AddBooks";
 import AddAchievementForm from "../AddAchievmentForm";
 import AddEventForm from "../AddEventForm";
-import EventPage from "../../User/EventPage";
-import EventSection from "../../User/EventSection";
 import HeroForm from "../HeroForm";
 import HeroSection from "../../User/HeroSection";
+import "./Dash.css";
 
-
-export default function YouTubePlaylist() {
-  const [activeTab, setActiveTab] = useState("HOME");
+export default function YouTubeDashboard() {
+  const [activeTab, setActiveTab] = useState("CREATE");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
@@ -29,194 +25,97 @@ export default function YouTubePlaylist() {
     navigate("/login");
   };
 
+  const handleAnalyze = () => {
+    Swal.fire({
+      title: "Dashboard Overview",
+      html: `
+        <div style="text-align: left;">
+          <p><strong>📚 Total Books:</strong> 13</p>
+          <p><strong>🎉 Total Events:</strong> 23</p>
+          <p><strong>🏆 Total Achievements:</strong> 35</p>
+        </div>`,
+      icon: "info",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#3085d6",
+    });
+  };
+
   return (
-    <div style={styles.container}>
+    <div className="dashboard-container">
       {isAuthenticated ? (
         <>
-          <header style={styles.header}>
-            <div style={styles.headerLeft}>
-              <FaBars style={styles.icon} />
-              <img
-                src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
-                alt="Logo"
-                style={styles.logo}
-              />
-            </div>
-            <div style={styles.searchBar}>
-              <input type="text" placeholder="Search" style={styles.searchInput} />
-              <FaSearch style={styles.searchIcon} />
-            </div>
-            <div style={styles.headerRight}>
-              <FaBell style={styles.icon} />
-              <FaTh style={styles.icon} />
-            </div>
-            <button onClick={handleLogout} style={styles.logoutButton}>
-              Log out
-            </button>
-          </header>
-
-          <div style={styles.banner}>
+          {/* Banner Section */}
+          <div className="banner">
             <img
               src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
               alt="Banner"
-              style={styles.bannerImg}
+              className="banner-img"
             />
           </div>
 
-          <div style={styles.profile}>
-            <img
-              src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
-              alt="Profile"
-              style={styles.profileImg}
-            />
-            <div style={styles.profileInfo}>
-              <h1 style={styles.name}>Pongodi</h1>
-              <p style={styles.role}>Admin1</p>
+          {/* Profile Section */}
+          <div className="profile">
+            <div className="profile-info">
+              <img
+                src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
+                alt="Profile"
+                className="profile-img"
+              />
+              <h1 className="name">Pongodi</h1>
+              <button className="small-button" onClick={handleAnalyze}>
+                Analyze
+              </button>
             </div>
-            <button style={styles.addButton}>Add More</button>
+            <div className="right-section">
+              <FaBell className="icon" />
+              <button onClick={handleLogout} className="logout-button">
+                Logout
+              </button>
+            </div>
           </div>
 
-          <nav style={styles.navBar}>
-            <ul style={styles.navList}>
-              {["HOME", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS"].map((tab) => (
-                <li
+          {/* Navigation Bar */}
+          <nav className="nav-bar">
+            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS"].map(
+              (tab) => (
+                <button
                   key={tab}
-                  style={activeTab === tab ? styles.activeTab : styles.navItem}
+                  className={`nav-item ${activeTab === tab ? "active" : ""}`}
                   onClick={() => setActiveTab(tab)}
                 >
                   {tab}
-                </li>
-              ))}
-            </ul>
+                </button>
+              )
+            )}
           </nav>
 
-          <div style={styles.contentSection}>
-            {activeTab === "HOME" && (
-              <div style={styles.playlists}>
-                <h2>Created</h2>
-                <div style={styles.boxes}>
-                  {["Total books", "Total events", "Total achievements"].map((label, index) => (
-                    <div key={index} style={styles.box}>
-                      <p style={styles.count}>{[13, 23, 35][index]}</p>
-                      <span
-                        style={{
-                          ...styles.boxLabel,
-                          color: ["red", "green", "blue"][index],
-                        }}
-                      >
-                        {label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+          {/* Content Section */}
+          <div className="content-section">
+            {activeTab === "BOOKS" && <AddBooks />}
+            {activeTab === "ACHIEVEMENTS" && <AddAchievementForm />}
+            {activeTab === "EVENTS" && <AddEventForm />}
+            {activeTab === "BANNERS" && (
+              <div className="banners-section">
+                <h2>Manage Banners</h2>
+                <HeroForm />
+                <HeroSection />
               </div>
             )}
-
-            {activeTab === "BOOKS" && <AddBooks/>}
-            {activeTab === "ACHIEVEMENTS" && <>
-              <AddAchievementForm />
-              
-            </> }
-            {activeTab === "EVENTS" &&<>
-              <AddEventForm/>
-              </> }
-            {activeTab === "BANNERS" && <><HeroForm/>
-            <HeroSection/>
-            </>}
+            {activeTab === "CREATE" && (
+              <div className="create-section">
+                <button className="small-button">Create</button>
+              </div>
+            )}
           </div>
         </>
       ) : (
-        <>
-          <p style={{ textAlign: "center", fontSize: "18px", marginTop: "20px" }}>
-            Please log in to view content.
-          </p>
-          <button onClick={() => navigate("/login")} style={styles.logoutButton}>
+        <div className="login-message">
+          <p>Please log in to view content.</p>
+          <button onClick={() => navigate("/login")} className="login-button">
             Go to Login
           </button>
-        </>
+        </div>
       )}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "1200px",
-    margin: "auto",
-    fontFamily: "Arial, sans-serif",
-    color: "#333",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "10px 20px",
-    background: "white",
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-  },
-  logo: {
-    height: "30px",
-    marginLeft: "10px",
-  },
-  icon: {
-    fontSize: "20px",
-    margin: "0 10px",
-    cursor: "pointer",
-  },
-  searchBar: {
-    display: "flex",
-    alignItems: "center",
-    background: "#f1f1f1",
-    padding: "5px 10px",
-    borderRadius: "20px",
-  },
-  searchInput: {
-    border: "none",
-    background: "transparent",
-    outline: "none",
-    padding: "5px",
-    width: "250px",
-  },
-  logoutButton: {
-    padding: "8px 18px",
-    backgroundColor: "grey",
-    color: "white",
-    border: "solid black 2px",
-    borderRadius: "20px",
-    cursor: "pointer",
-  },
-  bannerImg: {
-    width: "100%",
-    height: "200px",
-    objectFit: "cover",
-  },
-  profile: {
-    display: "flex",
-    alignItems: "center",
-    padding: "20px",
-    justifyContent: "center",
-    gap: "20px",
-  },
-  profileImg: {
-    height: "90px",
-    width: "90px",
-    borderRadius: "50%",
-  },
-  navList: {
-    display: "flex",
-    justifyContent: "space-around",
-    listStyle: "none",
-    padding: "0",
-    margin: "0",
-  },
-  activeTab: {
-    fontWeight: "bold",
-    cursor: "pointer",
-    padding: "10px",
-    borderBottom: "2px solid black",
-  },
-  contentSection: {
-    padding: "20px",
-  },
-};
-
