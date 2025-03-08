@@ -10,7 +10,7 @@ import AddAchievementForm from "./Admin/AddAchievmentForm";
 import Forget from "./Authentication/Forget/Forget";
 import Log_in from "./Authentication/Login/Log_in";
 import Sign_up from "./Authentication/Sigup/Sign_up";
-import Dash from "./Admin/Dash";
+import Dash from "./Admin/Dashboard/Dash";
 
 import AddBooks from "./Admin/AddBooks";
 
