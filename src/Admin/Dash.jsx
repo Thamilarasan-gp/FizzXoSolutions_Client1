@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Log_in from "../Authentication/Login/Log_in";
 import Signup from "../Authentication/Sigup/Sign_up";
 import Forget from "../Authentication/Forget/Forget";
+import AddBooks from "./AddBooks";
 
 export default function YouTubePlaylist() {
   const [activeTab, setActiveTab] = useState("HOME");
@@ -104,7 +105,7 @@ export default function YouTubePlaylist() {
               </div>
             )}
 
-            {activeTab === "BOOKS" && <Log_in />}
+            {activeTab === "BOOKS" && <AddBooks/>}
             {activeTab === "ACHIEVEMENTS" && <Signup />}
             {activeTab === "EVENTS" && <Forget />}
           </div>
