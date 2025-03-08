@@ -5,6 +5,12 @@ import Log_in from "../Authentication/Login/Log_in";
 import Signup from "../Authentication/Sigup/Sign_up";
 import Forget from "../Authentication/Forget/Forget";
 import AddBooks from "./AddBooks";
+import AddAchievementForm from "./AddAchievmentForm";
+import AddEventForm from "./AddEventForm";
+import EventPage from "../User/EventPage";
+import EventSection from "../User/EventSection";
+import HeroForm from "./HeroForm";
+import HeroSection from "../User/HeroSection";
 
 export default function YouTubePlaylist() {
   const [activeTab, setActiveTab] = useState("HOME");
@@ -106,8 +112,17 @@ export default function YouTubePlaylist() {
             )}
 
             {activeTab === "BOOKS" && <AddBooks/>}
-            {activeTab === "ACHIEVEMENTS" && <Signup />}
-            {activeTab === "EVENTS" && <Forget />}
+            {activeTab === "ACHIEVEMENTS" && <>
+              <AddAchievementForm />
+              
+            </> }
+            {activeTab === "EVENTS" &&<>
+              <HeroForm/>
+              <HeroSection/>
+              </> }
+            {activeTab === "BANNERS" && <><HeroForm/>
+            <HeroSection/>
+            </>}
           </div>
         </>
       ) : (
