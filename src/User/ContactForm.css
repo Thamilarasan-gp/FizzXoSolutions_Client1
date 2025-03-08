@@ -66,7 +66,7 @@ h2 {
 }
 
 /* Button Styling */
-button {
+.submit {
     width: 100%;
     background: #5f017c;
     color: white;
