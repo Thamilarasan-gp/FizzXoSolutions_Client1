@@ -40,7 +40,7 @@ function Log_in() {
         setMessage("Login successful!");
         console.log("Response:", response.data);
         alert("Successfully logged in");
-
+        localStorage.setItem("isAuthenticated", "true");
         const { id } = response.data.user;
         navigate("/dash", { state: { id } });
       }

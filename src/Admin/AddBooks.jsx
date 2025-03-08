@@ -5,7 +5,11 @@ import { API_BASE_URL } from "../../api";
 
 const AddBooks = () => {
   const [books, setBooks] = useState([]);
+<<<<<<< HEAD
   const [filteredBooks, setFilteredBooks] = useState([]); // State for filtered books
+=======
+  const [filteredBooks, setFilteredBooks] = useState([]);
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
   const [formData, setFormData] = useState({
     bookname: "",
     title: "",
@@ -25,7 +29,11 @@ const AddBooks = () => {
   const fetchBooks = async () => {
     setLoading(true);
     try {
+<<<<<<< HEAD
       const res = await axios.get(`${API_BASE_URL}/books/all`);
+=======
+      const res = await axios.get(`${API_BASE_URL}/api/books/all`);
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
       setBooks(res.data);
       setFilteredBooks(res.data);
     } catch (error) {
@@ -37,7 +45,11 @@ const AddBooks = () => {
 
   useEffect(() => {
     if (search.trim() === "") {
+<<<<<<< HEAD
       setFilteredBooks(books); // Show all books when search is cleared
+=======
+      setFilteredBooks(books);
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
     } else {
       const filtered = books.filter(
         (book) =>
@@ -47,7 +59,11 @@ const AddBooks = () => {
       );
       setFilteredBooks(filtered);
     }
+<<<<<<< HEAD
   }, [search, books]); // Runs when search or books list changes
+=======
+  }, [search, books]);
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
 
   const handleChange = (e) => {
     if (e.target.name === "image") {
@@ -81,7 +97,11 @@ const AddBooks = () => {
         bookData.append("image", formData.image);
       }
 
+<<<<<<< HEAD
       await axios.post(`${API_BASE_URL}/books/add`, bookData, {
+=======
+      await axios.post(`${API_BASE_URL}/api/books/add`, bookData, {
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -119,6 +139,7 @@ const AddBooks = () => {
         bookData.append("image", formData.image);
       }
 
+<<<<<<< HEAD
       await axios.put(
         `${API_BASE_URL}/books/update/${selectedBookId}`,
         bookData,
@@ -126,6 +147,11 @@ const AddBooks = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+=======
+      await axios.put(`${API_BASE_URL}/api/books/update/${selectedBookId}`, bookData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
 
       fetchBooks();
       setFormData({
@@ -152,9 +178,13 @@ const AddBooks = () => {
     }
     setLoading(true);
     try {
+<<<<<<< HEAD
       await axios.delete(
         `http://localhost:5000/api/books/delete/${selectedBookId}`
       );
+=======
+      await axios.delete(`${API_BASE_URL}/api/books/delete/${selectedBookId}`);
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
       fetchBooks();
       setFormData({
         bookname: "",
@@ -179,16 +209,24 @@ const AddBooks = () => {
       title: book.title,
       author: book.author,
       description: book.description,
+<<<<<<< HEAD
       image: null, // Image needs to be reselected
+=======
+      image: null,
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
     });
     setPreviewImage(book.image ? book.image : null);
   };
 
   return (
+<<<<<<< HEAD
     <div
       className="adbook-container"
       style={{ cursor: loading ? "wait" : "default" }}
     >
+=======
+    <div className="adbook-container" style={{ cursor: loading ? "wait" : "default" }}>
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
       <div className="ad-bk-fm">
         <h2>Bookstore Management</h2>
 
@@ -201,6 +239,7 @@ const AddBooks = () => {
         />
 
         <form className="book-form">
+<<<<<<< HEAD
           <input
             type="text"
             name="bookname"
@@ -238,6 +277,13 @@ const AddBooks = () => {
             accept="image/*"
             onChange={handleChange}
           />
+=======
+          <input type="text" name="bookname" placeholder="Book Name" value={formData.bookname} onChange={handleChange} required />
+          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+          <input type="text" name="author" placeholder="Author" value={formData.author} onChange={handleChange} required />
+          <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required></textarea>
+          <input type="file" name="image" accept="image/*" onChange={handleChange} />
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
 
           {previewImage && (
             <div className="ad-image-preview">
@@ -246,6 +292,7 @@ const AddBooks = () => {
           )}
 
           <div className="adbk-button-group">
+<<<<<<< HEAD
             <button type="button" onClick={handleAdd}>
               Add
             </button>
@@ -255,6 +302,11 @@ const AddBooks = () => {
             <button type="button" onClick={handleDelete}>
               Delete
             </button>
+=======
+            <button type="button" onClick={handleAdd}>Add</button>
+            <button type="button" onClick={handleUpdate}>Update</button>
+            <button type="button" onClick={handleDelete}>Delete</button>
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
           </div>
         </form>
       </div>
@@ -264,14 +316,19 @@ const AddBooks = () => {
           {filteredBooks.map((book) => (
             <li
               key={book._id}
+<<<<<<< HEAD
               className={`book-item ${
                 selectedBookId === book._id ? "selected" : ""
               }`}
+=======
+              className={`book-item ${selectedBookId === book._id ? "selected" : ""}`}
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
               onClick={() => handleSelectBook(book)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
               <strong>{book.bookname}</strong> - {book.title} by {book.author}
               <p>{book.description}</p>
+<<<<<<< HEAD
               {book.image && (
                 <img
                   src={book.image}
@@ -279,6 +336,9 @@ const AddBooks = () => {
                   className="book-image"
                 />
               )}
+=======
+              {book.image && <img src={book.image} alt={book.bookname} className="book-image" />}
+>>>>>>> f73780c7b81c254389df05742bb74a61ba552565
             </li>
           ))}
         </ul>
