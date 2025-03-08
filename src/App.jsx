@@ -11,6 +11,8 @@ import Forget from "./Authentication/Forget/Forget";
 import Log_in from "./Authentication/Login/Log_in";
 import Sign_up from "./Authentication/Sigup/Sign_up";
 import Dash from "./Admin/Dash";
+import RecentBooks from "./User/RecentBooks";
+import AddBooks from "./Admin/AddBooks";
 
 function App() {
   const [posts, setPosts] = useState([]); // Define state for HeroForm
@@ -33,6 +35,7 @@ function App() {
         <Route path="/login" element={<Log_in />} />
         <Route path="/signup" element={<Sign_up />} />
         <Route path="/dash" element={<Dash />} />
+        <Route path="/addbooks" element={<AddBooks />} />
       </Routes>
     </Router>
   );

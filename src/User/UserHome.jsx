@@ -7,11 +7,13 @@ import Navbar from './NavBar'
 import Footer from './Footer'
 import ContactForm from './ContactForm'
 import AchievementSection from './AchievementSection'
+import RecentBooks from './RecentBooks'
 function UserHome() {
   return (
 <>
 <Navbar/>
 <HeroSection/>
+<RecentBooks />
 <AboutSection/>
 <EventSection />
 <GallerySection />
