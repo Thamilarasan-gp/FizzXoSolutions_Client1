@@ -11,7 +11,7 @@ import EventPage from "../../User/EventPage";
 import EventSection from "../../User/EventSection";
 import HeroForm from "../HeroForm";
 import HeroSection from "../../User/HeroSection";
-import EventList from "./EventList";
+
 
 export default function YouTubePlaylist() {
   const [activeTab, setActiveTab] = useState("HOME");
@@ -118,7 +118,7 @@ export default function YouTubePlaylist() {
               
             </> }
             {activeTab === "EVENTS" &&<>
-              <EventList/>
+              <AddEventForm/>
               </> }
             {activeTab === "BANNERS" && <><HeroForm/>
             <HeroSection/>

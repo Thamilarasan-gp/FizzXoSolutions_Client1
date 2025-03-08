@@ -1,13 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import "./HeroForm.css"; // Separate CSS file for styles
+import "./HeroForm.css"; // Import styles
 import { API_BASE_URL } from "../../api";
-const HeroForm = ({ posts = [], setPosts }) => { 
 
+const HeroForm = () => {
+  const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+  const [editId, setEditId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+
+  // Fetch images on component mount
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/heros/gallery`);
+        setPosts(res.data);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+    fetchImages();
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -34,14 +51,37 @@ const HeroForm = ({ posts = [], setPosts }) => {
     }
   };
 
-  // Delete a single image
+  // Handle delete
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_BASE_URL}/heros/files/${id}`);
-      setPosts(posts.filter((post) => post._id !== id)); // Remove from UI
+      setPosts(posts.filter((post) => post._id !== id));
     } catch (error) {
       console.error("Delete error:", error);
       alert("Delete failed!");
+    }
+  };
+
+  // Handle edit mode
+  const handleEdit = (post) => {
+    setEditId(post._id);
+    setEditTitle(post.title);
+    setEditDescription(post.description);
+  };
+
+  // Save edited details
+  const handleSaveEdit = async () => {
+    try {
+      const res = await axios.put(`${API_BASE_URL}/heros/files/${editId}`, {
+        title: editTitle,
+        description: editDescription,
+      });
+
+      setPosts(posts.map((post) => (post._id === editId ? res.data.image : post)));
+      setEditId(null);
+    } catch (error) {
+      console.error("Update error:", error);
+      alert("Update failed!");
     }
   };
 
@@ -49,7 +89,7 @@ const HeroForm = ({ posts = [], setPosts }) => {
   const handleDeleteAll = async () => {
     try {
       await axios.delete(`${API_BASE_URL}/heros/deleteAll`);
-      setPosts([]); // Clear UI
+      setPosts([]);
     } catch (error) {
       console.error("Delete all error:", error);
       alert("Delete all failed!");
@@ -89,11 +129,21 @@ const HeroForm = ({ posts = [], setPosts }) => {
             {posts.map((post) => (
               <motion.div key={post._id} className="image-card" whileHover={{ scale: 1.05 }}>
                 <img src={post.imageUrl} alt="Uploaded" />
-                <div className="image-info">
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
-                  <button onClick={() => handleDelete(post._id)}>Delete</button>
-                </div>
+                {editId === post._id ? (
+                  <div className="edit-mode">
+                    <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+                    <textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
+                    <button onClick={handleSaveEdit}>Save</button>
+                    <button onClick={() => setEditId(null)}>Cancel</button>
+                  </div>
+                ) : (
+                  <div className="image-info">
+                    <h3>{post.title}</h3>
+                    <p>{post.description}</p>
+                    <button onClick={() => handleEdit(post)}>Edit</button>
+                    <button onClick={() => handleDelete(post._id)}>Delete</button>
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
