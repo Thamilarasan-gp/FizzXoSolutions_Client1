@@ -7,15 +7,13 @@ html, body {
 
 /* Gallery Container */
 .gallery-container {
-    width: 99vw;
-    height: 100vh;
+    width: 100%;
+    height: 100vh; /* Default for large screens */
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
- 
     overflow: hidden;
-
 }
 
 /* Hero Section */
@@ -69,9 +67,21 @@ html, body {
 .right-arrow {
     right: 10px;
 }
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+    .gallery-container {
+        height: 50vh; /* Reduce height for smaller screens */
+    }
+
+    .hero-section {
+        height: 50vh; /* Adjust hero section height */
+        width: 100%;
+    }
+    .hero-image {
+        height: 80vh; /* Ensure it does not exceed 80% of the viewport height */
+        object-fit: cover;
+    }
+
     .arrow {
         font-size: 16px;
         width: 40px;
@@ -80,6 +90,22 @@ html, body {
 }
 
 @media (max-width: 480px) {
+    .gallery-container {
+        height: 40vh; /* Reduce height further for mobile */
+    }
+
+    .hero-section {
+        height: 10vh;
+        width: 100%;
+    }
+    .hero-image {
+        height: 25vh; /* Limit height for mobile */
+        max-height: 60vh; /* Ensures it does not stretch */
+        width: 98%;
+        object-fit: cover;
+        margin-left:-14px;
+    }
+
     .arrow {
         font-size: 14px;
         width: 35px;
