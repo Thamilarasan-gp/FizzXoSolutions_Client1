@@ -1,16 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Contact Section */
-.contact-section {
+.contact {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 80px 20px;
+    min-height: 100vh;
+
+    padding: 40px 20px;
 }
 
 /* Contact Container */
@@ -20,66 +14,60 @@ body {
     width: 100%;
     border-radius: 10px;
     overflow: hidden;
+
 }
 
 /* Form Container */
 .contact-form-container {
     flex: 1;
     padding: 40px;
-    text-align: left;
 }
 
-.contact-title {
-    font-size: 28px;
+h2 {
+    font-size: 24px;
     font-weight: 600;
     color: #333;
+    text-align: center;
     margin-bottom: 20px;
 }
 
 /* Form Styling */
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.input-box {
+    margin-bottom: 15px;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.input-group label {
+.input-box label {
     font-size: 14px;
     font-weight: 500;
-    color: #555;
+    color: #444;
+    display: block;
     margin-bottom: 5px;
 }
 
-.input-group input, 
-.input-group textarea {
+.input-box .field {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    color: #333;
-    background: #f9f9f9;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+    background: #f8f8f8;
+    transition: 0.3s ease-in-out;
 }
 
-.input-group input:focus, 
-.input-group textarea:focus {
+.input-box .field:focus {
     border-color: #5f017c;
+    outline: none;
+    background: #fff;
 }
 
-.input-group textarea {
+.mess {
     height: 120px;
     resize: none;
 }
 
-/* Button */
-.contact-button {
+/* Button Styling */
+button {
+    width: 100%;
     background: #5f017c;
     color: white;
     font-size: 16px;
@@ -91,20 +79,9 @@ body {
     transition: 0.3s ease-in-out;
 }
 
-.contact-button:hover {
+button:hover {
     background: #470160;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Success Message */
-.success-message {
-    background: #61ff8b;
-    color: black;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-bottom: 15px;
-    font-weight: bold;
 }
 
 /* Image Container */
@@ -113,24 +90,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 200px;
-    width:100%;
+    padding: 20px;
 }
 
 .contact-image {
-    width: 120%;
-    height: 70%;
-    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
-/* Hide the image for screens smaller than a laptop (below 1024px) */
-@media (max-width: 1024px) {
-    .contact-image-container {
-        display: none;
-    }
-}
-
-@media (max-width: 800px) {
+/* Responsive Design */
+@media (max-width: 768px) {
     .contact-container {
         flex-direction: column;
     }
@@ -138,10 +108,12 @@ body {
     .contact-form-container {
         padding: 30px;
     }
-}
 
-@media (max-width: 500px) {
-    .contact-title {
-        font-size: 24px;
+    .contact-image-container {
+        padding: 0;
+    }
+
+    .contact-image {
+        width: 80%;
     }
 }
