@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaBell, FaSearch, FaBars, FaTh } from "react-icons/fa";
-import img2 from "C:/Users/Home/Desktop/Pothagam/client2/src/assets/tamil-library-02.jpg";
-import img3 from "C:/Users/Home/Desktop/Pothagam/client2/src/assets/tamil_img3.jpg";
+
 
 export default function YouTubePlaylist() {
   const [activeTab, setActiveTab] = useState("HOME"); // State to track active tab
@@ -12,7 +11,7 @@ export default function YouTubePlaylist() {
       <header style={styles.header}>
         <div style={styles.headerLeft}>
           <FaBars style={styles.icon} />
-          <img src={img3} alt="Logo" style={styles.logo} />
+          <img src="https://th.bing.com/th/id/OIP.7ITF2gx8_a3s4NbnDOpZzAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"alt="Logo" style={styles.logo} />
         </div>
         <div style={styles.searchBar}>
           <input type="text" placeholder="Search" style={styles.searchInput} />
@@ -27,12 +26,12 @@ export default function YouTubePlaylist() {
 
       {/* Banner */}
       <div style={styles.banner}>
-        <img src={img2} alt="Banner" style={styles.bannerImg} />
+        <img src="https://th.bing.com/th/id/OIP.7ITF2gx8_a3s4NbnDOpZzAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Banner" style={styles.bannerImg} />
       </div>
 
       {/* Profile Section */}
       <div style={styles.profile}>
-        <img src={img3} alt="Profile" style={styles.profileImg} />
+        <img src="https://th.bing.com/th/id/OIP.gttNrUtnDkf5AKxJkJ2TyQHaEO?w=330&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Profile" style={styles.profileImg} />
         <div style={styles.profileInfo}>
           <h1 style={styles.name}>Pongodi</h1>
           <p style={styles.role}>Admin1</p>

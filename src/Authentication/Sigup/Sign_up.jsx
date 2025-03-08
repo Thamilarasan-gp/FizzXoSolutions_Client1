@@ -53,7 +53,7 @@ function Sign_up() {
         username: "",
       });
 
-      navigate("/login");
+      navigate("/dash");
     } catch (error) {
       setResponseMessage("Registration failed. Please try again.");
       console.error("Error:", error.response?.data || error.message);
