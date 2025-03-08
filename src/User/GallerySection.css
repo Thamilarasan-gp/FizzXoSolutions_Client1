@@ -1,6 +1,7 @@
 .gallery-container {
     padding: 20px;
     background-color: #f5f5f5;
+    margin-left: -14px;
   }
   
   .gallery-grid {
@@ -26,7 +27,7 @@
   }
   
   .small-images img {
-    width: 100%;
+    width: 90%;
     height: 290px;
     object-fit: cover;
     border-radius: 8px;
@@ -53,4 +54,8 @@
     grid-column: span 2;
     height: 200px;
   }
+  
+  
+
+  
   

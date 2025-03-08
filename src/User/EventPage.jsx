@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa6"; // Import WhatsApp icon
 import "./EventPage.css";
-import {API_BASE_URL} from '../../api';
+import { API_BASE_URL } from "../../api";
+
 const EventPage = () => {
     const { id } = useParams();
     const [event, setEvent] = useState(null);
@@ -49,7 +50,7 @@ const EventPage = () => {
         if (isLikeLoading || hasUserLiked || hasUserDisliked) return;
         setIsLikeLoading(true);
         try {
-            const response = await fetch(`http://localhost:9000/events/${id}/like`, {
+            const response = await fetch(`${API_BASE_URL}/events/${id}/like`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -84,7 +85,7 @@ const EventPage = () => {
             setLikes(prev => Math.max(0, prev - 1));
             
             try {
-                await fetch(`http://localhost:9000/events/${id}/unlike`, {
+                await fetch(`${API_BASE_URL}/events/${id}/unlike`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 });

@@ -14,14 +14,14 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <div className="container">
+      <div className="nav-container">
         {/* Logo */}
         <a href="/" className="logo">
           <img src="https://www.floatui.com/logo.svg" alt="Logo" />
         </a>
 
         {/* Mobile Menu Button */}
-        <button className="menu-toggle" onClick={() => setIsOpen(!isOpen)}>
+        <button className={`menu-toggle ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (
             <svg className="icon close-icon" viewBox="0 0 24 24">
               <path d="M6 18L18 6M6 6l12 12" />
@@ -33,10 +33,10 @@ const NavBar = () => {
           )}
         </button>
 
-        {/* Desktop Navigation */}
+        {/* Navigation Links */}
         <ul className={`nav-links ${isOpen ? "active" : ""}`}>
           {navigation.map((item, idx) => (
-            <li key={idx}>
+            <li key={idx} className="nav-item">
               <a href={item.path} onClick={() => setIsOpen(false)}>
                 {item.title}
               </a>

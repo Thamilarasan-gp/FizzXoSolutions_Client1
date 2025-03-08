@@ -28,7 +28,7 @@ const EventSection = () => {
 
     return (
         <div className="event-section">
-            <h2>Upcoming Events</h2>
+            <h2>Recent Events</h2>
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
             <div className="carousel-container">

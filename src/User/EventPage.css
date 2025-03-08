@@ -1,4 +1,4 @@
-/* Event Page Styling */
+/* Event Page Container */
 .event-page {
     display: flex;
     flex-direction: column;
@@ -7,9 +7,20 @@
     max-width: 800px;
     margin: 50px auto;
     padding: 25px;
-    background: #ffffff;
+    background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
     border-radius: 12px;
     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Title */
@@ -18,13 +29,27 @@
     font-weight: 700;
     margin-bottom: 15px;
     color: #222;
+    animation: scaleUp 0.6s ease-in-out;
 }
 
-/* Video Section */
+/* Scale Animation */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Video Container */
 .video-container {
     width: 100%;
     max-width: 650px;
     margin-bottom: 15px;
+    animation: slideUp 0.8s ease-in-out;
 }
 
 .video-container iframe {
@@ -32,6 +57,18 @@
     height: 360px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Image */
@@ -64,12 +101,19 @@
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    transform: scale(1);
+}
+
+/* Button Hover Effect */
+.video-actions button:hover {
+    transform: scale(1.1);
 }
 
 /* Like Button */
 .like-btn {
     background: #007bff;
     color: white;
+    transition: all 0.3s ease-in-out;
 }
 
 .like-btn:hover {
@@ -79,11 +123,20 @@
 .like-btn.liked {
     background: #4CAF50;
     cursor: not-allowed;
+    animation: pulse 0.5s ease-in-out;
 }
 
-.like-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+/* Pulse Animation for Like */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Share Button */
@@ -98,17 +151,28 @@
     cursor: pointer;
     border: none;
     border-radius: 6px;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.3s ease-in-out;
+    animation: bounce 1.5s infinite alternate ease-in-out;
+}
+
+/* Bounce Animation for Share Button */
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-5px);
+    }
 }
 
 .share-btn:hover {
     background: #1da851;
 }
 
+/* WhatsApp Icon */
 .whatsapp-icon {
     font-size: 20px;
 }
-
 
 /* Dislike Button */
 .dislike-btn {
@@ -122,11 +186,6 @@
 
 .dislike-btn.disliked {
     background: #6c757d;
-    cursor: not-allowed;
-}
-
-.dislike-btn:disabled {
-    opacity: 0.7;
     cursor: not-allowed;
 }
 

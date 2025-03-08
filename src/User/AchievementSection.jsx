@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./AchievementSection.css";
 
-const API_BASE_URL = "http://localhost:9000"; 
+import { API_BASE_URL } from "../../api"; 
 
 const AchievementSection = () => {
     const [achievements, setAchievements] = useState([]);

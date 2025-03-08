@@ -9,28 +9,30 @@
   left: 0;
   z-index: 1000;
   padding: 10px 0;
-  
+  transition: background 0.3s ease-in-out;
+ 
 }
 
 /* Container */
-.container {
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
- width: 100%;
- margin-left: -20%;
+  width: 100%;
   padding: 0 20px;
+  margin-left: -60px;
+  
 }
 
 /* Logo */
-.logo {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 .logo img {
   height: 50px;
+  transition: transform 0.3s ease-in-out;
+  margin-left: 90%;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
 }
 
 /* Navigation Links */
@@ -40,28 +42,66 @@
   list-style: none;
   margin: 0;
   padding: 0;
+ 
+  
 }
 
+.nav-links li {
+  position: relative;
+  overflow: hidden;
+ 
+}
 .nav-links li a {
   text-decoration: none;
   color: #4b5563;
   font-weight: 500;
   transition: color 0.3s ease-in-out;
+  padding: 5px 10px;
+  position: relative;
+}
+
+/* Underline effect */
+.nav-links li a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background: #4f46e5;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
 }
 
 .nav-links li a:hover {
   color: #4f46e5;
+  text-decoration:#4f46e5;
 }
+
+/* Expanding underline on hover */
+.nav-links li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
 
 /* Mobile Menu Button */
 .menu-toggle {
   display: none;
   background: none;
- 
   border: none;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  
 }
 
+.menu-toggle.open {
+  transform: rotate(180deg);
+}
+
+/* Icon Styling */
 .icon {
   width: 30px;
   height: 30px;
@@ -70,51 +110,66 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   background: none;
+
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .container {
+  .nav-container {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
-
-  .logo {
-    margin-right: 60%;
+  .logo img {
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    margin-left: -70%;
   }
-
+  
+  .logo img:hover {
+    transform: scale(0.5);
+  }
   .menu-toggle {
     display: block;
     position: absolute;
     top: 15px;
-    left: 350px;
-
+    right: 20px;
   }
 
+  /* Mobile Menu Animation */
   .nav-links {
-    display: none;
+    display: flex;
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: -100vh;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 15px 0;
     border-radius: 8px;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
   }
 
   .nav-links.active {
-    display: flex;
+    top: 60px;
+    opacity: 1;
   }
 
   .nav-links li {
     text-align: center;
     padding: 12px 0;
     width: 100%;
+    transform: translateY(-10px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+
+  .nav-links.active li {
+    transform: translateY(0);
+    opacity: 1;
   }
 
   .nav-links li a {
@@ -122,5 +177,13 @@
     width: 100%;
     padding: 10px;
     font-size: 18px;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+
+  .nav-links li a:hover {
+    background: #4f46e5;
+    color: #fff;
+    transform: scale(1.05);
+    border-radius: 5px;
   }
 }
