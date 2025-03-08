@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FaBell, FaSearch, FaBars, FaTh } from "react-icons/fa";
-import img2 from "C:/Users/Home/Desktop/Pothagam/client2/src/assets/tamil-library-02.jpg";
-import img3 from "C:/Users/Home/Desktop/Pothagam/client2/src/assets/tamil_img3.jpg";
+
 import { useNavigate } from "react-router-dom";
 import Log_in from "../Authentication/Forget/Forget";
 
@@ -30,7 +29,7 @@ export default function YouTubePlaylist() {
           <header style={styles.header}>
             <div style={styles.headerLeft}>
               <FaBars style={styles.icon} />
-              <img src={img3} alt="Logo" style={styles.logo} />
+              <img src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg" alt="Logo" style={styles.logo} />
             </div>
             <div style={styles.searchBar}>
               <input type="text" placeholder="Search" style={styles.searchInput} />
@@ -44,11 +43,11 @@ export default function YouTubePlaylist() {
           </header>
 
           <div style={styles.banner}>
-            <img src={img2} alt="Banner" style={styles.bannerImg} />
+            <img src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg" alt="Banner" style={styles.bannerImg} />
           </div>
 
           <div style={styles.profile}>
-            <img src={img3} alt="Profile" style={styles.profileImg} />
+            <img src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg" alt="Profile" style={styles.profileImg} />
             <div style={styles.profileInfo}>
               <h1 style={styles.name}>Pongodi</h1>
               <p style={styles.role}>Admin1</p>
