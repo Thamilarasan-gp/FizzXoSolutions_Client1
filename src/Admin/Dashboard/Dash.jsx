@@ -75,12 +75,12 @@ export default function YouTubeDashboard() {
           </div>
 
           {/* Navigation Bar */}
-          <nav className="nav-bar">
+          <nav className="admin-nav-bar">
             {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS"].map(
               (tab) => (
                 <button
                   key={tab}
-                  className={`nav-item ${activeTab === tab ? "active" : ""}`}
+                  className={`admin-nav-item ${activeTab === tab ? "active" : ""}`}
                   onClick={() => setActiveTab(tab)}
                 >
                   {tab}

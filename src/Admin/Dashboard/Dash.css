@@ -97,7 +97,7 @@
 }
 
 /* Navigation Bar */
-.nav-bar {
+.admin-nav-bar {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -108,7 +108,7 @@
 }
 
 /* Navigation Buttons */
-.nav-item {
+.admin-nav-item {
   background: #C04000; /* Warm Burnt Orange */
   border: none;
   font-size: 16px;
@@ -120,12 +120,12 @@
   font-weight: bold;
 }
 
-.nav-item.active {
+.admin-nav-item.active {
   background-color: #8B4513; /* Earthy Brown */
 }
 
 /* Navigation Hover Effect */
-.nav-item:hover {
+.admin-nav-item:hover {
   background-color: #A52A2A; /* Deep Red-Brown */
   transform: scale(1.05);
 }

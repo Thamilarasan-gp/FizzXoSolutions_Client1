@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./NavBar.css";
-
+import img2 from "../assets/image.png";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -17,7 +17,7 @@ const NavBar = () => {
       <div className="nav-container">
         {/* Logo */}
         <a href="/" className="logo">
-          <img src="https://www.floatui.com/logo.svg" alt="Logo" />
+          <img src={img2} alt="Logo" />
         </a>
 
         {/* Mobile Menu Button */}

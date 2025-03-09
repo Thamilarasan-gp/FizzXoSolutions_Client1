@@ -1,61 +1,138 @@
-.gallery-container {
-    padding: 20px;
-    background-color: #f5f5f5;
-    margin-left: -14px;
-  }
-  
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 10px;
-  }
-  
-  .large-image img {
-    width: 100%;
-    height: 180%;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .small-images {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: 1%;
-    margin-left: 2%;
-  }
-  
-  .small-images img {
-    width: 90%;
-    height: 290px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  .small-images2 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-   margin-right:-200%;
-   margin-left: 105%;
-  
-  }
-  
-  .small-images2 img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .wide-image {
-    grid-column: span 2;
-    height: 200px;
-  }
-  
-  
+.unique-gallery-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  margin-left: -14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Ensure container takes at least full viewport height */
+  width: 100%; /* Ensure it spans full width */
+}
 
-  
-  
+.unique-gallery-title-container {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.unique-section-heading {
+  font-size: 24px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.unique-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
+  width: 100%; /* Ensure grid takes full width */
+  max-width: 1200px; /* Optional: cap width for larger screens */
+}
+
+.unique-large-image img {
+  width: 100%;
+  height: 180%; /* This might still cause issues; consider 'auto' or a fixed height */
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.unique-small-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 1%;
+  margin-left: 2%;
+}
+
+.unique-small-images img {
+  width: 90%;
+  height: 290px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.unique-small-images2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-right: -200%;
+  margin-left: 105%;
+}
+
+.unique-small-images2 img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.unique-wide-image {
+  grid-column: span 2;
+  height: 200px;
+}
+
+/* Mobile Screen Adjustments */
+@media (max-width: 768px) {
+  .unique-gallery-container {
+    padding: 10px; /* Reduce padding for smaller screens */
+    height: 100%; /* Allow height to grow with content */
+  }
+
+  .unique-gallery-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%; /* Ensure full width */
+  }
+
+  .unique-large-image img {
+    width: 96%; /* Uniform width for all images */
+    height: 200px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensures content fits within the dimensions */
+    max-width: 100%;
+    margin-left: 5px;
+  }
+
+  .unique-small-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    margin-left: 0;
+    gap: 20px;
+  }
+
+  .unique-small-images img {
+    width: 90%; /* Uniform width for all images */
+    height: 200px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensures content fits within the dimensions */
+    max-width: 100%;
+  }
+
+  .unique-small-images2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+    margin-left: 0;
+    gap: 20px;
+  }
+
+  .unique-small-images2 img {
+    width: 90%; /* Uniform width for all images */
+    height: 200px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensures content fits within the dimensions */
+    max-width: 100%;
+  }
+
+  .unique-wide-image {
+    width: 90%; /* Uniform width for all images */
+    height: 200px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensures content fits within the dimensions */
+    grid-column: auto;
+  }
+}
