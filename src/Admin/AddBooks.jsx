@@ -194,11 +194,12 @@ const AddBooks = () => {
 
         <input
           type="text"
-          placeholder="Search books by name, title, author"
+          placeholder="🔍 Search books by name, title, author..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="search-bar"
         />
+
 
         <form className="book-form">
           <input
