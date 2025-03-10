@@ -153,7 +153,7 @@ const AddBooks = () => {
     setLoading(true);
     try {
       await axios.delete(
-        `${API_BASE_URL}/api/books/delete/${selectedBookId}`
+        `${API_BASE_URL}/books/delete/${selectedBookId}`
       );
       fetchBooks();
       setFormData({

@@ -8,6 +8,7 @@ import Footer from './Footer'
 import ContactForm from './ContactForm'
 import AchievementSection from './AchievementSection'
 import RecentBooks from './RecentBooks'
+import GotoPathipagam from './GotoPathipagam'
 function UserHome() {
   return (
 <>
@@ -15,6 +16,7 @@ function UserHome() {
 <HeroSection/>
 <RecentBooks />
 <AboutSection/>
+<GotoPathipagam/>
 <EventSection />
 <GallerySection />
 <AchievementSection/>

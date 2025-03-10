@@ -1,0 +1,56 @@
+.adbook-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+}
+
+.adbook-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-item {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.book-item:hover {
+    background: #f1f1f1;
+    transform: scale(1.02);
+}
+
+.book-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}

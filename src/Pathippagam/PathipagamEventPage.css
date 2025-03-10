@@ -1,0 +1,59 @@
+.pathipagam-event-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.video-container {
+    margin: 20px auto;
+}
+
+img {
+    width: 80%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.video-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.like-btn, .dislike-btn, .share-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.like-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.liked {
+    background-color: #2E7D32;
+}
+
+.dislike-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.disliked {
+    background-color: #b71c1c;
+}
+
+.share-btn {
+    background-color: #25D366;
+    color: white;
+}
+
+.whatsapp-icon {
+    font-size: 1.2em;
+}

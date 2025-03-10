@@ -8,6 +8,9 @@ import AddEventForm from "../AddEventForm";
 import HeroForm from "../HeroForm";
 import HeroSection from "../../User/HeroSection";
 import "./Dash.css";
+import AddPathippagamBooks from "../AddPathippagamBooks";
+
+import AddPathipagamEventForm from "../AddPathipagamEventForm";
 
 export default function YouTubeDashboard() {
   const [activeTab, setActiveTab] = useState("CREATE");
@@ -76,7 +79,7 @@ export default function YouTubeDashboard() {
 
           {/* Navigation Bar */}
           <nav className="admin-nav-bar">
-            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS"].map(
+            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS" , "PATHIPPAGAMBOOKS" , "PATHIPPAGAMEVENTS"].map(
               (tab) => (
                 <button
                   key={tab}
@@ -94,6 +97,8 @@ export default function YouTubeDashboard() {
             {activeTab === "BOOKS" && <AddBooks />}
             {activeTab === "ACHIEVEMENTS" && <AddAchievementForm />}
             {activeTab === "EVENTS" && <AddEventForm />}
+            {activeTab === "PATHIPPAGAMBOOKS" && <AddPathippagamBooks />}
+            {activeTab === "PATHIPPAGAMEVENTS" && <AddPathipagamEventForm/>}
             {activeTab === "BANNERS" && (
               <div className="banners-section">
                 <h2>Manage Banners</h2>
