@@ -94,7 +94,7 @@
     height: 200px; /* Fixed height for uniformity */
     object-fit: cover; /* Ensures content fits within the dimensions */
     max-width: 100%;
-    margin-left: 5px;
+    margin-left: px;
   }
 
   .unique-small-images {

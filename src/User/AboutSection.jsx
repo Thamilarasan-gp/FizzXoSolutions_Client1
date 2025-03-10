@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./AboutSection.css";
 
 const AboutSection = () => {
+    const aboutRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            },
+            { threshold: 0.3 }
+        );
+
+        if (aboutRef.current) {
+            observer.observe(aboutRef.current);
+        }
+
+        return () => {
+            if (aboutRef.current) observer.unobserve(aboutRef.current);
+        };
+    }, []);
+
     return (
-        <div className="about-container">
+        <div className="about-container hidden" ref={aboutRef}>
             <div className="about-text">
                 <h2>About Us</h2>
                 <p>

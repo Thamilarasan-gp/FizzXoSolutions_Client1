@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../../api";
+import "./AddEventForm.css";
 
 const AddEventForm = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,10 @@ const AddEventForm = () => {
     youtubeLink: "",
     photo: null,
   });
+
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -28,10 +32,18 @@ const AddEventForm = () => {
         date: selectedEvent.date.split("T")[0],
         location: selectedEvent.location,
         youtubeLink: selectedEvent.youtubeLink || "",
-        photo: null, // Reset file input
+        photo: null,
       });
     }
   }, [selectedEvent]);
+
+  useEffect(() => {
+    setFilteredEvents(
+      events.filter((event) =>
+        event.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, events]);
 
   const fetchEvents = async () => {
     try {
@@ -39,6 +51,7 @@ const AddEventForm = () => {
       const response = await fetch(`${API_BASE_URL}/events`);
       const data = await response.json();
       setEvents(data);
+      setFilteredEvents(data);
     } catch (error) {
       setError("Failed to fetch events.");
     } finally {
@@ -75,18 +88,12 @@ const AddEventForm = () => {
       let method = "POST";
 
       if (selectedEvent) {
-        // If editing, update event
         url = `${API_BASE_URL}/events/${selectedEvent._id}`;
         method = "PUT";
       }
 
-      response = await fetch(url, {
-        method: method,
-        body: form, 
-      });
-
+      response = await fetch(url, { method, body: form });
       const result = await response.json();
-      console.log("Server Response:", result); // Debugging
 
       if (response.ok) {
         setSuccess(selectedEvent ? "Event updated successfully!" : "Event added successfully!");
@@ -96,7 +103,6 @@ const AddEventForm = () => {
         setError(result.message || "An error occurred.");
       }
     } catch (error) {
-      console.error("Form Submission Error:", error);
       setError("An error occurred while submitting the form.");
     }
   };
@@ -138,57 +144,69 @@ const AddEventForm = () => {
   };
 
   return (
-    <div>
+    <div className="add-event-form">
       <h2>{selectedEvent ? "Update Event" : "Add Event"}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <input
+        type="text"
+        placeholder="Search events..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+      />
+
+      {loading && <p>Loading events...</p>}
+      {filteredEvents.length === 0 && !loading && <p>No events found.</p>}
+
+      <form onSubmit={handleSubmit} className="event-form">
+        <div className="input-group">
           <label>Name:</label>
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
         </div>
-        <div>
+        <div className="input-group">
           <label>Description:</label>
           <textarea name="description" value={formData.description} onChange={handleChange} required />
         </div>
-        <div>
+        <div className="input-group">
           <label>Date:</label>
           <input type="date" name="date" value={formData.date} onChange={handleChange} required />
         </div>
-        <div>
+        <div className="input-group">
           <label>Location:</label>
           <input type="text" name="location" value={formData.location} onChange={handleChange} required />
         </div>
-        <div>
+        <div className="input-group">
           <label>YouTube Link:</label>
           <input type="url" name="youtubeLink" value={formData.youtubeLink} onChange={handleChange} />
         </div>
-        <div>
+        <div className="input-group">
           <label>Photo:</label>
           <input type="file" name="photo" onChange={handleChange} />
         </div>
         <button type="submit">{selectedEvent ? "Update Event" : "Add Event"}</button>
-        {selectedEvent && <button type="button" onClick={resetForm} style={{ marginLeft: "10px" }}>Cancel Edit</button>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <p style={{ color: "green" }}>{success}</p>}
+        {selectedEvent && <button type="button" onClick={resetForm} className="cancel-btn">Cancel Edit</button>}
       </form>
 
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
+
       <h2>All Events</h2>
-      {loading && <p>Loading events...</p>}
-      {events.length === 0 && !loading && <p>No events found.</p>}
-      <ul>
-        {events.map((event) => (
-          <li key={event._id} style={{ border: "1px solid #ddd", padding: "10px", marginBottom: "10px" }}>
-            <h3>{event.name}</h3>
-            <p>{event.description}</p>
-            <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-            <p><strong>Location:</strong> {event.location}</p>
-            {event.youtubeLink && <p><a href={event.youtubeLink} target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>}
-            {event.photoUrl && <img src={event.photoUrl} alt={event.name} style={{ width: "100px" }} />}
-            <br />
-            <button onClick={() => handleEdit(event)}>Edit</button>
-            <button onClick={() => handleDelete(event._id)} style={{ marginLeft: "10px", color: "red" }}>Delete</button>
-          </li>
-        ))}
-      </ul>
+   
+      <div className="event-grid-container">
+        <div className="event-grid">
+          {filteredEvents.map((event) => (
+            <div key={event._id} className="event-card">
+              <h3>{event.name}</h3>
+              <p>{event.description}</p>
+              <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+              <p><strong>Location:</strong> {event.location}</p>
+              {event.youtubeLink && <p><a href={event.youtubeLink} target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>}
+              {event.photoUrl && <img src={event.photoUrl} alt={event.name} className="event-image" />}
+              <button onClick={() => handleEdit(event)}>Edit</button>
+              <button onClick={() => handleDelete(event._id)} className="delete-btn">Delete</button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
