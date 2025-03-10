@@ -1,5 +1,6 @@
 .p_books-container {
     padding: 20px;
+    margin-top: 7%;
   }
   
   .p_books-category-grid {
@@ -106,6 +107,10 @@
     .p_books-details img {
       width: 120px;
       height: 160px;
+    }
+    .p_books-container {
+      padding: 20px;
+      margin-top: 20%;
     }
   
     .p_books-info-container {
