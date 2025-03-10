@@ -17,7 +17,6 @@ const AddAchievementForm = () => {
   const [success, setSuccess] = useState(null);
   const [editId, setEditId] = useState(null);
 
-  // Fetch Achievements
   useEffect(() => {
     const fetchAchievements = async () => {
       try {
@@ -30,7 +29,6 @@ const AddAchievementForm = () => {
     fetchAchievements();
   }, []);
 
-  // Handle Input Change
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (files) {
@@ -41,7 +39,6 @@ const AddAchievementForm = () => {
     }
   };
 
-  // Handle Form Submission (Add / Edit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -78,7 +75,6 @@ const AddAchievementForm = () => {
     }
   };
 
-  // Handle Edit
   const handleEdit = (achievement) => {
     setEditId(achievement._id);
     setFormData({
@@ -91,7 +87,6 @@ const AddAchievementForm = () => {
     setPreview(achievement.photoUrl);
   };
 
-  // Handle Delete
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_BASE_URL}/achievements/${id}`);
@@ -119,17 +114,21 @@ const AddAchievementForm = () => {
 
       <div className="achievement-list">
         <h2>Achievements</h2>
-        {achievements.map((ach) => (
-          <div key={ach._id} className="achievement-card">
-            <img src={ach.photoUrl} alt="Achievement" />
-            <h3>{ach.title}</h3>
-            <p>{ach.description}</p>
-            <p><b>Date:</b> {ach.date}</p>
-            <p><b>Location:</b> {ach.location}</p>
-            <button onClick={() => handleEdit(ach)}>Edit</button>
-            <button onClick={() => handleDelete(ach._id)}>Delete</button>
-          </div>
-        ))}
+        <div className="achievement-cards">
+          {achievements.map((ach) => (
+            <div key={ach._id} className="achievement-card">
+              <img src={ach.photoUrl} alt="Achievement" />
+              <h3>{ach.title}</h3>
+              <p>{ach.description}</p>
+              <p><b>Date:</b> {ach.date}</p>
+              <p><b>Location:</b> {ach.location}</p>
+              <div className="achievement-buttons">
+                <button onClick={() => handleEdit(ach)}>Edit</button>
+                <button onClick={() => handleDelete(ach._id)}>Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
