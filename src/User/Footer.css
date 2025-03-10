@@ -11,8 +11,9 @@
 }
 
 .footer-logo img {
-    width: 120px;
+    width: 100px;
     margin-bottom: 15px;
+
 }
 
 .footer-text {
@@ -51,6 +52,19 @@
 .social-icons {
     display: flex;
     gap: 20px;
+}
+.social-item img {
+    width: 40px; /* Adjust size as needed */
+    height: 40px;
+    /* Makes it circular */
+     /* Ensures a visible background */
+    padding: 5px; /* Adds spacing around the icon */
+   
+    transition: transform 0.2s ease-in-out;
+}
+
+.social-item img:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
 }
 
 /* Default: Hide text and bold content */
