@@ -10,6 +10,13 @@
     justify-content: center;
     margin-bottom: 20px;
   }
+  .category-books-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
   
   .p_books-category-box {
     padding: 15px 20px;

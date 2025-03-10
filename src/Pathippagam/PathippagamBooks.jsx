@@ -47,6 +47,7 @@ export default function PathippagamHome() {
     <div className="p_books-container">
       {/* Categories */}
       <div className="p_books-category-grid">
+      <h2 className="category-books-title">Category of Books</h2>
         {categories.map((category, index) => (
           <div
             key={index}
