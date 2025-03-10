@@ -50,7 +50,7 @@ const EventPage = () => {
         if (isLikeLoading || hasUserLiked || hasUserDisliked) return;
         setIsLikeLoading(true);
         try {
-            const response = await fetch(`${API_BASE_URL}/events/${id}/like`, {
+            const response = await fetch(`${API_BASE_URL}/events/events/${id}/like`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -85,7 +85,7 @@ const EventPage = () => {
             setLikes(prev => Math.max(0, prev - 1));
             
             try {
-                await fetch(`${API_BASE_URL}/events/${id}/unlike`, {
+                await fetch(`${API_BASE_URL}/events/events/${id}/unlike`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 });
