@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./EventSection.css";
-import {API_BASE_URL} from '../../api';
+import {API_BASE_URL} from '../api';
 const EventSection = () => {
     const [events, setEvents] = useState([]);
     const [error, setError] = useState(null);
     const scrollRef = useRef(null);
 
     useEffect(() => {
-        fetch(`${API_BASE_URL}/events`)
+        fetch(`${API_BASE_URL}/events/events`)
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to fetch events");
                 return res.json();
