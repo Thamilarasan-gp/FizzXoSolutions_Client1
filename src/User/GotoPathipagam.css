@@ -1,14 +1,16 @@
 
   
   .goto-pathipagam-btn {
-    background-color: #007bff; /* Blue color */
+    background-color: #00b330; /* Blue color */
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 12px 15px;
     font-size: 18px;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     transition: 0.3s;
+    margin-left: 30%;
+    margin-bottom: 50px;
   }
   
   .goto-pathipagam-btn:hover {
