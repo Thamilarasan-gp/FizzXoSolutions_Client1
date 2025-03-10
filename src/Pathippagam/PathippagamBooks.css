@@ -10,13 +10,6 @@
     justify-content: center;
     margin-bottom: 20px;
   }
-  .category-books-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
   
   .p_books-category-box {
     padding: 15px 20px;
@@ -100,6 +93,15 @@
     height: 200px;
     border-radius: 8px;
   }
+  .category-books-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    display: block
+  }
+  
   
   /* Mobile Responsive */
   @media screen and (max-width: 768px) {
@@ -124,4 +126,8 @@
       flex-direction: column;
     }
   }
-  
+  @media screen and (max-width: 480px) {
+    .category-books-title {
+    margin-left: 15%;
+    }
+  }
