@@ -24,7 +24,7 @@ const EventPage = () => {
 
         const fetchEvent = async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/events/${id}`);
+                const response = await fetch(`${API_BASE_URL}/events/events/${id}`);
                 if (!response.ok) throw new Error("Failed to fetch event");
                 const data = await response.json();
                 setEvent(data);

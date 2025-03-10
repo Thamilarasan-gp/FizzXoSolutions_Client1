@@ -48,7 +48,7 @@ const AddEventForm = () => {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/events`);
+      const response = await fetch(`${API_BASE_URL}/events/events`);
       const data = await response.json();
       setEvents(data);
       setFilteredEvents(data);
@@ -84,11 +84,11 @@ const AddEventForm = () => {
 
     try {
       let response;
-      let url = `${API_BASE_URL}/addevent`;
+      let url = `${API_BASE_URL}/events/addevent`;
       let method = "POST";
 
       if (selectedEvent) {
-        url = `${API_BASE_URL}/events/${selectedEvent._id}`;
+        url = `${API_BASE_URL}/events/events/${selectedEvent._id}`;
         method = "PUT";
       }
 
@@ -115,7 +115,7 @@ const AddEventForm = () => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/events/${eventId}`, {
+      const response = await fetch(`${API_BASE_URL}/events/events/${eventId}`, {
         method: "DELETE",
       });
 
