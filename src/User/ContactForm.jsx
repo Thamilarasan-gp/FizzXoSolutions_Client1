@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import "./ContactForm.css";
+import contactimg from "../assets/Untitled design (5).png";
 
 const ContactForm = () => {
     const [result, setResult] = useState(null);
@@ -47,7 +48,14 @@ const ContactForm = () => {
                     transition={{ duration: 1 }}
                 >
                     <form onSubmit={onSubmit}>
-                        <h2>Get in Touch</h2>
+                        <motion.h2 
+                            className="contact-title"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            Get in Touch
+                        </motion.h2>
                         <motion.div 
                             className="input-box"
                             whileHover={{ scale: 1.05 }}
@@ -74,7 +82,7 @@ const ContactForm = () => {
                         </motion.div>
                         <motion.button 
                             type="submit" 
-                            className="submit"
+                            className="submit-btn"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             transition={{ duration: 0.2 }}
@@ -89,11 +97,16 @@ const ContactForm = () => {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                 >
-                    <img 
-                        src="https://blog.pincel.app/wp-content/uploads/2023/09/0-add-hidden-text-or-symbol-into-AI-photo.jpg" 
+                    <motion.img 
+                        src={contactimg} 
                         alt="Contact Us" 
                         className="contact-image"
+                        animate={{ y: [0, -10, 0] }}
+                        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                        style={{ width: "130%", height: "100%" }}
                     />
                 </motion.div>
             </div>

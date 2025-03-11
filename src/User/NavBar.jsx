@@ -72,9 +72,9 @@ const NavBar = () => {
         </ul>
 
         {/* Translate Icon (Visible only on larger screens) */}
-        <button onClick={toggleLanguage} className="tamil-translate-translate-only">
+        <p onClick={toggleLanguage} className="tamil-translate-translate-only">
           <img src={translateicon} alt="Translate" />
-        </button>
+        </p>
       </div>
     </nav>
   );

@@ -200,7 +200,13 @@
     font-size: 18px;
     transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
-
+  .nav-logo img {
+    height: 70px;
+    width: 190px;
+    transition: transform 0.3s ease-in-out;
+    margin-left: -170px;
+    margin-top:-9px;
+  }
   .nav-links li a:hover {
     background: #4f46e5;
     color: #fff;

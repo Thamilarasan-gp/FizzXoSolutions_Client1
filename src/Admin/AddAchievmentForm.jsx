@@ -107,7 +107,7 @@ const AddAchievementForm = () => {
         <input type="file" name="photo" accept="image/*" onChange={handleChange} />
 
         {preview && <img src={preview} alt="Preview" className="preview-img" />}
-        <button type="submit">{editId ? "Update Achievement" : "Add Achievement"}</button>
+        <button className ="achive-button"type="submit">{editId ? "Update Achievement" : "Add Achievement"}</button>
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
       </form>

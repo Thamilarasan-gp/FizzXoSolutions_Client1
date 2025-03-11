@@ -17,10 +17,10 @@ function UserHome() {
 <HeroSection/>
 <RecentBooks />
 <AboutSection/>
-<GotoPathipagam/>
 <EventSection />
-<GallerySection />
+<GotoPathipagam/>
 <AchievementSection/>
+<GallerySection />
 <Newsletter/>
 <ContactForm/>
 <Footer/>
