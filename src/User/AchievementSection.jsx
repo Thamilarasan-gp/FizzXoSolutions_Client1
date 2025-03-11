@@ -23,7 +23,7 @@ const AchievementSection = () => {
     }, []);
 
     return (
-        <div className="achievement-section">
+        <div className="achievement-section" id="achievements-section">
             <h2><span>OUR</span> ACHIEVEMENTS</h2>
             {error && <p className="error-message">Error: {error}</p>}
             

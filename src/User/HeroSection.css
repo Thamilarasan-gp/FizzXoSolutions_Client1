@@ -14,6 +14,8 @@ html, body {
     align-items: center;
     position: relative;
     overflow: hidden;
+    margin-top: 4%;
+    margin-left: -50px;
 }
 
 /* Hero Section */
@@ -68,11 +70,13 @@ html, body {
 }
 
 .left-arrow {
-    left: 15px;
+    left: 55px;
+    top: 55%;
 }
 
 .right-arrow {
-    right: 15px;
+    right: -5px;
+    top: 55%;
 }
 
 /* Responsive Adjustments */
@@ -107,6 +111,7 @@ html, body {
     .hero-section {
         height: 40vh; /* Full-screen height */
         top:17px;
+        margin-left: 1px;
     }
 
     .hero-image {

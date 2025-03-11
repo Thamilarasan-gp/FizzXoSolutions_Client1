@@ -44,7 +44,7 @@ export default function PathippagamHome() {
   };
 
   return (
-    <div className="p_books-container">
+    <div className="p_books-container" id="pathippagam-books">
       {/* Categories */}
       <div className="p_books-category-grid">
       <h2 className="category-books-title">Category of Books</h2>

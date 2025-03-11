@@ -31,7 +31,7 @@ const PathipagamEvent = () => {
   };
 
   return (
-    <div className="pathipagam-event-container">
+    <div className="pathipagam-event-container" id="pathipagam-events">
       <h2>Pathipagam Events</h2>
       {loading && <p>Loading events...</p>}
       {error && <p className="error">{error}</p>}

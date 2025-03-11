@@ -1,4 +1,4 @@
-/* General Navbar Styles */
+/* Navbar */
 .navbar {
   background-color: #fff;
   border-bottom: 2px solid #e5e7eb;
@@ -8,9 +8,7 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  padding: 10px 0;
-  transition: background 0.3s ease-in-out;
- 
+  padding: 3px 0;
 }
 
 /* Container */
@@ -20,18 +18,16 @@
   align-items: center;
   width: 100%;
   padding: 0 20px;
-  margin-left: -60px;
-  
 }
 
 /* Logo */
-.logo img {
-  height: 50px;
+.nav-logo img {
+  height: 70px;
+  width: 190px;
   transition: transform 0.3s ease-in-out;
-  margin-left: 90%;
 }
 
-.logo img:hover {
+.nav-logo img:hover {
   transform: scale(1.1);
 }
 
@@ -40,17 +36,14 @@
   display: flex;
   gap: 20px;
   list-style: none;
-  margin: 0;
   padding: 0;
- 
-  
+  margin-left: 20%;
 }
 
 .nav-links li {
   position: relative;
-  overflow: hidden;
- 
 }
+
 .nav-links li a {
   text-decoration: none;
   color: #4b5563;
@@ -76,16 +69,12 @@
 
 .nav-links li a:hover {
   color: #4f46e5;
-  text-decoration:#4f46e5;
 }
 
-/* Expanding underline on hover */
 .nav-links li a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
-
-
 
 /* Mobile Menu Button */
 .menu-toggle {
@@ -94,7 +83,6 @@
   border: none;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  
 }
 
 .menu-toggle.open {
@@ -109,10 +97,39 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  background: none;
-
 }
 
+.translate-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  right: 100px; /* Moves it slightly to the left */
+}
+
+.translate-button img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease-in-out;
+  margin-top: 5px;
+}
+
+.translate-button:hover img {
+  transform: translateX(-3px); /* Moves slightly left on hover */
+  background-color: none;
+}
+.english-only {
+  display: none; /* Hide "English" by default */
+}
+
+.translate-only {
+  display: block; /* Show Translate Icon by default */
+}
+.tamil-translate-translate-only img {
+  width: 40px; /* Hide Translate Icon by default */
+  height: 40px;
+  margin-right: 100px;
+}
 /* Responsive Styles */
 @media (max-width: 768px) {
   .nav-container {
@@ -120,29 +137,29 @@
     align-items: center;
     text-align: center;
   }
-  .logo img {
-    height: 50px;
-    transition: transform 0.3s ease-in-out;
-    margin-left: -70%;
-  }
-  
-  .logo img:hover {
-    transform: scale(0.5);
-  }
+
   .menu-toggle {
     display: block;
     position: absolute;
     top: 15px;
     right: 20px;
   }
-
+  .tamil-translate {
+    display: none;
+  }
+  .english-only {
+    display: block;
+  }
+  .translate-only {
+    display: none; /* Hide Translate Icon on small screens */
+  }
   /* Mobile Menu Animation */
   .nav-links {
     display: flex;
     flex-direction: column;
     position: absolute;
     top: -100vh;
-    left: 50%;
+    left: 30%;
     transform: translateX(-50%);
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
@@ -151,6 +168,10 @@
     border-radius: 8px;
     transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
     opacity: 0;
+    
+  }
+  .tamil-translate-translate-only{
+    display: none;
   }
 
   .nav-links.active {

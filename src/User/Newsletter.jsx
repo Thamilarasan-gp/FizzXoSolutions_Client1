@@ -14,7 +14,7 @@ const Newsletter = () => {
   }, []);
 
   return (
-    <div className="newsletter-display-container">
+    <div className="newsletter-display-container" id="newsletters-section">
       <h2>Latest Newsletters</h2>
       <div className="newsletter-list">
         {newsletters.map((news) => (

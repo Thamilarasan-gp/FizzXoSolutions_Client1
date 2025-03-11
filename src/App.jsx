@@ -22,10 +22,12 @@ import PathipagamEventPage from "./Pathippagam/PathipagamEventPage";
 import PathipagamEvent from "./Pathippagam/PathipagamEvent";
 import Newsletter from "./User/Newsletter";
 import AddNewsletterForm from "./Admin/AddNewsletterForm";
+import { LanguageProvider } from "./LanguageContext";
 function App() {
   const [posts, setPosts] = useState([]); // Define state for HeroForm
 
   return (
+    <LanguageProvider>
     <Router>
       <Routes>
         <Route path="/" element={<UserHome />} />
@@ -50,6 +52,7 @@ function App() {
    <Route path="/addnewsletter" element={<AddNewsletterForm/>} />
       </Routes>
     </Router>
+    </LanguageProvider>
   );
 }
 
