@@ -1,0 +1,352 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.newsletter-display-container {
+    text-align: center;
+    background: #ffffff;
+    padding: 40px 0;
+    font-family: 'Poppins', sans-serif;
+    width: 90%;
+    margin: auto;
+}
+
+.newsletter-display-container h2 {
+    font-size: 34px;
+    font-weight: 600;
+    color: #5f017c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.newsletter-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 90%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.newsletter-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.18);
+    transition: transform 0.4s ease-in-out;
+    padding: 15px;
+    text-align: left;
+}
+
+.newsletter-card:hover {
+    transform: scale(1.05);
+}
+
+.newsletter-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.newsletter-card h3 {
+    background: #ff3191;
+    padding: 8px 12px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    margin: 10px 0;
+    display: inline-block;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+
+.newsletter-card p {
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+.newsletter-date {
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    margin-top: 5px;
+}
+
+
+@media (max-width: 1024px) {
+    .newsletter-display-container h2 {
+        font-size: 30px;
+    }
+
+    .newsletter-list {
+        width: 95%;
+    }
+
+    .newsletter-image {
+        height: 200px;
+    }
+
+    .newsletter-card h3 {
+        font-size: 16px;
+    }
+
+    .newsletter-card p {
+        font-size: 14px;
+    }
+
+    .newsletter-date {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .newsletter-display-container h2 {
+        font-size: 26px;
+    }
+
+    .newsletter-list {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .newsletter-image {
+        height: 180px;
+    }
+
+    .newsletter-card {
+        padding: 12px;
+    }
+
+    .newsletter-card h3 {
+        font-size: 15px;
+        padding: 6px 10px;
+    }
+
+    .newsletter-card p {
+        font-size: 13px;
+    }
+
+    .newsletter-date {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .newsletter-display-container h2 {
+        font-size: 22px;
+    }
+
+    .newsletter-list {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .newsletter-image {
+        height: 160px;
+    }
+
+    .newsletter-card {
+        padding: 10px;
+    }
+
+    .newsletter-card h3 {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+
+    .newsletter-card p {
+        font-size: 12px;
+    }
+
+    .newsletter-date {
+        font-size: 10px;
+    }
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.newsletter-slider-container {
+    text-align: center;
+    background: #ffffff;
+    padding: 40px 0;
+    font-family: 'Poppins', sans-serif;
+    width: 90%;
+    margin: auto;
+    position: relative;
+}
+
+.newsletter-slider-container h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #5f017c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.newsletter-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.newsletter-list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 20px;
+    scroll-behavior: smooth;
+}
+
+.newsletter-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* Square Newsletter Cards */
+.newsletter-card {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 320px;
+    scroll-snap-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-card:hover {
+    transform: scale(1.07);
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Parallax Hover Effect */
+.newsletter-card:hover .newsletter-image {
+    transform: scale(1.1);
+}
+
+.newsletter-card h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.newsletter-card p {
+    font-size: 14px;
+    color: #555;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+/* Neon Glow Navigation Buttons */
+.newsletter-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(255, 117, 140, 0.5);
+    z-index: 10;
+    animation: floatButton 3s infinite ease-in-out;
+}
+
+.newsletter-nav-btn:hover {
+    animation: pulseGlow 1.5s infinite;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.newsletter-left {
+    left: 10px;
+    z-index: 15;
+}
+
+.newsletter-right {
+    right: 10px;
+}
+
+/* Button Animations */
+@keyframes floatButton {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-52%) scale(1.1);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 4px 10px rgba(255, 117, 140, 0.5);
+    }
+    50% {
+        box-shadow: 0 6px 14px rgba(255, 117, 140, 0.9);
+    }
+    100% {
+        box-shadow: 0 4px 10px rgba(255, 117, 140, 0.5);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .newsletter-list {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .newsletter-card {
+        width: 250px;
+        height: 250px;
+    }
+
+    .newsletter-card h3 {
+        font-size: 14px;
+    }
+
+    .newsletter-card p {
+        font-size: 10px;
+    }
+
+    .newsletter-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+

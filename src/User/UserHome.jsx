@@ -9,6 +9,7 @@ import ContactForm from './ContactForm'
 import AchievementSection from './AchievementSection'
 import RecentBooks from './RecentBooks'
 import GotoPathipagam from './GotoPathipagam'
+import Newsletter from './Newsletter'
 function UserHome() {
   return (
 <>
@@ -20,6 +21,7 @@ function UserHome() {
 <EventSection />
 <GallerySection />
 <AchievementSection/>
+<Newsletter/>
 <ContactForm/>
 <Footer/>
 </>
