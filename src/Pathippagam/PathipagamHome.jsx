@@ -10,7 +10,6 @@ const PathipagamHome = () => {
         <NavBar/>
         <PathipagamBooks/>
         <PathipagamEvent/>
-        <PathipagamHome/>
         <ContactForm/>
         <Footer/>
     </div>

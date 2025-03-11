@@ -43,7 +43,7 @@ function App() {
         <Route path="/p_home" element={<Pathippagam_home />} />
         <Route path="/p_books" element={<AddPathippagamBooks />} />
         <Route path="/add_p_events" element={<AddPathipagamEventForm />} />
-<Route path='/PathipagamHome' element={<PathipagamHome/>} />
+<Route path='/pathipagamHome' element={<PathipagamHome/>} />
 <Route path="/pathipagamevent/:id" element={<PathipagamEventPage />} />
    <Route path="/pathipagam-event" element={<PathipagamEvent/>} />
    <Route path="/newsletter" element={<Newsletter/>} />
