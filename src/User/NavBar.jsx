@@ -43,7 +43,7 @@ const NavBar = () => {
         </a>
 
         {/* Mobile Menu Button */}
-        <button className={`menu-toggle ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <button id="menu-toggle-icon" className={`menu-toggle ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (
             <svg className="icon close-icon" viewBox="0 0 24 24">
               <path d="M6 18L18 6M6 6l12 12" />
@@ -67,7 +67,7 @@ const NavBar = () => {
 
           {/* Show "English" button only on small screens */}
           <li className="nav-item english-only">
-            <button onClick={toggleLanguage}>{language === "english" ? "தமிழ்" : "English"}</button>
+            <button id="change-language-btn"onClick={toggleLanguage}>{language === "english" ? "தமிழ்" : "English"}</button>
           </li>
         </ul>
 
