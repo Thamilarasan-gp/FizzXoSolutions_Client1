@@ -14,28 +14,33 @@ html, body {
     align-items: center;
     position: relative;
     overflow: hidden;
-    margin-top: 4%;
-   
 }
 
 /* Hero Section */
 .hero-section {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: hidden;
 }
 
 /* Hero Image */
 .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures full coverage while maintaining aspect ratio */
+    width: 50%; /* Slightly wider than the screen */
+
+    height: 100vh; /* Slightly taller than the screen */
+
+    object-fit: cover; /* Ensures full coverage without distortion */
+
     position: absolute;
-    top: 0;
-    left: 0;
+
+    transform: scale(1.8); /* Enlarges image without excessive cropping */
+
+    right: 370px;
+
 }
 
 /* Navigation Arrows */
@@ -63,26 +68,31 @@ html, body {
 }
 
 .left-arrow {
-    left: 10px;
+    left: 15px;
 }
 
 .right-arrow {
-    right: 10px;
+    right: 15px;
 }
+
 /* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .hero-image {
+        transform: scale(1.2);
+    }
+}
+
 @media (max-width: 768px) {
-    .gallery-container {
-        height: 50vh;
-        margin-left: 10px; /* Reduce height for smaller screens */
+    .gallery-container,
+    .hero-section {
+        height: 100vh;
     }
 
-    .hero-section {
-        height: 50vh; /* Adjust hero section height */
-        width: 100%;
-    }
     .hero-image {
-        height: 80vh; /* Ensure it does not exceed 80% of the viewport height */
-        object-fit: cover;
+        width: 210px; /* Extra width for proper coverage */
+        height: 12vh;
+        transform: scale(1.9);
+        left: 102px;
     }
 
     .arrow {
@@ -90,33 +100,20 @@ html, body {
         width: 40px;
         height: 40px;
     }
-    
-.left-arrow {
-    left: 10px;
-    top: 120%;
-}
-
-.right-arrow {
-    right: 10px;
-    top: 120%;
-}
 }
 
 @media (max-width: 480px) {
-    .gallery-container {
-        height: 40vh; /* Reduce height further for mobile */
+    .gallery-container,
+    .hero-section {
+        height: 40vh; /* Full-screen height */
+        top:17px;
     }
 
-    .hero-section {
-        height: 10vh;
-        width: 100%;
-    }
     .hero-image {
-        height: 25vh; /* Limit height for mobile */
-        max-height: 60vh; /* Ensures it does not stretch */
-        width: 98%;
-        object-fit: cover;
-        margin-left:-14px;
+        width: 210px; /* Extra width for proper coverage */
+        height: 12vh;
+        transform: scale(1.9);
+        left: 101px;
     }
 
     .arrow {
@@ -127,11 +124,9 @@ html, body {
 
     .left-arrow {
         left: 10px;
-        top: 120%;
     }
-    
+
     .right-arrow {
         right: 10px;
-        top: 120%;
     }
 }
