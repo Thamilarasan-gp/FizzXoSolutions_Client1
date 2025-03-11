@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./Dash.css"; // Import CSS
+
 import AddBooks from "../AddBooks";
 import AddAchievementForm from "../AddAchievmentForm";
 import AddEventForm from "../AddEventForm";
 import HeroForm from "../HeroForm";
 import HeroSection from "../../User/HeroSection";
-import "./Dash.css";
 import AddPathippagamBooks from "../AddPathippagamBooks";
-
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
 
-export default function YouTubeDashboard() {
+export default function Dash() {
   const [activeTab, setActiveTab] = useState("CREATE");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated") === "true";
-    setIsAuthenticated(authStatus);
+    setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
   }, []);
 
   const handleLogout = () => {
@@ -28,58 +26,18 @@ export default function YouTubeDashboard() {
     navigate("/login");
   };
 
-  const handleAnalyze = () => {
-    Swal.fire({
-      title: "Dashboard Overview",
-      html: `
-        <div style="text-align: left;">
-          <p><strong>📚 Total Books:</strong> 13</p>
-          <p><strong>🎉 Total Events:</strong> 23</p>
-          <p><strong>🏆 Total Achievements:</strong> 35</p>
-        </div>`,
-      icon: "info",
-      confirmButtonText: "OK",
-      confirmButtonColor: "#3085d6",
-    });
-  };
-
   return (
     <div className="dashboard-container">
       {isAuthenticated ? (
         <>
-          {/* Banner Section */}
-          <div className="banner">
-            <img
-              src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
-              alt="Banner"
-              className="banner-img"
-            />
-          </div>
-
-          {/* Profile Section */}
-          <div className="profile">
-            <div className="profile-info">
-              <img
-                src="https://dataconomy.com/wp-content/uploads/2022/10/NightCafe-AI-image-generator-7.jpg"
-                alt="Profile"
-                className="profile-img"
-              />
-              <h1 className="name">Pongodi</h1>
-              <button className="small-button" onClick={handleAnalyze}>
-                Analyze
-              </button>
+          {/* Left Sidebar */}
+          <nav className="admin-sidebar">
+            <div className="profile-section">
+              <img src="https://th.bing.com/th/id/OIP.zuj7kANit3527OCU_UP2YAHaFm?w=242&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Profile" className="profile-image" />
+              <p className="profile-name">John Doe</p>
             </div>
-            <div className="right-section">
-              <FaBell className="icon" />
-              <button onClick={handleLogout} className="logout-button">
-                Logout
-              </button>
-            </div>
-          </div>
 
-          {/* Navigation Bar */}
-          <nav className="admin-nav-bar">
-            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS" , "PATHIPPAGAMBOOKS" , "PATHIPPAGAMEVENTS"].map(
+            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS", "PATHIPPAGAMBOOKS", "PATHIPPAGAMEVENTS"].map(
               (tab) => (
                 <button
                   key={tab}
@@ -92,13 +50,13 @@ export default function YouTubeDashboard() {
             )}
           </nav>
 
-          {/* Content Section */}
+          {/* Right Content Section */}
           <div className="content-section">
             {activeTab === "BOOKS" && <AddBooks />}
             {activeTab === "ACHIEVEMENTS" && <AddAchievementForm />}
             {activeTab === "EVENTS" && <AddEventForm />}
             {activeTab === "PATHIPPAGAMBOOKS" && <AddPathippagamBooks />}
-            {activeTab === "PATHIPPAGAMEVENTS" && <AddPathipagamEventForm/>}
+            {activeTab === "PATHIPPAGAMEVENTS" && <AddPathipagamEventForm />}
             {activeTab === "BANNERS" && (
               <div className="banners-section">
                 <h2>Manage Banners</h2>

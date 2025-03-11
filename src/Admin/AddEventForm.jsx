@@ -49,6 +49,7 @@ const AddEventForm = () => {
     try {
       setLoading(true);
       const response = await fetch(`${API_BASE_URL}/events/events`);
+      if (!response.ok) throw new Error("Failed to fetch events.");
       const data = await response.json();
       setEvents(data);
       setFilteredEvents(data);
@@ -190,23 +191,40 @@ const AddEventForm = () => {
       {success && <p className="success-message">{success}</p>}
 
       <h2>All Events</h2>
-   
-      <div className="event-grid-container">
-        <div className="event-grid">
-          {filteredEvents.map((event) => (
-            <div key={event._id} className="event-card">
-              <h3>{event.name}</h3>
-              <p>{event.description}</p>
-              <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-              <p><strong>Location:</strong> {event.location}</p>
-              {event.youtubeLink && <p><a href={event.youtubeLink} target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>}
-              {event.photoUrl && <img src={event.photoUrl} alt={event.name} className="event-image" />}
-              <button onClick={() => handleEdit(event)}>Edit</button>
-              <button onClick={() => handleDelete(event._id)} className="delete-btn">Delete</button>
-            </div>
-          ))}
+      {loading ? (
+        <p>Loading events...</p>
+      ) : filteredEvents.length === 0 ? (
+        <p>No events found.</p>
+      ) : (
+        <div className="event-grid-container">
+          <div className="event-grid">
+            {filteredEvents.map((event) => (
+              <div key={event._id} className="event-card">
+                <h3>{event.name}</h3>
+                <p>{event.description}</p>
+                <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                <p><strong>Location:</strong> {event.location}</p>
+                {event.youtubeLink && (
+                  <p>
+                    <a href={event.youtubeLink} target="_blank" rel="noopener noreferrer">
+                      Watch on YouTube
+                    </a>
+                  </p>
+                )}
+                {event.photoUrl ? (
+                  <img src={event.photoUrl} alt={event.name} className="event-image" />
+                ) : (
+                  <p className="no-image">No image available</p>
+                )}
+                <div className="event-actions">
+                  <button onClick={() => handleEdit(event)}>Edit</button>
+                  <button onClick={() => handleDelete(event._id)} className="delete-btn">Delete</button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
