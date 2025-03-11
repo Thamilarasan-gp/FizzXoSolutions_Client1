@@ -20,13 +20,14 @@ import AddPathipagamEventForm from "./Admin/AddPathipagamEventForm";
 import PathipagamHome from "./Pathippagam/PathipagamHome";
 import PathipagamEventPage from "./Pathippagam/PathipagamEventPage";
 import PathipagamEvent from "./Pathippagam/PathipagamEvent";
+import Newsletter from "./User/Newsletter";
+import AddNewsletterForm from "./Admin/AddNewsletterForm";
 function App() {
   const [posts, setPosts] = useState([]); // Define state for HeroForm
 
   return (
     <Router>
       <Routes>
-
         <Route path="/" element={<UserHome />} />
         <Route path="/eventsection" element={<EventSection />} />
         <Route path="/event/:id" element={<EventPage />} />
@@ -45,6 +46,8 @@ function App() {
 <Route path='/PathipagamHome' element={<PathipagamHome/>} />
 <Route path="/pathipagamevent/:id" element={<PathipagamEventPage />} />
    <Route path="/pathipagam-event" element={<PathipagamEvent/>} />
+   <Route path="/newsletter" element={<Newsletter/>} />
+   <Route path="/addnewsletter" element={<AddNewsletterForm/>} />
       </Routes>
     </Router>
   );
