@@ -7,7 +7,7 @@ import AddBooks from "../AddBooks";
 import AddAchievementForm from "../AddAchievmentForm";
 import AddEventForm from "../AddEventForm";
 import HeroForm from "../HeroForm";
-import HeroSection from "../../User/HeroSection";
+
 import AddPathippagamBooks from "../AddPathippagamBooks";
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
 import AddNewsletterForm from "../AddNewsletterForm";
@@ -89,7 +89,7 @@ export default function Dash() {
               <div className="banners-section">
                 <h2>Manage Banners</h2>
                 <HeroForm />
-                <HeroSection />
+     
               </div>
             )}
             {activeTab === "CREATE" && (

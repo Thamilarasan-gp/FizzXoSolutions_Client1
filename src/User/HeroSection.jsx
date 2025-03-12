@@ -48,7 +48,7 @@ const HeroSection = () => {
           </AnimatePresence>
 
           {/* Left Arrow */}
-          <button className="arrow left-arrow" onClick={prevSlide}>&#10094;</button>
+          <button  className="arrow left-arrow" onClick={prevSlide}>&#10094;</button>
 
           {/* Right Arrow */}
           <button className="arrow right-arrow" onClick={nextSlide}>&#10095;</button>
