@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa6";
 import "./PathipagamEventPage.css";
 import { API_BASE_URL } from "../api";
+
 const PathipagamEventPage = () => {
-    const { id } = useParams();
+    const location = useLocation();
+    const { id } = location.state;
+
     const [event, setEvent] = useState(null);
     const [error, setError] = useState(null);
     const [likes, setLikes] = useState(0);
@@ -14,13 +17,6 @@ const PathipagamEventPage = () => {
     const [hasUserDisliked, setHasUserDisliked] = useState(false);
 
     useEffect(() => {
-        const checkUserInteractions = () => {
-            const likedEvents = JSON.parse(localStorage.getItem('likedPathipagamEvents') || '[]');
-            const dislikedEvents = JSON.parse(localStorage.getItem('dislikedPathipagamEvents') || '[]');
-            setHasUserLiked(likedEvents.includes(id));
-            setHasUserDisliked(dislikedEvents.includes(id));
-        };
-
         const fetchEvent = async () => {
             try {
                 const response = await fetch(`${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${id}`);
@@ -33,20 +29,29 @@ const PathipagamEventPage = () => {
             }
         };
 
+        const checkUserInteractions = () => {
+            const likedEvents = JSON.parse(localStorage.getItem('likedPathipagamEvents') || '[]');
+            const dislikedEvents = JSON.parse(localStorage.getItem('dislikedPathipagamEvents') || '[]');
+            setHasUserLiked(likedEvents.includes(id));
+            setHasUserDisliked(dislikedEvents.includes(id));
+        };
+
         fetchEvent();
         checkUserInteractions();
     }, [id]);
 
     const getYouTubeID = (url) => {
         if (!url) return null;
-        const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*[?&]v=|.*\/))([\w-]{11})/);
+        const match = url.match(
+            /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([\w-]{11})/
+        );
         return match ? match[1] : null;
     };
 
     const videoID = event?.youtubeLink ? getYouTubeID(event.youtubeLink) : null;
 
     const handleLike = async () => {
-        if (isLikeLoading || hasUserLiked || hasUserDisliked) return;
+        if (isLikeLoading || hasUserLiked) return;
         setIsLikeLoading(true);
         try {
             const response = await fetch(`${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${id}/like`, {
@@ -54,13 +59,13 @@ const PathipagamEventPage = () => {
                 headers: { 'Content-Type': 'application/json' }
             });
             if (!response.ok) throw new Error("Failed to update like");
+
             const data = await response.json();
             setLikes(data.likes);
-            
-            const likedEvents = JSON.parse(localStorage.getItem('likedPathipagamEvents') || '[]');
-            likedEvents.push(id);
-            localStorage.setItem('likedPathipagamEvents', JSON.stringify(likedEvents));
             setHasUserLiked(true);
+
+            const likedEvents = JSON.parse(localStorage.getItem('likedPathipagamEvents') || '[]');
+            localStorage.setItem('likedPathipagamEvents', JSON.stringify([...likedEvents, id]));
         } catch (err) {
             setError(err.message);
         } finally {
@@ -68,35 +73,17 @@ const PathipagamEventPage = () => {
         }
     };
 
-    const handleDislike = async () => {
+    const handleDislike = () => {
         if (hasUserDisliked || hasUserLiked) return;
-        
-        const dislikedEvents = JSON.parse(localStorage.getItem('dislikedPathipagamEvents') || '[]');
-        dislikedEvents.push(id);
-        localStorage.setItem('dislikedPathipagamEvents', JSON.stringify(dislikedEvents));
-        setHasUserDisliked(true);
 
-        if (hasUserLiked) {
-            const likedEvents = JSON.parse(localStorage.getItem('likedPathipagamEvents') || '[]');
-            const updatedLikedEvents = likedEvents.filter(eventId => eventId !== id);
-            localStorage.setItem('likedPathipagamEvents', JSON.stringify(updatedLikedEvents));
-            setHasUserLiked(false);
-            setLikes(prev => Math.max(0, prev - 1));
-            
-            try {
-                await fetch(`${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${id}/unlike`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-            } catch (err) {
-                console.error('Error updating like count:', err);
-            }
-        }
+        const dislikedEvents = JSON.parse(localStorage.getItem('dislikedPathipagamEvents') || '[]');
+        localStorage.setItem('dislikedPathipagamEvents', JSON.stringify([...dislikedEvents, id]));
+        setHasUserDisliked(true);
     };
 
     const handleShare = () => {
         const eventUrl = window.location.href;
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent("Check out this Pathipagam event: " + eventUrl)}`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`Check out this Pathipagam event: ${eventUrl}`)}`;
         window.open(whatsappUrl, "_blank");
     };
 
@@ -124,20 +111,22 @@ const PathipagamEventPage = () => {
             )}
 
             <div className="video-actions">
-                <button 
+                <button
                     className={`like-btn ${hasUserLiked ? 'liked' : ''}`}
                     onClick={handleLike}
-                    disabled={isLikeLoading || hasUserLiked || hasUserDisliked}
+                    disabled={isLikeLoading || hasUserLiked}
                 >
                     <FaThumbsUp /> {likes}
                 </button>
-                <button 
+
+                <button
                     className={`dislike-btn ${hasUserDisliked ? 'disliked' : ''}`}
                     onClick={handleDislike}
                     disabled={hasUserDisliked || hasUserLiked}
                 >
                     <FaThumbsDown />
                 </button>
+
                 <button className="share-btn" onClick={handleShare}>
                     <FaWhatsapp className="whatsapp-icon" /> Share
                 </button>

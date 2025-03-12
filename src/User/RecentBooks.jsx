@@ -14,7 +14,6 @@ export default function RecentBooks() {
     const fetchBooks = async () => {
       setLoading(true); // Set loading to true before fetching
       try {
-        console.log("hiiiiiiiiii");
         const res = await axios.get(`${API_BASE_URL}/books/all`);
         setBooks(res.data);
       } catch (error) {
