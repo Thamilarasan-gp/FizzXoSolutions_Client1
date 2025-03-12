@@ -201,7 +201,7 @@ const AddBooks = () => {
         />
 
 
-        <form className="book-form">
+        <form className="book-form" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
             name="bookname"
