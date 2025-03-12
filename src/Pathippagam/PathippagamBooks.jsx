@@ -10,6 +10,7 @@ export default function PathippagamHome() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -17,6 +18,11 @@ export default function PathippagamHome() {
       try {
         const res = await axios.get(`${API_BASE_URL}/p_books/all`);
         setBooks(res.data);
+
+        // Set first category only once when books are initially loaded
+        if (res.data.length > 0 && !selectedCategory) {
+          setSelectedCategory(res.data[0].category);
+        }
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
@@ -25,7 +31,7 @@ export default function PathippagamHome() {
     };
 
     fetchBooks();
-  }, []);
+  }, []); // Run only once when component mounts
 
   const categories = [...new Set(books.map((book) => book.category))];
 
@@ -142,3 +148,4 @@ export default function PathippagamHome() {
     </div>
   );
 }
+
