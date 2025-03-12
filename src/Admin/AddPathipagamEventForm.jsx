@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../api";
-import "./AddPathipagamEventForm.css";
+import "./AddBooks.css"; 
 
 const AddPathipagamEventForm = () => {
   const [formData, setFormData] = useState({
@@ -11,135 +11,124 @@ const AddPathipagamEventForm = () => {
     youtubeLink: "",
     photo: null,
   });
-  
-  const [pathipagamEvents, setPathipagamEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]); // For search functionality
-  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const [events, setEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [previewImage, setPreviewImage] = useState(null);
 
   useEffect(() => {
-    fetchPathipagamEvents();
+    fetchEvents();
   }, []);
 
-  useEffect(() => {
-    if (selectedEvent) {
-      setFormData({
-        name: selectedEvent.name,
-        description: selectedEvent.description,
-        date: selectedEvent.date.split("T")[0],
-        location: selectedEvent.location,
-        youtubeLink: selectedEvent.youtubeLink || "",
-        photo: null,
-      });
-    }
-  }, [selectedEvent]);
-
-  useEffect(() => {
-    // Filter events based on search query
-    const filtered = pathipagamEvents.filter((event) =>
-      event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredEvents(filtered);
-  }, [searchQuery, pathipagamEvents]);
-
-  const fetchPathipagamEvents = async () => {
+  // Fetch all events
+  const fetchEvents = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/pathipagamEvent/pathipagamEvents`);
+      const response = await fetch(
+        `${API_BASE_URL}/pathipagamEvent/pathipagamEvents`
+      );
       const data = await response.json();
-      setPathipagamEvents(data);
-      setFilteredEvents(data); // Initialize filteredEvents
+      setEvents(data);
     } catch (error) {
-      setError("Failed to fetch pathipagam events.");
+      setMessage("Failed to fetch events.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
+  // Handle form input change
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
+    if (name === "photo" && files.length > 0) {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: files[0],
+      }));
+      setPreviewImage(URL.createObjectURL(files[0]));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSuccess(null);
-
+  // Handle event form submit (Add or Update)
+  const handleSubmit = async (method) => {
+    setMessage("");
     const form = new FormData();
-    form.append("name", formData.name);
-    form.append("description", formData.description);
-    form.append("date", formData.date);
-    form.append("location", formData.location);
-    form.append("youtubeLink", formData.youtubeLink);
-    if (formData.photo) {
-      form.append("photo", formData.photo);
-    }
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) form.append(key, value);
+    });
 
     try {
-      let response;
-      let url = `${API_BASE_URL}/pathipagamEvent/pathipagamEvents`;
-      let method = "POST";
+      const url =
+        selectedEvent && method === "PUT"
+          ? `${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${selectedEvent._id}`
+          : `${API_BASE_URL}/pathipagamEvent/pathipagamEvents`;
 
-      if (selectedEvent) {
-        url = `${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${selectedEvent._id}`;
-        method = "PUT";
-      }
-
-      response = await fetch(url, {
-        method: method,
-        body: form,
-      });
-
+      const response = await fetch(url, { method, body: form });
       const result = await response.json();
+
       if (response.ok) {
-        setSuccess(selectedEvent ? "Pathipagam Event updated successfully!" : "Pathipagam Event added successfully!");
-        fetchPathipagamEvents();
+        setMessage(
+          method === "PUT"
+            ? "Event updated successfully!"
+            : "Event added successfully!"
+        );
+        fetchEvents();
         resetForm();
       } else {
-        setError(result.message || "An error occurred.");
+        setMessage(result.message || "Error occurred.");
       }
     } catch (error) {
-      setError("An error occurred while submitting the form.");
+      setMessage("Failed to submit the form.");
     }
   };
 
-  const handleEdit = (event) => {
-    setSelectedEvent(event);
-  };
-
-  const handleDelete = async (eventId) => {
+  // Handle delete event
+  const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${eventId}`, {
-        method: "DELETE",
-      });
-
+      const response = await fetch(
+        `${API_BASE_URL}/pathipagamEvent/pathipagamEvents/${id}`,
+        { method: "DELETE" }
+      );
       if (response.ok) {
-        fetchPathipagamEvents();
-        alert("Pathipagam Event deleted successfully!");
+        setMessage("Event deleted successfully!");
+        fetchEvents();
         resetForm();
       } else {
-        alert("Failed to delete event.");
+        setMessage("Failed to delete event.");
       }
     } catch (error) {
-      alert("Error deleting event.");
+      setMessage("Error deleting event.");
     }
   };
 
+  // Handle event edit
+  const handleEdit = (event) => {
+    setSelectedEvent(event);
+    setFormData({
+      name: event.name,
+      description: event.description,
+      date: event.date.split("T")[0],
+      location: event.location,
+      youtubeLink: event.youtubeLink || "",
+      photo: null,
+    });
+    setPreviewImage(event.photoUrl || null);
+  };
+
+  // Select event from list
+  const handleSelectEvent = (event) => {
+    handleEdit(event);
+  };
+
+  // Reset form to default
   const resetForm = () => {
     setFormData({
       name: "",
@@ -150,54 +139,145 @@ const AddPathipagamEventForm = () => {
       photo: null,
     });
     setSelectedEvent(null);
+    setPreviewImage(null);
   };
 
+  // Filter events by search
+  const filteredEvents = events.filter(
+    (e) =>
+      e.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      e.description.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      e.location.toLowerCase().startsWith(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="add-pathipagam-container">
-      <h2>{selectedEvent ? "Update Pathipagam Event" : "Add Pathipagam Event"}</h2>
+    <div
+      className="adbook-container"
+      style={{ cursor: loading ? "wait" : "default" }}
+    >
+      <div className="ad-bk-fm">
+        <h2>
+          {selectedEvent ? "Update Pathipagam Event" : "Add Pathipagam Event"}
+        </h2>
 
-      {/* Search Input */}
-      <input
-        type="text"
-        className="add-pathipagam-input search-input"
-        placeholder="Search events..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
+        {/* Search */}
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="🔍 Search events..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
 
-      <form className="add-pathipagam-form" onSubmit={handleSubmit}>
-        <input className="add-pathipagam-input" type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Event Name" required />
-        <textarea className="add-pathipagam-textarea" name="description" value={formData.description} onChange={handleChange} placeholder="Event Description" required />
-        <input className="add-pathipagam-input" type="date" name="date" value={formData.date} onChange={handleChange} required />
-        <input className="add-pathipagam-input" type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Location" required />
-        <input className="add-pathipagam-input" type="url" name="youtubeLink" value={formData.youtubeLink} onChange={handleChange} placeholder="YouTube Link" />
-        <input className="add-pathipagam-input" type="file" name="photo" onChange={handleChange} />
-
-        <button className="add-pathipagam-button primary" type="submit">{selectedEvent ? "Update Event" : "Add Event"}</button>
-        {selectedEvent && <button className="add-pathipagam-button secondary" type="button" onClick={resetForm}>Cancel Edit</button>}
-      </form>
-
-      <h2>All Pathipagam Events</h2>
-      {loading && <p>Loading events...</p>}
-      {!loading && filteredEvents.length === 0 && <p>No events found.</p>}
-
-      <div className="pathipagam-events-slider">
-        {filteredEvents.map((event) => (
-          <div className="pathipagam-event-card" key={event._id}>
-            <h3>{event.name}</h3>
-            <p>{event.description}</p>
-            <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-            <p><strong>Location:</strong> {event.location}</p>
-            {event.youtubeLink && <p><a href={event.youtubeLink} target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>}
-            {event.photoUrl && <img className="pathipagam-event-image" src={event.photoUrl} alt={event.name} />}
-
-            <div className="pathipagam-event-actions">
-              <button className="add-pathipagam-button primary" onClick={() => handleEdit(event)}>Edit</button>
-              <button className="add-pathipagam-button danger" onClick={() => handleDelete(event._id)}>Delete</button>
+        {/* Form */}
+        <form onSubmit={(e) => e.preventDefault()} className="book-form">
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Event Name"
+            required
+          />
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Event Description"
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="Location"
+            required
+          />
+          <input
+            type="url"
+            name="youtubeLink"
+            value={formData.youtubeLink}
+            onChange={handleChange}
+            placeholder="YouTube Link"
+          />
+          <input type="file" name="photo" onChange={handleChange} />
+          {previewImage && (
+            <div className="ad-image-preview">
+              <img src={previewImage} alt="Preview" />
             </div>
+          )}
+
+          <div className="adbk-button-group">
+            <button type="button" onClick={() => handleSubmit("POST")}>
+              Add
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSubmit("PUT")}
+            >
+              Update
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDelete(selectedEvent._id)}
+            >
+              Delete
+            </button>
+            <button type="button" onClick={resetForm}>
+              Clear
+            </button>
           </div>
-        ))}
-      </div>
+        </form>
+        </div>
+
+        {/* Event List */}
+        <div className="ad-bk-ds-cont">
+          <ul className="book-list">
+            {filteredEvents.map((event) => (
+              <li
+                key={event._id}
+                className={`book-item ${
+                  selectedEvent?._id === event._id ? "selected" : ""
+                }`}
+                onClick={() => handleSelectEvent(event)}
+                style={{ pointerEvents: loading ? "none" : "auto" }}
+              >
+                <strong>{event.name}</strong> - {event.location}
+                <p>{event.description}</p>
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(event.date).toLocaleDateString()}
+                </p>
+                {event.youtubeLink && (
+                  <p>
+                    <a
+                      href={event.youtubeLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Watch on YouTube
+                    </a>
+                  </p>
+                )}
+                {event.photoUrl && (
+                  <img
+                    src={event.photoUrl}
+                    alt={event.name}
+                    className="book-image"
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
     </div>
   );
 };
