@@ -27,7 +27,7 @@ function App() {
   const [posts, setPosts] = useState([]); // Define state for HeroForm
 
   return (
-    <LanguageProvider>
+ 
       <Router>
         <Routes>
           <Route path="/" element={<UserHome />} />
@@ -58,7 +58,7 @@ function App() {
           <Route path="/addnewsletter" element={<AddNewsletterForm />} />
         </Routes>
       </Router>
-    </LanguageProvider>
+   
   );
 }
 

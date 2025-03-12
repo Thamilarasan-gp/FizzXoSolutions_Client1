@@ -1,13 +1,12 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
-// Create a Language Context
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState("en"); // Default: English
+  const [language, setLanguage] = useState("en"); 
 
   const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === "en" ? "ta" : "en"));
+    setLanguage((prev) => (prev === "en" ? "ta" : "en"));
   };
 
   return (
@@ -17,5 +16,4 @@ export const LanguageProvider = ({ children }) => {
   );
 };
 
-// Custom Hook to use Language Context
 export const useLanguage = () => useContext(LanguageContext);

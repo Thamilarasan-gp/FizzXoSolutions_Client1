@@ -1,15 +1,42 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import { useLanguage } from "../LanguageContext"; // Import Language Context
 import "./ContactForm.css";
 import contactimg from "../assets/Untitled design (5).png";
 
 const ContactForm = () => {
     const [result, setResult] = useState(null);
+    const { language } = useLanguage(); // Get selected language
+
+    const translations = {
+        en: {
+            title: "Get in Touch",
+            name: "Name",
+            email: "Email",
+            message: "Message",
+            placeholderName: "Enter your name",
+            placeholderEmail: "Enter your email",
+            placeholderMessage: "Enter your message",
+            send: "Send Message",
+            success: "Message sent successfully!",
+        },
+        ta: {
+            title: "தொடர்பில் இருங்கள்",
+            name: "பெயர்",
+            email: "மின்னஞ்சல்",
+            message: "செய்தி",
+            placeholderName: "உங்கள் பெயரை உள்ளிடவும்",
+            placeholderEmail: "உங்கள் மின்னஞ்சலை உள்ளிடவும்",
+            placeholderMessage: "உங்கள் செய்தியை உள்ளிடவும்",
+            send: "செய்தியை அனுப்பவும்",
+            success: "செய்தி வெற்றிகரமாக அனுப்பப்பட்டது!",
+        }
+    };
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        setResult("Sending....");
+        setResult(language === "en" ? "Sending...." : "அனுப்பப்படுகிறது...");
         const formData = new FormData(event.target);
         formData.append("access_key", "285197e6-21f4-420f-9df0-3f9a9fc36c4e");
 
@@ -23,10 +50,10 @@ const ContactForm = () => {
         if (data.success) {
             Swal.fire({
                 title: "Success!",
-                text: "Message sent successfully!",
+                text: translations[language].success,
                 icon: "success"
             });
-            setResult("Form Submitted Successfully");
+            setResult(translations[language].success);
             event.target.reset();
         } else {
             setResult(data.message);
@@ -54,31 +81,31 @@ const ContactForm = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5 }}
                         >
-                            Get in Touch
+                            {translations[language].title}
                         </motion.h2>
                         <motion.div 
                             className="input-box"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <label htmlFor="name">Name</label>
-                            <input type="text" className="field" placeholder="Enter your name" id="name" name="name" required />
+                            <label htmlFor="name">{translations[language].name}</label>
+                            <input type="text" className="field" placeholder={translations[language].placeholderName} id="name" name="name" required />
                         </motion.div>
                         <motion.div 
                             className="input-box"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <label htmlFor="email">Email</label>
-                            <input type="email" className="field" placeholder="Enter your email" id="email" name="email" required />
+                            <label htmlFor="email">{translations[language].email}</label>
+                            <input type="email" className="field" placeholder={translations[language].placeholderEmail} id="email" name="email" required />
                         </motion.div>
                         <motion.div 
                             className="input-box"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <label htmlFor="message">Message</label>
-                            <textarea className="field mess" placeholder="Enter your message" id="message" name="message" required></textarea>
+                            <label htmlFor="message">{translations[language].message}</label>
+                            <textarea className="field mess" placeholder={translations[language].placeholderMessage} id="message" name="message" required></textarea>
                         </motion.div>
                         <motion.button 
                             type="submit" 
@@ -87,7 +114,7 @@ const ContactForm = () => {
                             whileTap={{ scale: 0.9 }}
                             transition={{ duration: 0.2 }}
                         >
-                            Send Message
+                            {translations[language].send}
                         </motion.button>
                     </form>
                 </motion.div>

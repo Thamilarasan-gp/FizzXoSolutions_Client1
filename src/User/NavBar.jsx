@@ -1,31 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useLanguage } from "../LanguageContext"; // Import Language Context
 import "./NavBar.css";
 import logo from "../assets/logo1.png";
 import translateicon from "../assets/translateicon.png";
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState("english");
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem("language");
-    if (savedLang) setLanguage(savedLang);
-  }, []);
-
-  const toggleLanguage = () => {
-    const newLang = language === "english" ? "tamil" : "english";
-    setLanguage(newLang);
-    localStorage.setItem("language", newLang);
-  };
+  const { language, toggleLanguage } = useLanguage(); // Get context values
 
   const navigation = {
-    english: [
+    en: [
       { title: "Home", path: "/" },
       { title: "Pathipagam Books", path: "/pathipagamHome#pathippagam-books" },
       { title: "Pathipagam Events", path: "/pathipagamHome#pathipagam-events" },
       { title: "Newsletter", path: "#pathipagam-even" },
       { title: "Achievements", path: "#achievements-section" },
     ],
-    tamil: [
+    ta: [
       { title: "முகப்பு", path: "/" },
       { title: "பதிப்பகம் புத்தகங்கள்", path: "/pathipagamHome#pathippagam-books" },
       { title: "பதிப்பகம் நிகழ்வுகள்", path: "/pathipagamHome#pathipagam-events" },
@@ -43,7 +34,11 @@ const NavBar = () => {
         </a>
 
         {/* Mobile Menu Button */}
-        <button id="menu-toggle-icon" className={`menu-toggle ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <button
+          id="menu-toggle-icon"
+          className={`menu-toggle ${isOpen ? "open" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {isOpen ? (
             <svg className="icon close-icon" viewBox="0 0 24 24">
               <path d="M6 18L18 6M6 6l12 12" />
@@ -65,13 +60,15 @@ const NavBar = () => {
             </li>
           ))}
 
-          {/* Show "English" button only on small screens */}
+          {/* Language Toggle Button */}
           <li className="nav-item english-only">
-            <button id="change-language-btn"onClick={toggleLanguage}>{language === "english" ? "தமிழ்" : "English"}</button>
+            <button id="change-language-btn" onClick={toggleLanguage}>
+              {language === "en" ? "தமிழ்" : "English"}
+            </button>
           </li>
         </ul>
 
-        {/* Translate Icon (Visible only on larger screens) */}
+        {/* Translate Icon */}
         <p onClick={toggleLanguage} className="tamil-translate-translate-only">
           <img src={translateicon} alt="Translate" />
         </p>

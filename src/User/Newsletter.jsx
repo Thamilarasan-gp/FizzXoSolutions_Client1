@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../api";
+import { useLanguage } from "../LanguageContext"; // Import Language Context
 import "./Newsletter.css";
 
 const Newsletter = () => {
   const [newsletters, setNewsletters] = useState([]);
+  const { language } = useLanguage(); // Get language from context
   const sliderRef = useRef(null);
 
   useEffect(() => {
@@ -27,9 +29,19 @@ const Newsletter = () => {
     }
   };
 
+  // Content for different languages
+  const content = {
+    en: {
+      heading: "Latest Newsletters",
+    },
+    ta: {
+      heading: "சமீபத்திய செய்திமடல்கள்",
+    },
+  };
+
   return (
     <div className="newsletter-slider-container">
-      <h2>Latest Newsletters</h2>
+      <h2>{content[language].heading}</h2>
       <button className="newsletter-nav-btn newsletter-left" onClick={scrollLeft}>
         ❮
       </button>
@@ -39,7 +51,6 @@ const Newsletter = () => {
             <div key={news._id} className="newsletter-card">
               {news.imageUrl && <img src={news.imageUrl} alt={news.title} className="newsletter-image" />}
               <h3 className="title_nl">{news.title}</h3>
-              {/* <p className="content_nl">{news.content}</p> */}
               <p className="newsletter-date">{new Date(news.date).toDateString()}</p>
             </div>
           ))}
