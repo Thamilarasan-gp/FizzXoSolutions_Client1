@@ -14,6 +14,7 @@ import AddPathipagamEventForm from "../AddPathipagamEventForm";
 export default function Dash() {
   const [activeTab, setActiveTab] = useState("CREATE");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,19 +22,38 @@ export default function Dash() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    setIsAuthenticated(false);
-    navigate("/login");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, logout!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("isAuthenticated");
+        setIsAuthenticated(false);
+        navigate("/login");
+      }
+    });
   };
 
   return (
     <div className="dashboard-container">
       {isAuthenticated ? (
         <>
+          {/* Menu Button */}
+          <button className="menu-button" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            ☰
+          </button>
+
           {/* Left Sidebar */}
-          <nav className="admin-sidebar">
+          <nav className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
             <div className="profile-section">
-              <img src="https://th.bing.com/th/id/OIP.zuj7kANit3527OCU_UP2YAHaFm?w=242&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Profile" className="profile-image" />
+              <img src="https://th.bing.com/th/id/OIP.zuj7kANit3527OCU_UP2YAHaFm?w=242&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7" 
+                   alt="Profile" 
+                   className="profile-image" />
               <p className="profile-name">John Doe</p>
             </div>
 
@@ -42,12 +62,18 @@ export default function Dash() {
                 <button
                   key={tab}
                   className={`admin-nav-item ${activeTab === tab ? "active" : ""}`}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setSidebarOpen(false); // Close sidebar on selection (for mobile)
+                  }}
                 >
                   {tab}
                 </button>
               )
             )}
+
+            {/* Logout Button */}
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
           </nav>
 
           {/* Right Content Section */}

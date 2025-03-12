@@ -1,230 +1,264 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./AddBooks.css"; // Reusing the same CSS
 import { API_BASE_URL } from "../../api";
-import "./AddEventForm.css";
 
 const AddEventForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    date: "",
-    location: "",
-    youtubeLink: "",
-    photo: null,
-  });
-
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    name: "",
+    date: "",
+    location: "",
+    description: "",
+    photo: null,
+  });
+  const [previewImage, setPreviewImage] = useState(null);
+  const [search, setSearch] = useState("");
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
+  // Fetch events on component mount
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  useEffect(() => {
-    if (selectedEvent) {
-      setFormData({
-        name: selectedEvent.name,
-        description: selectedEvent.description,
-        date: selectedEvent.date.split("T")[0],
-        location: selectedEvent.location,
-        youtubeLink: selectedEvent.youtubeLink || "",
-        photo: null,
-      });
-    }
-  }, [selectedEvent]);
-
-  useEffect(() => {
-    setFilteredEvents(
-      events.filter((event) =>
-        event.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [searchTerm, events]);
-
+  // Fetch all events
   const fetchEvents = async () => {
+    setLoading(true);
+    setMessage("");
     try {
-      setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/events/events`);
-      if (!response.ok) throw new Error("Failed to fetch events.");
-      const data = await response.json();
-      setEvents(data);
-      setFilteredEvents(data);
+      const res = await axios.get(`${API_BASE_URL}/events/all`);
+      setEvents(res.data);
+      setFilteredEvents(res.data);
     } catch (error) {
-      setError("Failed to fetch events.");
+      console.error("Error fetching events:", error);
+      setMessage("Failed to fetch events. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Search functionality
+  useEffect(() => {
+    const filtered = events.filter((event) =>
+      [event.eventname, event.location, event.description]
+        .some((field) =>
+          field?.toLowerCase().startsWith(search.trim().toLowerCase())
+        )
+    );
+    setFilteredEvents(filtered);
+  }, [search, events]);
+
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
-  };
+    if (name === "image" && files[0]) {
+      const file = files[0];
+      setFormData({ ...formData, image: file });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSuccess(null);
-
-    const form = new FormData();
-    form.append("name", formData.name);
-    form.append("description", formData.description);
-    form.append("date", formData.date);
-    form.append("location", formData.location);
-    form.append("youtubeLink", formData.youtubeLink);
-    if (formData.photo) {
-      form.append("photo", formData.photo);
-    }
-
-    try {
-      let response;
-      let url = `${API_BASE_URL}/events/addevent`;
-      let method = "POST";
-
-      if (selectedEvent) {
-        url = `${API_BASE_URL}/events/events/${selectedEvent._id}`;
-        method = "PUT";
-      }
-
-      response = await fetch(url, { method, body: form });
-      const result = await response.json();
-
-      if (response.ok) {
-        setSuccess(selectedEvent ? "Event updated successfully!" : "Event added successfully!");
-        fetchEvents();
-        resetForm();
-      } else {
-        setError(result.message || "An error occurred.");
-      }
-    } catch (error) {
-      setError("An error occurred while submitting the form.");
+      // Image preview
+      const reader = new FileReader();
+      reader.onloadend = () => setPreviewImage(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
 
-  const handleEdit = (event) => {
-    setSelectedEvent(event);
-  };
-
-  const handleDelete = async (eventId) => {
-    if (!window.confirm("Are you sure you want to delete this event?")) return;
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/events/events/${eventId}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        fetchEvents();
-        alert("Event deleted successfully!");
-        resetForm();
-      } else {
-        alert("Failed to delete event.");
-      }
-    } catch (error) {
-      alert("Error deleting event.");
-    }
-  };
-
+  // Reset form
   const resetForm = () => {
     setFormData({
       name: "",
-      description: "",
       date: "",
       location: "",
-      youtubeLink: "",
-      photo: null,
+      description: "",
+      image: null,
     });
-    setSelectedEvent(null);
+    setPreviewImage(null);
+    setSelectedEventId(null);
+    setMessage("");
+  };
+
+  // Add event
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+    try {
+      const eventData = createFormData();
+      await axios.post(`${API_BASE_URL}/events/add`, eventData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      fetchEvents();
+      resetForm();
+      setMessage("Event added successfully!");
+    } catch (error) {
+      console.error("Error adding event:", error);
+      setMessage("Failed to add event. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update event
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!selectedEventId) return alert("Select an event to update.");
+    setLoading(true);
+    setMessage("");
+    try {
+      const eventData = createFormData();
+      await axios.put(`${API_BASE_URL}/events/events/${selectedEventId}`, eventData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      fetchEvents();
+      resetForm();
+      setMessage("Event updated successfully!");
+    } catch (error) {
+      console.error("Error updating event:", error);
+      setMessage("Failed to update event. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Delete event
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (!selectedEventId) return alert("Select an event to delete.");
+    setLoading(true);
+    setMessage("");
+    try {
+      await axios.delete(`${API_BASE_URL}/events/events/${selectedEventId}`);
+      fetchEvents();
+      resetForm();
+      setMessage("Event deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      setMessage("Failed to delete event. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Prepare FormData for requests
+  const createFormData = () => {
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) data.append(key, value);
+    });
+    return data;
+  };
+
+  // Select event for update/delete
+  const handleSelectEvent = (event) => {
+    setSelectedEventId(event._id);
+    setFormData({
+      name: event.name,
+      date: event.date.split("T")[0], // For proper date input
+      location: event.location,
+      description: event.description,
+      photoUrl: null,
+    });
+    setPreviewImage(event.photoUrl || null);
   };
 
   return (
-    <div className="add-event-form">
-      <h2>{selectedEvent ? "Update Event" : "Add Event"}</h2>
-      <input
-        type="text"
-        placeholder="Search events..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
-      />
+    <div
+      className="adbook-container"
+      style={{ cursor: loading ? "wait" : "default" }}
+    >
+      <div className="ad-bk-fm">
+        <h2>Event Management</h2>
 
-      {loading && <p>Loading events...</p>}
-      {filteredEvents.length === 0 && !loading && <p>No events found.</p>}
+        <input
+          type="text"
+          placeholder="🔍 Search events by name or location..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-bar"
+        />
 
-      <form onSubmit={handleSubmit} className="event-form">
-        <div className="input-group">
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-        </div>
-        <div className="input-group">
-          <label>Description:</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} required />
-        </div>
-        <div className="input-group">
-          <label>Date:</label>
-          <input type="date" name="date" value={formData.date} onChange={handleChange} required />
-        </div>
-        <div className="input-group">
-          <label>Location:</label>
-          <input type="text" name="location" value={formData.location} onChange={handleChange} required />
-        </div>
-        <div className="input-group">
-          <label>YouTube Link:</label>
-          <input type="url" name="youtubeLink" value={formData.youtubeLink} onChange={handleChange} />
-        </div>
-        <div className="input-group">
-          <label>Photo:</label>
-          <input type="file" name="photo" onChange={handleChange} />
-        </div>
-        <button type="submit">{selectedEvent ? "Update Event" : "Add Event"}</button>
-        {selectedEvent && <button type="button" onClick={resetForm} className="cancel-btn">Cancel Edit</button>}
-      </form>
+        {message && <div className="status-message">{message}</div>}
 
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
+        <form className="book-form" onSubmit={(e) => e.preventDefault()}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Event Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="file"
+            name="photoUrl"
+            accept="image/*"
+            onChange={handleChange}
+          />
 
-      <h2>All Events</h2>
-      {loading ? (
-        <p>Loading events...</p>
-      ) : filteredEvents.length === 0 ? (
-        <p>No events found.</p>
-      ) : (
-        <div className="event-grid-container">
-          <div className="event-grid">
-            {filteredEvents.map((event) => (
-              <div key={event._id} className="event-card">
-                <h3>{event.name}</h3>
-                <p>{event.description}</p>
-                <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-                <p><strong>Location:</strong> {event.location}</p>
-                {event.youtubeLink && (
-                  <p>
-                    <a href={event.youtubeLink} target="_blank" rel="noopener noreferrer">
-                      Watch on YouTube
-                    </a>
-                  </p>
-                )}
-                {event.photoUrl ? (
-                  <img src={event.photoUrl} alt={event.name} className="event-image" />
-                ) : (
-                  <p className="no-image">No image available</p>
-                )}
-                <div className="event-actions">
-                  <button onClick={() => handleEdit(event)}>Edit</button>
-                  <button onClick={() => handleDelete(event._id)} className="delete-btn">Delete</button>
-                </div>
-              </div>
-            ))}
+          {previewImage && (
+            <div className="ad-image-preview">
+              <img src={previewImage} alt="Event Preview" />
+            </div>
+          )}
+
+          <div className="adbk-button-group">
+            <button type="button" onClick={handleAdd} disabled={loading}>
+              Add
+            </button>
+            <button type="button" onClick={handleUpdate} disabled={loading}>
+              Update
+            </button>
+            <button type="button" onClick={handleDelete} disabled={loading}>
+              Delete
+            </button>
           </div>
-        </div>
-      )}
+        </form>
+      </div>
+
+      <div className="ad-bk-ds-cont">
+        <ul className="book-list">
+          {filteredEvents.map((event) => (
+            <li
+              key={event._id}
+              className={`book-item ${selectedEventId === event._id ? "selected" : ""}`}
+              onClick={() => handleSelectEvent(event)}
+              style={{ pointerEvents: loading ? "none" : "auto" }}
+            >
+              <strong>{event.name}</strong> — {event.date.split("T")[0]} at {event.location}
+              <p>{event.description}</p>
+              {event.photoUrl && (
+                <img src={event.photoUrl} alt={event.name} className="book-image" />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
