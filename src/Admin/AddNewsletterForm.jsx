@@ -1,230 +1,254 @@
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-// import { API_BASE_URL } from "../api";
-// // import "./AddNewsletterForm.css";
-// //const API_BASE_URL = 'https://localhost:9000'; // or your actual API URL
-// const AddNewsletterForm = () => {
-//   const [newsletters, setNewsletters] = useState([]);
-//   const [formData, setFormData] = useState({
-//     title: "",
-//     content: "",
-//     date: "",
-//     image: null,
-//   });
-  
-//   const [preview, setPreview] = useState(null);
-//   const [error, setError] = useState(null);
-//   const [success, setSuccess] = useState(null);
-//   const [editId, setEditId] = useState(null);
-
-//   useEffect(() => {
-//     axios.get(`${API_BASE_URL}/newsletters`)
-//       .then(response => setNewsletters(response.data))
-//       .catch(error => console.error("Error fetching newsletters:", error));
-//   }, []);
-
-//   const handleChange = (e) => {
-//     const { name, value, files } = e.target;
-//     if (files) {
-//       setFormData({ ...formData, image: files[0] });
-//       setPreview(URL.createObjectURL(files[0]));
-//     } else {
-//       setFormData({ ...formData, [name]: value });
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setError(null);
-//     setSuccess(null);
-
-//     if (!formData.title || !formData.content || !formData.date) {
-//       setError("All fields are required.");
-//       return;
-//     }
-
-//     const formDataToSend = new FormData();
-//     for (const key in formData) {
-//       formDataToSend.append(key, formData[key]);
-//     }
-
-//     try {
-//       let response;
-//       if (editId) {
-//         response = await axios.put(`${API_BASE_URL}/newsletters/${editId}`, formDataToSend);
-//         setNewsletters(prev => prev.map(news => (news._id === editId ? response.data.newsletter : news)));
-//         setEditId(null);
-//       } else {
-//         console.log("Form Data (JSON):", JSON.stringify(formData, null, 2));
-//         response = await axios.post(`${API_BASE_URL}/newsletters`, formDataToSend);
-//         setNewsletters([...newsletters, response.data.newsletter]);
-//       }
-
-//       setSuccess(editId ? "Newsletter updated successfully!" : "Newsletter added successfully!");
-//       setFormData({ title: "", content: "", date: "", image: null });
-//       setPreview(null);
-//     } catch (error) {
-//       setError(error.response?.data?.message || "Something went wrong.");
-//     }
-//   };
-
-//   const handleEdit = (news) => {
-//     setEditId(news._id);
-//     setFormData({ title: news.title, content: news.content, date: news.date, image: null });
-//     setPreview(news.imageUrl);
-//   };
-
-//   const handleDelete = async (id) => {
-//     try {
-//       await axios.delete(`${API_BASE_URL}/newsletters/${id}`);
-//       setNewsletters(newsletters.filter(news => news._id !== id));
-//     } catch (error) {
-//       setError("Error deleting newsletter.");
-//     }
-//   };
-
-//   return (
-//     <div className="newsletter-container">
-//       <h2>{editId ? "Edit Newsletter" : "Add Newsletter"}</h2>
-//       <form onSubmit={handleSubmit} className="newsletter-form">
-//         <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" required />
-//         <textarea name="content" value={formData.content} onChange={handleChange} placeholder="Content" required />
-//         <input type="date" name="date" value={formData.date} onChange={handleChange} required />
-//         <input type="file" name="image" accept="image/*" onChange={handleChange} />
-//         {preview && <img src={preview} alt="Preview" className="preview-img" />}
-//         <button type="submit">{editId ? "Update Newsletter" : "Add Newsletter"}</button>
-//         {error && <p className="error">{error}</p>}
-//         {success && <p className="success">{success}</p>}
-//       </form>
-
-//       <div className="newsletter-list">
-//         {newsletters.map((news) => (
-//           <div key={news._id} className="newsletter-card">
-//             <img src={news.imageUrl} alt="Newsletter" />
-//             <h3>{news.title}</h3>
-//             <p>{news.content}</p>
-//             <p>{news.date.split('T')[0]}</p>
-//             <button onClick={() => handleEdit(news)}>Edit</button>
-//             <button onClick={() => handleDelete(news._id)}>Delete</button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddNewsletterForm;
-
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./AddBooks.css";
 import { API_BASE_URL } from "../api";
-import './AddNewsletterForm.css';
 
 const AddNewsletterForm = () => {
   const [newsletters, setNewsletters] = useState([]);
+  const [filteredNewsletters, setFilteredNewsletters] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     date: "",
     image: null,
   });
-
-  const [preview, setPreview] = useState(null);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const [editId, setEditId] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [search, setSearch] = useState("");
+  const [selectedNewsletterId, setSelectedNewsletterId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/newsletters`)
-      .then(response => setNewsletters(response.data))
-      .catch(error => console.error("Error fetching newsletters:", error));
+    fetchNewsletters();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, image: files[0] });
-      setPreview(URL.createObjectURL(files[0]));
-    } else {
-      setFormData({ ...formData, [name]: value });
+  const fetchNewsletters = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${API_BASE_URL}/newsletters`);
+      setNewsletters(res.data);
+      setFilteredNewsletters(res.data);
+    } catch (error) {
+      console.error("Error fetching newsletters:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSuccess(null);
-
-    if (!formData.title || !formData.content || !formData.date) {
-      setError("All fields are required.");
-      return;
+  useEffect(() => {
+    if (search.trim() === "") {
+      setFilteredNewsletters(newsletters);
+    } else {
+      const filtered = newsletters.filter(
+        (news) =>
+          news.title.toLowerCase().startsWith(search.toLowerCase()) ||
+          news.content.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredNewsletters(filtered);
     }
+  }, [search, newsletters]);
 
-    const formDataToSend = new FormData();
-    for (const key in formData) {
-      formDataToSend.append(key, formData[key]);
-    }
+  const handleChange = (e) => {
+    if (e.target.name === "image") {
+      const file = e.target.files[0];
+      setFormData({ ...formData, image: file });
 
-    try {
-      let response;
-      if (editId) {
-        response = await axios.put(`${API_BASE_URL}/newsletters/${editId}`, formDataToSend);
-        setNewsletters(prev => prev.map(news => (news._id === editId ? response.data.newsletter : news)));
-        setEditId(null);
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewImage(reader.result);
+        };
+        reader.readAsDataURL(file);
       } else {
-        response = await axios.post(`${API_BASE_URL}/newsletters`, formDataToSend);
-        setNewsletters([...newsletters, response.data.newsletter]);
+        setPreviewImage(null);
+      }
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const newsData = new FormData();
+      newsData.append("title", formData.title);
+      newsData.append("content", formData.content);
+      newsData.append("date", formData.date);
+      if (formData.image) {
+        newsData.append("image", formData.image);
       }
 
-      setSuccess(editId ? "Newsletter updated successfully!" : "Newsletter added successfully!");
+      await axios.post(`${API_BASE_URL}/newsletters`, newsData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      fetchNewsletters();
       setFormData({ title: "", content: "", date: "", image: null });
-      setPreview(null);
+      setPreviewImage(null);
+      setSelectedNewsletterId(null);
     } catch (error) {
-      setError(error.response?.data?.message || "Something went wrong.");
+      console.error("Error adding newsletter:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleEdit = (news) => {
-    setEditId(news._id);
-    setFormData({ title: news.title, content: news.content, date: news.date.split('T')[0], image: null });
-    setPreview(news.imageUrl);
-  };
-
-  const handleDelete = async (id) => {
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!selectedNewsletterId) {
+      alert("Please select a newsletter to update.");
+      return;
+    }
+    setLoading(true);
     try {
-      await axios.delete(`${API_BASE_URL}/newsletters/${id}`);
-      setNewsletters(newsletters.filter(news => news._id !== id));
+      const newsData = new FormData();
+      newsData.append("title", formData.title);
+      newsData.append("content", formData.content);
+      newsData.append("date", formData.date);
+      if (formData.image) {
+        newsData.append("image", formData.image);
+      }
+
+      await axios.put(
+        `${API_BASE_URL}/newsletters/${selectedNewsletterId}`,
+        newsData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      fetchNewsletters();
+      setFormData({ title: "", content: "", date: "", image: null });
+      setPreviewImage(null);
+      setSelectedNewsletterId(null);
     } catch (error) {
-      setError("Error deleting newsletter.");
+      console.error("Error updating newsletter:", error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (!selectedNewsletterId) {
+      alert("Please select a newsletter to delete.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await axios.delete(`${API_BASE_URL}/newsletters/${selectedNewsletterId}`);
+      fetchNewsletters();
+      setFormData({ title: "", content: "", date: "", image: null });
+      setPreviewImage(null);
+      setSelectedNewsletterId(null);
+    } catch (error) {
+      console.error("Error deleting newsletter:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSelectNewsletter = (news) => {
+    setSelectedNewsletterId(news._id);
+    setFormData({
+      title: news.title,
+      content: news.content,
+      date: news.date.split("T")[0],
+      image: null,
+    });
+    setPreviewImage(news.imageUrl ? news.imageUrl : null);
   };
 
   return (
-    <div className="addnewsletter-container">
-      <h2>{editId ? "Edit Newsletter" : "Add Newsletter"}</h2>
-      <form onSubmit={handleSubmit} className="addnewsletter-form">
-        <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" required />
-        <textarea name="content" value={formData.content} onChange={handleChange} placeholder="Content" required />
-        <input type="date" name="date" value={formData.date} onChange={handleChange} required />
-        <input type="file" name="image" accept="image/*" onChange={handleChange} />
-        {preview && <img src={preview} alt="Preview" className="addnewsletter-preview-img" />}
-        <button type="submit">{editId ? "Update Newsletter" : "Add Newsletter"}</button>
-        {error && <p className="addnewsletter-error">{error}</p>}
-        {success && <p className="addnewsletter-success">{success}</p>}
-      </form>
+    <div
+      className="adbook-container"
+      style={{ cursor: loading ? "wait" : "default" }}
+    >
+      <div className="ad-bk-fm">
+        <h2>Newsletter Management</h2>
 
-      <div className="addnewsletter-list">
-        {newsletters.map((news) => (
-          <div key={news._id} className="addnewsletter-card">
-            <img src={news.imageUrl} alt="Newsletter" />
-            <h3>{news.title}</h3>
-            <p>{news.content}</p>
-            <p>{news.date.split('T')[0]}</p>
-            <button onClick={() => handleEdit(news)}>Edit</button>
-            <button onClick={() => handleDelete(news._id)}>Delete</button>
+        <input
+          type="text"
+          placeholder="🔍 Search newsletters by title, content..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-bar"
+        />
+
+        <form className="book-form">
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="content"
+            placeholder="Content"
+            value={formData.content}
+            onChange={handleChange}
+            required
+          ></textarea>
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+          />
+
+          {previewImage && (
+            <div className="ad-image-preview">
+              <img src={previewImage} alt="Newsletter Preview" />
+            </div>
+          )}
+
+          <div className="adbk-button-group">
+            <button type="button" onClick={handleAdd}>
+              Add
+            </button>
+            <button type="button" onClick={handleUpdate}>
+              Update
+            </button>
+            <button type="button" onClick={handleDelete}>
+              Delete
+            </button>
           </div>
-        ))}
+        </form>
+      </div>
+
+      <div className="ad-bk-ds-cont">
+        <ul className="book-list">
+          {filteredNewsletters.map((news) => (
+            <li
+              key={news._id}
+              className={`book-item ${
+                selectedNewsletterId === news._id ? "selected" : ""
+              }`}
+              onClick={() => handleSelectNewsletter(news)}
+              style={{ pointerEvents: loading ? "none" : "auto" }}
+            >
+              <strong>{news.title}</strong>
+              <p>{news.content}</p>
+              <p><em>{news.date.split("T")[0]}</em></p>
+              {news.imageUrl && (
+                <img
+                  src={news.imageUrl}
+                  alt={news.title}
+                  className="book-image"
+                />
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

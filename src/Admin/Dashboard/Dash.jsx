@@ -10,6 +10,7 @@ import HeroForm from "../HeroForm";
 import HeroSection from "../../User/HeroSection";
 import AddPathippagamBooks from "../AddPathippagamBooks";
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
+import AddNewsletterForm from "../AddNewsletterForm";
 
 export default function Dash() {
   const [activeTab, setActiveTab] = useState("CREATE");
@@ -57,7 +58,7 @@ export default function Dash() {
               <p className="profile-name">John Doe</p>
             </div>
 
-            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS", "PATHIPPAGAMBOOKS", "PATHIPPAGAMEVENTS"].map(
+            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS", "PATHIPPAGAM BOOKS", "PATHIPPAGAM EVENTS","ADD NEWSLETTER"].map(
               (tab) => (
                 <button
                   key={tab}
@@ -81,8 +82,9 @@ export default function Dash() {
             {activeTab === "BOOKS" && <AddBooks />}
             {activeTab === "ACHIEVEMENTS" && <AddAchievementForm />}
             {activeTab === "EVENTS" && <AddEventForm />}
-            {activeTab === "PATHIPPAGAMBOOKS" && <AddPathippagamBooks />}
-            {activeTab === "PATHIPPAGAMEVENTS" && <AddPathipagamEventForm />}
+            {activeTab === "PATHIPPAGAM BOOKS" && <AddPathippagamBooks />}
+            {activeTab === "PATHIPPAGAM EVENTS" && <AddPathipagamEventForm />}
+            {activeTab === "ADD NEWSLETTER" && <AddNewsletterForm/>}
             {activeTab === "BANNERS" && (
               <div className="banners-section">
                 <h2>Manage Banners</h2>

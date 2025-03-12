@@ -122,7 +122,7 @@ const HeroForm = () => {
 
       {/* Image Gallery */}
       {posts.length > 0 && (
-        <div className="gallery-container">
+        <div className="gallery">
           <h2>Uploaded Images</h2>
           <button className="delete-all-btn" onClick={handleDeleteAll}>Delete All</button>
           <div className="gallery-grid">
