@@ -39,7 +39,7 @@ border-radius: 20px;
   
 }
 .p_books-category-box.p_books-selected {
-  background-color: pink;
+  background-color: rgb(254, 165, 242);
   color: white;
 }
 
@@ -166,7 +166,9 @@ align-items: center;
 background-color: #f6f3fc;
 height: 400px;
 margin-bottom:50px ;
-background-image: url('https://www.transparenttextures.com/patterns/axiom-pattern.png');
+background-image: url('../assets/background.avif');
+background-repeat: no-repeat;
+background-size: cover;
 }
 
 .categories-content {
