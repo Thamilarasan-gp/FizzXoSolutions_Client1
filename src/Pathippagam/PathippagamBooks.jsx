@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import axios from "axios";
-import "../Pathippagam/PathippagamBooks.css"; // Use your CSS path
+import "../Pathippagam/PathippagamBooks.css"; // Import CSS file
 import { API_BASE_URL } from "../api";
+import { FaSearch } from "react-icons/fa";
 
 export default function PathippagamHome() {
   const scrollRef = useRef(null);
@@ -35,9 +36,27 @@ export default function PathippagamHome() {
 
   const categories = [...new Set(books.map((book) => book.category))];
 
-  const filteredBooks = selectedCategory
-    ? books.filter((book) => book.category === selectedCategory)
-    : books; // If no category selected, show all books
+  // Handle search functionality
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSelectedBook(null);
+      return;
+    }
+
+    const foundBook = books.find((book) =>
+      book.bookname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    if (foundBook) {
+      setSelectedCategory(foundBook.category);
+      setSelectedBook(foundBook);
+    } else {
+      setSelectedBook(null);
+    }
+  }, [searchTerm, books]);
+
+  // Filter books based on selected category
+  const filteredBooks = books.filter((book) => book.category === selectedCategory);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -50,102 +69,101 @@ export default function PathippagamHome() {
   };
 
   return (
-    <div className={`rcbk-container ${selectedBook ? "expanded" : ""}`}>
-      
-      {/* Left Section: Book Details */}
-      <div className={`book-details ${selectedBook ? "show" : "hide"}`}>
-        {selectedBook && (
-          <div>
-            <button className="rc-close-btn" onClick={() => setSelectedBook(null)}>
-              <X size={24} />
+    <div className="p_books-container" id="pathippagam-books">
+      <div className="categories-container">
+        <div className="categories-content">
+          <h3 className="subtitle">Explore your favorite books 📚</h3>
+          <h1 className="title">Categories</h1>
+          <a href="/" className="back-link">Back To Home</a>
+
+          {/* Search Bar */}
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search Your Favorite Books..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button className="search-btn">
+              <FaSearch />
             </button>
-            <div className="bk-sh-cont">
-              <img
-                src={selectedBook.image}
-                alt={selectedBook.title}
-                className="selected-book-image"
-              />
-              <div>
-                <h2>{selectedBook.title}</h2>
-                <h3>{selectedBook.author}</h3>
-                <p>{selectedBook.description}</p>
-              </div>
-            </div>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Right Section: Book Carousel */}
-      <div className={`recent-books-container ${selectedBook ? "shrink" : ""}`}>
-        <h2 className="title">Pathippagam Books</h2>
-
-        {/* Categories Section */}
-        <div className="p_books-category-grid">
-          <h2 className="category-books-title">Category of Books</h2>
-          {categories.map((category, index) => (
-            <div
-              key={index}
-              className={`p_books-category-box ${
-                selectedCategory === category ? "p_books-selected" : ""
-              }`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </div>
-          ))}
+      {/* Categories */}
+      <div className="p_books-category-grid">
+        {categories.map((category, index) => (
           <div
+            key={index}
             className={`p_books-category-box ${
-              selectedCategory === null ? "p_books-selected" : ""
+              selectedCategory === category ? "p_books-selected" : ""
             }`}
-            onClick={() => setSelectedCategory(null)} // Option to show all
+            onClick={() => setSelectedCategory(category)} // Clicking updates category
           >
-            All
+            {category}
           </div>
-        </div>
-
-        {/* Books Section */}
-        <div className="scroll-container">
-          <button onClick={() => scroll("left")} className="arrow left">
-            <ChevronLeft size={24} />
-          </button>
-
-          <div ref={scrollRef} className="books-wrapper">
-            {loading ? (
-              <p>Loading books...</p>
-            ) : filteredBooks.length === 0 ? (
-              <p>No books available.</p>
-            ) : (
-              filteredBooks.map((book, index) => (
-                <div
-                  key={index}
-                  className="book-card"
-                  onClick={() => !loading && setSelectedBook(book)}
-                  style={{ cursor: loading ? "not-allowed" : "pointer" }}
-                >
-                  <img
-                    src={book.image}
-                    alt={book.title}
-                    className="book-image"
-                  />
-                  <h3>{book.bookname}</h3>
-                  <div className="num">
-                    <p className="book-author">{index + 1}</p>
-                  </div>
-                  <div className="book-info">
-                    <h3 className="book-title">{book.title}</h3>
-                    <p className="book-author">{book.author}</p>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-
-          <button onClick={() => scroll("right")} className="arrow right">
-            <ChevronRight size={24} />
-          </button>
-        </div>
+        ))}
       </div>
+
+      {/* Books Section */}
+      {selectedCategory && (
+        <div className="p_books-section">
+          <h2 className="p_books-category-title">{selectedCategory} books</h2>
+          <div className="p_books-scroll-container">
+            <button onClick={() => scroll("left")} className="p_books-arrow left">
+              <ChevronLeft size={24} />
+            </button>
+
+            <div ref={scrollRef} className="p_books-wrapper">
+              {loading ? (
+                <p>Loading books...</p>
+              ) : filteredBooks.length === 0 ? (
+                <p>No books available in this category.</p>
+              ) : (
+                filteredBooks.map((book, index) => (
+                  <div
+                    key={index}
+                    className={`p_books-card ${
+                      selectedBook?.bookname === book.bookname ? "p_books-highlight" : ""
+                    }`}
+                    onClick={() => setSelectedBook(book)}
+                  >
+                    <img
+                      src={book.image}
+                      alt={book.bookname}
+                      className="p_books-image"
+                    />
+                    <h3>{book.bookname}</h3>
+                    <p className="author_pb">{book.author}</p>
+                  </div>
+                ))
+              )}
+            </div>
+
+            <button onClick={() => scroll("right")} className="p_books-arrow right">
+              <ChevronRight size={24} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Selected Book Details */}
+      {selectedBook && (
+        <div className="p_books-details">
+          <button className="p_books-close-btn" onClick={() => setSelectedBook(null)}>
+            <X size={24} />
+          </button>
+          <div className="p_books-info-container">
+            <img src={selectedBook.image} alt={selectedBook.bookname} />
+            <div>
+              <h2>{selectedBook.bookname}</h2>
+              <h3>{selectedBook.author}</h3>
+              <p>{selectedBook.description}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
