@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 .newsletter-slider-container {
@@ -6,10 +6,9 @@
     background: linear-gradient(to bottom, #ffbaf6, #ffffff);
     padding: 40px 0;
     font-family: 'Poppins', sans-serif;
- 
     margin: auto;
     position: relative;
-   width: 100%;
+     width: 100%;
 }
 
 
@@ -28,7 +27,7 @@
     margin-bottom: 20px;
 }
 
-/* 🏞️ Newsletter List (Horizontal Scroll) */
+/* 🏞 Newsletter List (Horizontal Scroll) */
 .newsletter-list {
     display: flex;
     gap: 15px;
@@ -47,14 +46,13 @@
 /* 📦 Newsletter Card Styling */
 .newsletter-card {
     flex: 0 0 auto;
-    width: 280px;
-    height: 320px;
+    width: 300px;
+    height: 420px;
     scroll-snap-align: center;
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(12px);
-    border-radius: 15px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    margin: 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -63,21 +61,23 @@
     text-decoration: none;
     color: #333;
     border: 2px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
 }
 
 /* 🎭 Hover Effects */
 .newsletter-card:hover {
     transform: scale(1.05);
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
-/* 🖼️ Image Animation */
+/* 🖼 Image Animation */
 .newsletter-image {
     width: 100%;
     height: 160px;
     object-fit: cover;
-    border-radius: 10px;
     transition: transform 0.3s ease-in-out;
+    border-radius: none;
 }
 
 .newsletter-card:hover .newsletter-image {
@@ -140,4 +140,28 @@
         height: 35px;
         font-size: 18px;
     }
+}
+
+.title_nl{
+    font-size: 13px;
+}
+
+.content_nl{
+    font-size: 10px;
+}
+.newsletter-date{
+    position: relative;
+    bottom: 10px;
+    left: -75px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(4, 39, 75, 0.5);
+}
+
+.title_nl{
+        text-align: left;
+        margin-left: 10px;
+        height: 100%;
+        overflow: hidden;
+        font-weight: 500;
 }

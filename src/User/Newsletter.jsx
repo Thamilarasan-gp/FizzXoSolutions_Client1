@@ -38,8 +38,8 @@ const Newsletter = () => {
           {newsletters.map((news) => (
             <div key={news._id} className="newsletter-card">
               {news.imageUrl && <img src={news.imageUrl} alt={news.title} className="newsletter-image" />}
-              <h3>{news.title}</h3>
-              <p>{news.content}</p>
+              <h3 className="title_nl">{news.title}</h3>
+              {/* <p className="content_nl">{news.content}</p> */}
               <p className="newsletter-date">{new Date(news.date).toDateString()}</p>
             </div>
           ))}
