@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api.js";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; 
 import "./PathipagamEvent.css";
 
 const PathipagamEvent = () => {
   const [events, setEvents] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(12); // Initially show 12 events
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const itemsPerPage = 8;
 
   useEffect(() => {
     fetchEvents();
@@ -26,13 +28,22 @@ const PathipagamEvent = () => {
     }
   };
 
-  const loadMore = () => {
-    setVisibleCount((prev) => prev + 12); // Show next 12 events
+  const totalPages = Math.ceil(events.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedEvents = events.slice(startIndex, startIndex + itemsPerPage);
+
+  const changePage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   return (
-    <div className="pathipagam-event-container" id="pathipagam-events">
-      <h2>Pathipagam Events</h2>
+    <div className="pathipagam-event-container">
+      <div className="header">
+        <h2 className="section-title">Pathipagam Events</h2>
+      </div>
+
       {loading && <p>Loading events...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && events.length === 0 && <p>No events found.</p>}
@@ -40,27 +51,37 @@ const PathipagamEvent = () => {
       {!loading && events.length > 0 && (
         <>
           <div className="event-grid">
-            {events.slice(0, visibleCount).map((event) => (
+            {displayedEvents.map((event) => (
               <Link to={`/pathipagamevent/${event._id}`} key={event._id} className="event-card">
-                <h3>{event.name}</h3>
-                <p>{event.description}</p>
-                <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-                <p><strong>Location:</strong> {event.location}</p>
-                {event.youtubeLink && (
-                  <p>
-                    <a href={event.youtubeLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                      Watch on YouTube
-                    </a>
-                  </p>
-                )}
-                {event.photoUrl && <img className="event-image" src={event.photoUrl} alt={event.name} />}
+                <img className="event-image" src={event.photoUrl} alt={event.name} />
+                <h3 className="event-title">{event.name}</h3>
+                <p className="event-author">{event.description}</p>
+                <p className="event-location">{event.location}</p>
               </Link>
             ))}
           </div>
 
-          {visibleCount < events.length && (
-            <button className="see-all-btn" onClick={loadMore}>See All</button>
-          )}
+          <div className="pathipagam-events-navigation-buttons">
+            <button className="arr-btn left-arrow" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1}>
+              <FaArrowLeft />
+            </button>
+            
+            <div className="pagination">
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index}
+                  className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
+                  onClick={() => changePage(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+            
+            <button className="arr-btn right-arrow" onClick={() => changePage(currentPage + 1)} disabled={currentPage === totalPages}>
+              <FaArrowRight />
+            </button>
+          </div>
         </>
       )}
     </div>
