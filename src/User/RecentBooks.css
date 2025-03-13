@@ -151,7 +151,7 @@
   padding: 10px;
   color: #333;
   text-align: center;
-  font-weight: bold;
+  font-weight: bold;  
   opacity: 0;
   transform: translateY(100%);
   transition: opacity 0.4s, transform 0.4s;
@@ -164,26 +164,13 @@
 
 /* Titles */
 .book-title {
-  font-size: 16px;
+  font-size: 14px;
   color: #333;
 }
 
 .book-author {
   font-size: 14px;
   color: #333;
-}
-
-/* Circular Number */
-.num {
-  border: 2px solid #333;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  line-height: 40px;
-  margin: 10px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Book Detail Section */
@@ -307,7 +294,7 @@
 
   .book-card {
     width: 150px;
-    height: 250px;
+    height: 300px;
   }
 
   .book-card img {

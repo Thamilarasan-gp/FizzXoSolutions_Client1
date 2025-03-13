@@ -89,9 +89,6 @@ export default function RecentBooks() {
                     className="book-image"
                   />
                   <h3>{book.bookname}</h3>
-                  <div className="num">
-                    <p className="book-author">{index + 1}</p>
-                  </div>
                   <div className="book-info">
                     <h3 className="book-title">{book.title}</h3>
                     <p className="book-author">{book.author}</p>
