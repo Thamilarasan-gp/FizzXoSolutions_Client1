@@ -56,7 +56,9 @@ export default function PathippagamHome() {
   }, [searchTerm, books]);
 
   // Filter books based on selected category
-  const filteredBooks = books.filter((book) => book.category === selectedCategory);
+  const filteredBooks = books.filter(
+    (book) => book.category === selectedCategory
+  );
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -74,7 +76,9 @@ export default function PathippagamHome() {
         <div className="categories-content">
           <h3 className="subtitle">Explore your favorite books 📚</h3>
           <h1 className="title">Categories</h1>
-          <a href="/" className="back-link">Back To Home</a>
+          <a href="/" className="back-link">
+            Back To Home
+          </a>
 
           {/* Search Bar */}
           <div className="search-bar">
@@ -111,7 +115,10 @@ export default function PathippagamHome() {
         <div className="p_books-section">
           <h2 className="p_books-category-title">{selectedCategory} books</h2>
           <div className="p_books-scroll-container">
-            <button onClick={() => scroll("left")} className="p_books-arrow left">
+            <button
+              onClick={() => scroll("left")}
+              className="p_books-arrow left"
+            >
               <ChevronLeft size={24} />
             </button>
 
@@ -125,7 +132,9 @@ export default function PathippagamHome() {
                   <div
                     key={index}
                     className={`p_books-card ${
-                      selectedBook?.bookname === book.bookname ? "p_books-highlight" : ""
+                      selectedBook?.bookname === book.bookname
+                        ? "p_books-highlight"
+                        : ""
                     }`}
                     onClick={() => setSelectedBook(book)}
                   >
@@ -134,14 +143,19 @@ export default function PathippagamHome() {
                       alt={book.bookname}
                       className="p_books-image"
                     />
-                    <h3>{book.bookname}</h3>
-                    <p className="author_pb">{book.author}</p>
+                    <div className="p_books-content">
+                      <h3>{book.bookname}</h3>
+                      <p className="author_pb">{book.author}</p>
+                    </div>
                   </div>
                 ))
               )}
             </div>
 
-            <button onClick={() => scroll("right")} className="p_books-arrow right">
+            <button
+              onClick={() => scroll("right")}
+              className="p_books-arrow right"
+            >
               <ChevronRight size={24} />
             </button>
           </div>
@@ -151,7 +165,10 @@ export default function PathippagamHome() {
       {/* Selected Book Details */}
       {selectedBook && (
         <div className="p_books-details">
-          <button className="p_books-close-btn" onClick={() => setSelectedBook(null)}>
+          <button
+            className="p_books-close-btn"
+            onClick={() => setSelectedBook(null)}
+          >
             <X size={24} />
           </button>
           <div className="p_books-info-container">
