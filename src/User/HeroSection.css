@@ -95,7 +95,7 @@ html, body {
         left: 102px;
     }
 
-    .arrow {
+    .hero-st-arrow {
         font-size: 16px;
         width: 40px;
         height: 40px;
@@ -117,17 +117,20 @@ html, body {
         left: 101px;
     }
 
-    .arrow {
+    .hero-st-arrow {
         font-size: 14px;
-        width: 35px;
-        height: 35px;
+        width: 45px;
+        height: 45px;
     }
 
-    .left-arrow {
+    .hero-left-arrow {
         left: 10px;
     }
 
-    .right-arrow {
+    .hero-right-arrow {
         right: 10px;
     }
 }
+
+
+
