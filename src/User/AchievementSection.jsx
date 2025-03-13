@@ -46,14 +46,14 @@ const AchievementSection = () => {
                 >
                     {achievements.map((achievement) => (
                         <SwiperSlide key={achievement._id} className="achievement-card">
-                            <div className="card-container">
+                            <div  className="card-container">
                                 <img 
                                     src={achievement.photoUrl ? achievement.photoUrl : "default-image.jpg"} 
                                     alt={achievement.title || "Achievement"} 
                                     className="card-image"
                                 />
                                 <div className="achievement-overlay">
-                                    <h3>{achievement.title}</h3>
+                                    <h4>{achievement.title}</h4>
                                     <p className="description">{achievement.description}</p>
                                     {achievement.date && (
                                         <p className="date">

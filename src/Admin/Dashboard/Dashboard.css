@@ -1,0 +1,93 @@
+/* Main container */
+.dashboard-admin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff; /* Dark theme */
+    color: rgb(0, 0, 0);
+    text-align: center;
+  }
+  
+  /* Content Box */
+  .dashboard-admin-content {
+   
+    padding: 40px;
+    border-radius: 15px;
+ 
+    width: 450px; /* Laptop friendly */
+  }
+  
+  /* Image Styling */
+  .dashboard-admin-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-admin-icon {
+    width: 80px;
+    height: 80px;
+    animation: dashboard-admin-bounce 2s infinite;
+  }
+  
+  /* Title */
+  .dashboard-admin-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Description */
+  .dashboard-admin-description {
+    font-size: 14px;
+    color: #b0b0b0;
+    line-height: 1.5;
+  }
+  
+  /* Create Button */
+  .dashboard-admin-button {
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .dashboard-admin-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 118, 136, 0.5);
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .dashboard-admin-content {
+      width: 100%;
+      padding: 30px;
+    }
+    .dashboard-admin-title {
+      font-size: 20px;
+    }
+    .dashboard-admin-description {
+      font-size: 13px;
+    }
+    .dashboard-admin-button {
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+  }
+  
+  /* Keyframe animation for bounce effect */
+  @keyframes dashboard-admin-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  

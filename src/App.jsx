@@ -10,8 +10,6 @@ import AddAchievementForm from "./Admin/AddAchievmentForm";
 import Forget from "./Authentication/Forget/Forget";
 import Log_in from "./Authentication/Login/Log_in";
 import Sign_up from "./Authentication/Sigup/Sign_up";
-import Dash from "./Admin/Dashboard/Dash";
-
 import AddBooks from "./Admin/AddBooks";
 import EventSection from "./User/EventSection";
 import Pathippagam_home from "./Pathippagam/PathippagamBooks";
@@ -22,6 +20,7 @@ import PathipagamEventPage from "./Pathippagam/PathipagamEventPage";
 import PathipagamEvent from "./Pathippagam/PathipagamEvent";
 import Newsletter from "./User/Newsletter";
 import AddNewsletterForm from "./Admin/AddNewsletterForm";
+import DashNavbar from "./Admin/Dashboard/DashNavbar";
 
 function App() {
   const [posts, setPosts] = useState([]); // Define state for HeroForm
@@ -43,7 +42,7 @@ function App() {
           <Route path="/forget" element={<Forget />} />
           <Route path="/login" element={<Log_in />} />
           <Route path="/signup" element={<Sign_up />} />
-          <Route path="/dash" element={<Dash />} />
+          <Route path="/dash" element={<DashNavbar/>} />
           <Route path="/addbooks" element={<AddBooks />} />
           <Route path="/p_home" element={<Pathippagam_home />} />
           <Route path="/p_books" element={<AddPathippagamBooks />} />

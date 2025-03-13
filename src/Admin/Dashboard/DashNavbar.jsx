@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import "./Dash.css"; // Import CSS
+import "./DashNavbar.css"; // Import CSS
 
 import AddBooks from "../AddBooks";
 import AddAchievementForm from "../AddAchievmentForm";
@@ -10,8 +10,9 @@ import HeroForm from "../HeroForm";
 import AddPathippagamBooks from "../AddPathippagamBooks";
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
 import AddNewsletterForm from "../AddNewsletterForm";
+import Dashboard from "./Dashboard";
 
-export default function Dash() {
+export default function DashNavbar() {
   const [activeTab, setActiveTab] = useState("CREATE");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -92,11 +93,7 @@ export default function Dash() {
                 <HeroForm />
               </div>
             )}
-            {activeTab === "CREATE" && (
-              <div className="create-section">
-                <button className="small-button">Create</button>
-              </div>
-            )}
+            {activeTab === "CREATE" && <Dashboard/>}
           </div>
         </>
       ) : (
