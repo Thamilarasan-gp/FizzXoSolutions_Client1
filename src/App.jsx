@@ -3,7 +3,7 @@ import { useState } from "react"; // Import useState
 
 import EventPage from "./User/EventPage";
 import AddEventForm from "./Admin/AddEventForm";
-import GallerySection from "./User/GallerySection";
+
 import UserHome from "./User/UserHome";
 import HeroForm from "./Admin/HeroForm";
 import AddAchievementForm from "./Admin/AddAchievmentForm";
@@ -22,7 +22,7 @@ import PathipagamEventPage from "./Pathippagam/PathipagamEventPage";
 import PathipagamEvent from "./Pathippagam/PathipagamEvent";
 import Newsletter from "./User/Newsletter";
 import AddNewsletterForm from "./Admin/AddNewsletterForm";
-import { LanguageProvider } from "./LanguageContext";
+
 function App() {
   const [posts, setPosts] = useState([]); // Define state for HeroForm
 
@@ -33,7 +33,7 @@ function App() {
           <Route path="/" element={<UserHome />} />
           <Route path="/eventsection" element={<EventSection />} />
           <Route path="/event/:id" element={<EventPage />} />
-          <Route path="/gallery" element={<GallerySection />} />
+      
           <Route path="/add" element={<AddEventForm />} />
           <Route
             path="/heros/upload"
