@@ -254,7 +254,7 @@ const AddAchievementForm = () => {
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
               <strong>{achievement.title}</strong> — {achievement.date.split("T")[0]} at {achievement.location}
-              <p>{achievement.description}</p>
+             
               {achievement.photoUrl && <img src={achievement.photoUrl} alt={achievement.title} className="book-image" />}
             </li>
           ))}

@@ -251,7 +251,7 @@ const AddPathipagamEventForm = () => {
                 style={{ pointerEvents: loading ? "none" : "auto" }}
               >
                 <strong>{event.name}</strong> - {event.location}
-                <p>{event.description}</p>
+               
                 <p>
                   <strong>Date:</strong>{" "}
                   {new Date(event.date).toLocaleDateString()}
