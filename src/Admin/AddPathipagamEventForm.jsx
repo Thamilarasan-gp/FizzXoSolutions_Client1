@@ -469,7 +469,7 @@ const AddPathipagamEventForm = () => {
               onClick={() => handleEdit(event)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
-              <strong>{event.name}</strong> - {event.location}
+              <p style={{height:"39px" , width:"320px",overflow:"hidden",fontWeight:'600'}}>{event.name}</p> - <p style={{height:"19px" , width:"200px",overflow:"hidden",fontWeight:'600'}}>{event.location}</p>
               <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
               {event.youtubeLink && (
                 <p>
@@ -477,7 +477,7 @@ const AddPathipagamEventForm = () => {
                 </p>
               )}
               {event.photoUrl && (
-                <img src={event.photoUrl} alt={event.name} className="book-image" style={{ width: "200px", height: "150px", objectFit: "cover" }} />
+                <img src={event.photoUrl} alt={event.name} className="book-image_new" style={{ width: "200px", height: "150px", objectFit: "cover" }} />
               )}
             </li>
           ))}

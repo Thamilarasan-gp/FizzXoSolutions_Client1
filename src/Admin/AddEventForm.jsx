@@ -513,8 +513,8 @@ const AddEventForm = () => {
               onClick={() => handleSelectEvent(event)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
-              <strong>{event.name}</strong> — {event.date.split("T")[0]} at {event.location}
-              {event.photoUrl && <img src={event.photoUrl} alt={event.name} className="book-image" />}
+              <p style={{height:"39px" , width:"201px",overflow:"hidden",fontWeight:'600'}} >{event.name}</p> — <p style={{height:"39px" , width:"200px",overflow:"hidden",fontWeight:'500'}}>{event.date.split("T")[0]} at {event.location}</p>
+              {event.photoUrl && <img src={event.photoUrl} alt={event.name} className="book-imag" />}
             </li>
           ))}
         </ul>
