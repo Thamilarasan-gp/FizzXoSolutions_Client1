@@ -10,6 +10,8 @@ import HeroForm from "../HeroForm";
 import AddPathippagamBooks from "../AddPathippagamBooks";
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
 import AddNewsletterForm from "../AddNewsletterForm";
+import  logo from "../../assets/logo1.png";
+
 import Dashboard from "./Dashboard";
 
 export default function DashNavbar() {
@@ -44,10 +46,16 @@ export default function DashNavbar() {
     <div className="dashboard-container">
       {isAuthenticated ? (
         <>
+        <div className="dash-nav-con">
+          <a href="/" className="dash-logo">
+            <img src={logo} alt="Logo" />
+          </a>
           {/* Menu Button (Only on Mobile) */}
           <button className="menu-button" onClick={() => setSidebarOpen(!sidebarOpen)}>
             ☰
           </button>
+        </div>
+
 
           {/* Sidebar (Fixed for Large Screens, Collapsible for Mobile) */}
           <nav className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>

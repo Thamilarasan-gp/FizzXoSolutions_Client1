@@ -9,7 +9,7 @@
 /* Sidebar - Fixed for Large Screens, Collapsible for Mobile */
 .admin-sidebar {
   width: 260px;
-  background: linear-gradient(135deg, #FF91A4, #f02c4c);
+  background: linear-gradient(135deg, #1e1d1f, #141212);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -83,8 +83,9 @@
 }
 .admin-nav-item:hover,
 .admin-nav-item.active {
-  background: rgba(0, 0, 0, 0.3); /* Subtle transparency effect */
-  color: white; /* Keep text white */
+  background: rgba(255, 255, 255, 0.3); /* Subtle transparency effect */
+  color: rgb(0, 0, 0); /* Keep text white */
+  font-weight: bold;
 }
 
 /* Active Tab Indicator */
@@ -98,13 +99,23 @@
   top: 0;
   border-radius: 6px 0 0 6px;
 }
+.dash-nav-con{
+  background-color: #141212;
+  height: 100px;
+  position:absolute;
+  width:100%;
+ 
+}
+.main-content {
+  padding-top: 120px; /* Same as navbar height */
+}
 
 /* Menu Button - Visible Only on Small Screens */
 .menu-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #007bff;
+  position: fixed;
+  top: 26px;
+  right: 26px;
+  background: linear-gradient(135deg, #544962, #141212);
   color: white;
   border: none;
   font-size: 22px;
@@ -120,6 +131,7 @@
   .menu-button {
     display: block;
   }
+  
 }
 
 /* Content Section */
@@ -130,6 +142,7 @@
   margin-left: 260px;
   height: 100vh;
   overflow-y: auto;
+
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: margin-left 0.3s ease-in-out;
 }
@@ -139,4 +152,13 @@
   .content-section {
     margin-left: 0;
   }
+  .dash-logo {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 50%;
+    height: 10%;
+    position:fixed;
+
+  }
 }

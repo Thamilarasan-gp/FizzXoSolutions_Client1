@@ -25,23 +25,23 @@ const Footer = () => {
             <a href="tel:+915678998765" className="social-item">
               <img src="https://img.icons8.com/?size=100&id=16733&format=png" alt="WhatsApp" width="24" height="24" />
               <span>{language === "en" ? "Call us" : "எங்களை அழைக்கவும்"}</span>
-              <strong>+91 5678998765</strong>
+              <strong>+91 9566699153</strong>
             </a>
 
             <a href="#" className="social-item">
               <img src="https://img.icons8.com/?size=100&id=37326&format=png" alt="YouTube" width="24" height="24" />
               <span>{language === "en" ? "Watch on" : "பார்க்க"}</span>
-              <strong>Channel Name</strong>
+              <strong>Padigal Pathipagam</strong>
             </a>
 
             <a href="mailto:cfvgbh@gmail.com" className="social-item">
               <img src="https://img.icons8.com/?size=100&id=38158&format=png" alt="Email" width="24" height="24" />
               <span>{language === "en" ? "Email" : "மின்னஞ்சல்"}</span>
-              <strong>cfvgbh@gmail.com</strong>
+              <strong>PadigalPathipagam.com</strong>
             </a>
           </div>
 
-          <p className="copyright">© 2025 Your Company | All rights reserved.</p>
+          <p className="copyright">© 2025 FizzXo Solutions | All rights reserved.</p>
         </div>
       </div>
     </footer>
