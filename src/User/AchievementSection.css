@@ -3,11 +3,14 @@
 .achievement-section {
     text-align: center;
     background: #ffffff;
-    padding: 40px 0;
+    padding: 40px 20px;
     font-family: 'Poppins', sans-serif;
     width: 100%;
+    max-width: 1200px;
+    margin: auto;
 }
 
+/* Section Heading */
 .achievement-section h2 {
     font-size: 34px;
     font-weight: 600;
@@ -23,50 +26,46 @@
 /* Grid Layout for Achievements */
 .achievement-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
-    width: 90%;
+    width: 100%;
+    max-width: 1100px;
     margin: auto;
     padding-top: 20px;
 }
 
+/* Card Styling */
 .achievement-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
-    overflow: hidden;
+    border-radius: 18px;
+    height: 70vh;
     background: white;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.18);
     transition: transform 0.4s ease-in-out;
-    height: 120%; /* Ensures uniform height */
 }
 
 .achievement-card:hover {
     transform: scale(1.05);
 }
 
-.card-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Ensures equal card heights */
-}
-
+/* Card Image */
 .card-image {
     width: 100%;
-    height: 50px;
+    height: 220px;
     object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
+/* Overlay Styling */
 .achievement-overlay {
-    flex-grow: 1; /* Takes up remaining space */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Ensures content is spaced properly */
     background: white;
-    padding: 13px;
+    padding: 15px;
     text-align: left;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
+/* Title */
 .achievement-overlay h3 {
     background: #ff3191;
     padding: 8px 12px;
@@ -79,6 +78,7 @@
     letter-spacing: 0.5px;
 }
 
+/* Description */
 .description {
     font-size: 15px;
     font-weight: 400;
@@ -87,79 +87,117 @@
     line-height: 1.5;
 }
 
+/* Date & Location */
 .date, .location {
     font-size: 13px;
     font-weight: 500;
     color: #555;
 }
 
-/* Responsive Grid */
+/* Responsive Design */
+
+/* Tablets */
 @media (max-width: 1024px) {
     .achievement-section h2 {
         font-size: 30px;
     }
+
     .achievement-grid {
-        width: 90%;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
+
     .card-image {
-        height: 220px;
+        height: 100px;
     }
+
     .achievement-overlay h3 {
         font-size: 16px;
     }
+
     .description {
         font-size: 14px;
     }
+
     .date, .location {
         font-size: 12px;
     }
 }
 
+/* Mobile Devices */
 @media (max-width: 768px) {
+    .achievement-section {
+        padding: 3px 3px;
+   
+    
+    }
+
     .achievement-section h2 {
         font-size: 26px;
     }
+
     .achievement-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
+
+    .achievement-card {
+        height: auto;
+    }
+
     .card-image {
-        height: 200px;
+        height: 10px;
+        width: 90%;
     }
+
     .achievement-overlay {
         padding: 14px;
     }
+
     .achievement-overlay h3 {
         font-size: 15px;
         padding: 6px 10px;
     }
+
     .description {
         font-size: 13px;
     }
+
     .date, .location {
         font-size: 11px;
     }
 }
 
+/* Small Mobile Devices */
 @media (max-width: 480px) {
+    .achievement-section{
+        left:10px;
+    }
     .achievement-section h2 {
         font-size: 22px;
     }
+
     .achievement-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
+
     .card-image {
-        height: 180px;
+    height:25vh;
     }
+
     .achievement-overlay {
         padding: 12px;
     }
+
     .achievement-overlay h3 {
         font-size: 14px;
         padding: 5px 8px;
     }
+
     .description {
         font-size: 12px;
     }
+
     .date, .location {
         font-size: 10px;
     }
