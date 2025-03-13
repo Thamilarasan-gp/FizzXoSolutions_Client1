@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./AddBooks.css";
+import "./AddNewsletterForm.css";
 import { API_BASE_URL } from "../api";
 
 const AddNewsletterForm = () => {
@@ -12,10 +12,12 @@ const AddNewsletterForm = () => {
     date: "",
     image: null,
   });
+
   const [previewImage, setPreviewImage] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedNewsletterId, setSelectedNewsletterId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [titleError, setTitleError] = useState("");
 
   useEffect(() => {
     fetchNewsletters();
@@ -48,7 +50,9 @@ const AddNewsletterForm = () => {
   }, [search, newsletters]);
 
   const handleChange = (e) => {
-    if (e.target.name === "image") {
+    const { name, value } = e.target;
+
+    if (name === "image") {
       const file = e.target.files[0];
       setFormData({ ...formData, image: file });
 
@@ -62,12 +66,22 @@ const AddNewsletterForm = () => {
         setPreviewImage(null);
       }
     } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      if (name === "title") {
+        const wordCount = value.trim().split(/\s+/).length;
+        if (wordCount < 32) {
+          setTitleError("Title must be at least 32 words.");
+        } else {
+          setTitleError("");
+        }
+      }
+      setFormData({ ...formData, [name]: value });
     }
   };
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    if (titleError) return;
+
     setLoading(true);
     try {
       const newsData = new FormData();
@@ -99,6 +113,8 @@ const AddNewsletterForm = () => {
       alert("Please select a newsletter to update.");
       return;
     }
+    if (titleError) return;
+
     setLoading(true);
     try {
       const newsData = new FormData();
@@ -109,13 +125,9 @@ const AddNewsletterForm = () => {
         newsData.append("image", formData.image);
       }
 
-      await axios.put(
-        `${API_BASE_URL}/newsletters/${selectedNewsletterId}`,
-        newsData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      await axios.put(`${API_BASE_URL}/newsletters/${selectedNewsletterId}`, newsData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       fetchNewsletters();
       setFormData({ title: "", content: "", date: "", image: null });
@@ -134,6 +146,7 @@ const AddNewsletterForm = () => {
       alert("Please select a newsletter to delete.");
       return;
     }
+
     setLoading(true);
     try {
       await axios.delete(`${API_BASE_URL}/newsletters/${selectedNewsletterId}`);
@@ -160,10 +173,7 @@ const AddNewsletterForm = () => {
   };
 
   return (
-    <div
-      className="adbook-container"
-      style={{ cursor: loading ? "wait" : "default" }}
-    >
+    <div className="adbook-container" style={{ cursor: loading ? "wait" : "default" }}>
       <div className="ad-bk-fm">
         <h2>Newsletter Management</h2>
 
@@ -175,15 +185,17 @@ const AddNewsletterForm = () => {
           className="search-bar"
         />
 
-        <form className="book-form">
+        <form style={{width:"210px"}} className="book-form">
           <input
             type="text"
             name="title"
-            placeholder="Title"
+            placeholder="Title (Minimum 32 words)"
             value={formData.title}
             onChange={handleChange}
             required
           />
+          {titleError && <p className="error-message">{titleError}</p>}
+
           <textarea
             name="content"
             placeholder="Content"
@@ -191,6 +203,7 @@ const AddNewsletterForm = () => {
             onChange={handleChange}
             required
           ></textarea>
+
           <input
             type="date"
             name="date"
@@ -198,12 +211,8 @@ const AddNewsletterForm = () => {
             onChange={handleChange}
             required
           />
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleChange}
-          />
+
+          <input type="file" name="image" accept="image/*" onChange={handleChange} />
 
           {previewImage && (
             <div className="ad-image-preview">
@@ -212,10 +221,10 @@ const AddNewsletterForm = () => {
           )}
 
           <div className="adbk-button-group">
-            <button type="button" onClick={handleAdd}>
+            <button type="button" onClick={handleAdd} disabled={titleError}>
               Add
             </button>
-            <button type="button" onClick={handleUpdate}>
+            <button type="button" onClick={handleUpdate} disabled={titleError}>
               Update
             </button>
             <button type="button" onClick={handleDelete}>
@@ -226,26 +235,19 @@ const AddNewsletterForm = () => {
       </div>
 
       <div className="ad-bk-ds-cont">
-        <ul className="book-list">
+        <ul  className="book-list">
           {filteredNewsletters.map((news) => (
             <li
               key={news._id}
-              className={`book-item ${
-                selectedNewsletterId === news._id ? "selected" : ""
-              }`}
+              className={`book-item_r ${selectedNewsletterId === news._id ? "selected" : ""}`}
+
               onClick={() => handleSelectNewsletter(news)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
-              <strong>{news.title}</strong>
-              <p>{news.content}</p>
+              <p  className="tit_an">{news.title}</p>
+              <p className="con_an">{news.content}</p>
               <p><em>{news.date.split("T")[0]}</em></p>
-              {news.imageUrl && (
-                <img
-                  src={news.imageUrl}
-                  alt={news.title}
-                  className="book-image"
-                />
-              )}
+              {news.imageUrl && <img src={news.imageUrl} alt={news.title} className="book-image" />}
             </li>
           ))}
         </ul>
