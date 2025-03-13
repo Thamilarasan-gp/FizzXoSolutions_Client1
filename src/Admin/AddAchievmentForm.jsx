@@ -89,45 +89,64 @@ const AddAchievementForm = () => {
   };
 
   // Add achievement
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const achievementData = createFormData();
-      await axios.post(`${API_BASE_URL}/achievements`, achievementData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      fetchAchievements();
-      resetForm();
-      Swal.fire("Success!", "Achievement added successfully!", "success");
-    } catch (error) {
-      console.error("Error adding achievement:", error);
-      Swal.fire("Error", "Failed to add achievement. Please try again.", "error");
-    } finally {
-      setLoading(false);
-    }
-  };
+// Add achievement
+const handleAdd = async (e) => {
+  e.preventDefault();
+  const titleLength = formData.title.length;
+  const descriptionLength = formData.description.length;
 
-  // Update achievement
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    if (!selectedAchievementId) return Swal.fire("Warning", "Select an achievement to update.", "warning");
-    setLoading(true);
-    try {
-      const achievementData = createFormData();
-      await axios.put(`${API_BASE_URL}/achievements/${selectedAchievementId}`, achievementData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      fetchAchievements();
-      resetForm();
-      Swal.fire("Success!", "Achievement updated successfully!", "success");
-    } catch (error) {
-      console.error("Error updating achievement:", error);
-      Swal.fire("Error", "Failed to update achievement. Please try again.", "error");
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (titleLength < 20|| titleLength > 100) {
+    return Swal.fire("Error", `Title must be between 5 and 20 characters. Current length: ${titleLength}`, "error");
+  }
+  if (descriptionLength < 50|| descriptionLength > 300) {
+    return Swal.fire("Error", `Description must be between 5 and 20 characters. Current length: ${descriptionLength}`, "error");
+  }
+
+  setLoading(true);
+  try {
+    const achievementData = createFormData();
+    await axios.post(`${API_BASE_URL}/achievements`, achievementData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    fetchAchievements();
+    resetForm();
+    Swal.fire("Success!", "Achievement added successfully!", "success");
+  } catch (error) {
+    console.error("Error adding achievement:", error);
+    Swal.fire("Error", "Failed to add achievement. Please try again.", "error");
+  } finally {
+    setLoading(false);
+  }
+};const handleUpdate = async (e) => {
+  e.preventDefault();
+  if (!selectedAchievementId) return Swal.fire("Warning", "Select an achievement to update.", "warning");
+
+  const titleLength = formData.title.length;
+  const descriptionLength = formData.description.length;
+
+  if (titleLength < 20 || titleLength > 100) {
+    return Swal.fire("Error", `Title must be between 5 and 20 characters. Current length: ${titleLength}`, "error");
+  }
+  if (descriptionLength < 20 || descriptionLength > 300) {
+    return Swal.fire("Error", `Description must be between 5 and 20 characters. Current length: ${descriptionLength}`, "error");
+  }
+
+  setLoading(true);
+  try {
+    const achievementData = createFormData();
+    await axios.put(`${API_BASE_URL}/achievements/${selectedAchievementId}`, achievementData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    fetchAchievements();
+    resetForm();
+    Swal.fire("Success!", "Achievement updated successfully!", "success");
+  } catch (error) {
+    console.error("Error updating achievement:", error);
+    Swal.fire("Error", "Failed to update achievement. Please try again.", "error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Delete achievement with confirmation
   const handleDelete = async (e) => {
@@ -253,7 +272,7 @@ const AddAchievementForm = () => {
               onClick={() => handleSelectAchievement(achievement)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
-              <strong>{achievement.title}</strong> — {achievement.date.split("T")[0]} at {achievement.location}
+              <strong>{achievement.title}</strong>
              
               {achievement.photoUrl && <img src={achievement.photoUrl} alt={achievement.title} className="book-image" />}
             </li>
