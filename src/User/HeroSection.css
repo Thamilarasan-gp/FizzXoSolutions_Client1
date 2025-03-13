@@ -53,8 +53,9 @@ html, body {
     color: #fff;
     border: none;
     padding: 12px 18px;
-    font-size: 30px;
-    border-radius: 50%;
+    font-size: 22px;
+    border-radius: 90%;
+    height: 55px;
     cursor: pointer;
     z-index: 10;
     transition: background-color 0.3s ease;
@@ -68,6 +69,7 @@ html, body {
   /* Left arrow position */
   .hero-left-arrow {
     left: 140px;
+  
   }
   
   /* Right arrow position */
@@ -95,7 +97,7 @@ html, body {
         left: 102px;
     }
 
-    .arrow {
+    .hero-st-arrow {
         font-size: 16px;
         width: 40px;
         height: 40px;
@@ -117,17 +119,20 @@ html, body {
         left: 101px;
     }
 
-    .arrow {
+    .hero-st-arrow {
         font-size: 14px;
-        width: 35px;
-        height: 35px;
+        width: 45px;
+        height: 45px;
     }
 
-    .left-arrow {
+    .hero-left-arrow {
         left: 10px;
     }
 
-    .right-arrow {
+    .hero-right-arrow {
         right: 10px;
     }
 }
+
+
+
