@@ -174,7 +174,7 @@ const AddPathippagamBooks = () => {
             <li key={book._id} className={`book-item ${selectedBookId === book._id ? "selected" : ""}`} onClick={() => handleSelectBook(book)}>
               <strong>{book.bookname}</strong> - {book.title} by {book.author} (Category: {book.category})
            
-              {book.image && <img src={book.image} alt={book.bookname} className="book-image" />}
+              {book.image && <img src={book.image} alt={book.bookname} className="book-image"  style={{ width: "200px", height: "150px", objectFit: "cover" }}  />}
             </li>
           ))}
         </ul>

@@ -277,7 +277,8 @@ const AddBooks = () => {
                 <img
                   src={book.image}
                   alt={book.bookname}
-                  className="book-image"
+                  className="book-image-preview"
+                  style={{ width: "200px", height: "150px", objectFit: "cover" }} 
                 />
               )}
             </li>

@@ -272,6 +272,7 @@ const AddPathipagamEventForm = () => {
                     src={event.photoUrl}
                     alt={event.name}
                     className="book-image"
+                    style={{ width: "200px", height: "150px", objectFit: "cover" }} 
                   />
                 )}
               </li>

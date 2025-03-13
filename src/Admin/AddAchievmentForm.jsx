@@ -274,7 +274,14 @@ const handleAdd = async (e) => {
             >
               <strong>{achievement.title}</strong>
              
-              {achievement.photoUrl && <img src={achievement.photoUrl} alt={achievement.title} className="book-image" />}
+              {achievement.photoUrl && (
+  <img 
+    src={achievement.photoUrl} 
+    alt={achievement.title} 
+    className="book-image" 
+    style={{ width: "200px", height: "150px", objectFit: "cover" }} 
+  />
+)}
             </li>
           ))}
         </ul>
