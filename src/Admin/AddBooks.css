@@ -192,4 +192,83 @@
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}/* Mobile devices (max-width: 600px) */
+@media (max-width: 600px) {
+    .book-list {
+        display: flex;
+        flex-direction: column;
+        max-height: 400px; /* Set a fixed height */
+        overflow-y: auto; /* Enable vertical scrolling */
+        padding: 10px;
+        border: 1px solid #ccc; /* Optional: adds a border for visibility */
+        border-radius: 5px;
+    }
+
+    .book-item {
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid #ddd; /* Optional: separator between books */
+    }
+
+    .book-item:last-child {
+        border-bottom: none; /* Remove border from the last item */
+    }
+}
+
+/* Tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .adbook-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ad-bk-ds-cont {
+        width: 100%;
+    }
+
+    .book-item {
+        width: 100%;
+    }
+
+    .book-image-preview {
+        width: 150px;
+        height: 120px;
+    }
+}
+
+/* Large Screens (min-width: 1025px) */
+@media (min-width: 1025px) {
+    .adbook-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .ad-bk-fm {
+        width: 40%;
+    }
+
+    .ad-bk-ds-cont {
+        width: 55%;
+    }
+}
+@media (max-width: 480px) {
+    .ad-bk-ds-cont {
+        display: flex;
+        flex-direction: column;
+        max-height: 60vh; /* Adjust as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+        padding: 10px;
+        border: 1px solid #ccc; /* Optional */
+        border-radius: 5px;
+    }
+
+    .ad-bk-ds-cont .book-item {
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid #ddd; /* Separator */
+    }
+
+    .ad-bk-ds-cont .book-item:last-child {
+        border-bottom: none;
+    }
 }

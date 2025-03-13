@@ -7,7 +7,6 @@ import AddBooks from "../AddBooks";
 import AddAchievementForm from "../AddAchievmentForm";
 import AddEventForm from "../AddEventForm";
 import HeroForm from "../HeroForm";
-
 import AddPathippagamBooks from "../AddPathippagamBooks";
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
 import AddNewsletterForm from "../AddNewsletterForm";
@@ -44,28 +43,30 @@ export default function Dash() {
     <div className="dashboard-container">
       {isAuthenticated ? (
         <>
-          {/* Menu Button */}
+          {/* Menu Button (Only on Mobile) */}
           <button className="menu-button" onClick={() => setSidebarOpen(!sidebarOpen)}>
             ☰
           </button>
 
-          {/* Left Sidebar */}
+          {/* Sidebar (Fixed for Large Screens, Collapsible for Mobile) */}
           <nav className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
             <div className="profile-section">
-              <img src="https://th.bing.com/th/id/OIP.zuj7kANit3527OCU_UP2YAHaFm?w=242&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7" 
-                   alt="Profile" 
-                   className="profile-image" />
+              <img
+                src="https://th.bing.com/th/id/OIP.zuj7kANit3527OCU_UP2YAHaFm?w=242&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                alt="Profile"
+                className="profile-image"
+              />
               <p className="profile-name">John Doe</p>
             </div>
 
-            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS", "PATHIPPAGAM BOOKS", "PATHIPPAGAM EVENTS","ADD NEWSLETTER"].map(
+            {["CREATE", "BOOKS", "EVENTS", "ACHIEVEMENTS", "BANNERS", "PATHIPPAGAM BOOKS", "PATHIPPAGAM EVENTS", "ADD NEWSLETTER"].map(
               (tab) => (
                 <button
                   key={tab}
                   className={`admin-nav-item ${activeTab === tab ? "active" : ""}`}
                   onClick={() => {
                     setActiveTab(tab);
-                    setSidebarOpen(false); // Close sidebar on selection (for mobile)
+                    setSidebarOpen(false); // Close sidebar on mobile
                   }}
                 >
                   {tab}
@@ -77,19 +78,18 @@ export default function Dash() {
             <button className="logout-button" onClick={handleLogout}>Logout</button>
           </nav>
 
-          {/* Right Content Section */}
+          {/* Content Section */}
           <div className="content-section">
             {activeTab === "BOOKS" && <AddBooks />}
             {activeTab === "ACHIEVEMENTS" && <AddAchievementForm />}
             {activeTab === "EVENTS" && <AddEventForm />}
             {activeTab === "PATHIPPAGAM BOOKS" && <AddPathippagamBooks />}
             {activeTab === "PATHIPPAGAM EVENTS" && <AddPathipagamEventForm />}
-            {activeTab === "ADD NEWSLETTER" && <AddNewsletterForm/>}
+            {activeTab === "ADD NEWSLETTER" && <AddNewsletterForm />}
             {activeTab === "BANNERS" && (
               <div className="banners-section">
                 <h2>Manage Banners</h2>
                 <HeroForm />
-     
               </div>
             )}
             {activeTab === "CREATE" && (
