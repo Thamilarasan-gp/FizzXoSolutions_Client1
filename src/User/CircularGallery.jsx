@@ -8,7 +8,18 @@ import {
   Program,
   Texture,
 } from 'ogl'
-
+import image1 from '../assets/1.jpg'
+import image2 from '../assets/2.jpg'
+import image3 from '../assets/3.jpg'
+import image4 from '../assets/4.jpg'
+import image5 from '../assets/5.jpg'
+import image6 from '../assets/6.jpg'
+import image7 from '../assets/7.jpg'
+import image8 from '../assets/8.jpg'
+import image9 from '../assets/9.jpg'
+import image10 from '../assets/10.jpg'
+import image11 from '../assets/11.jpg'
+import image12 from '../assets/12.jpg'
 import './CircularGallery.css';
 
 function debounce(func, wait) {
@@ -330,18 +341,18 @@ class App {
   }
   createMedias(items, bend = 1, textColor, borderRadius, font) {
     const defaultItems = [
-      { image: `https://picsum.photos/seed/1/800/600?grayscale` },
-      { image: `https://picsum.photos/seed/2/800/600?grayscale` },
-      { image: `https://picsum.photos/seed/3/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/4/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/5/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/16/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/17/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/8/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/9/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/10/800/600?grayscale`},
-      { image: `https://picsum.photos/seed/21/800/600?grayscale` },
-      { image: `https://picsum.photos/seed/12/800/600?grayscale` }
+      { image:image1},
+      { image: image2 },
+      { image:image3},
+      { image: image4},
+      { image:image5},
+      { image: image6},
+      { image:image7},
+      { image: image8},
+      { image: image9},
+      { image: image10},
+      { image: image11 },
+      { image: image12 }
     ]
     const galleryItems = items && items.length ? items : defaultItems
     this.mediasImages = galleryItems.concat(galleryItems)
