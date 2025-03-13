@@ -41,43 +41,39 @@ html, body {
 
     transform: scale(1.8); /* Enlarges image without excessive cropping */
 
-    right: 370px;
+    right: 320px;
 
 }
 
-/* Navigation Arrows */
-.arrow {
+.hero-st-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
     border: none;
-    font-size: 18px;
+    padding: 12px 18px;
+    font-size: 30px;
+    border-radius: 50%;
     cursor: pointer;
     z-index: 10;
-    transition: 0.3s ease-in-out;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.arrow:hover {
-    background: rgba(0, 0, 0, 0.8);
-}
-
-.left-arrow {
-    left: 50%;
-    top: 55%;
-}
-
-.right-arrow {
-    right: -5px;
-    top: 55%;
-}
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect on arrows */
+  .hero-st-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Left arrow position */
+  .hero-left-arrow {
+    left: 140px;
+  }
+  
+  /* Right arrow position */
+  .hero-right-arrow {
+    right: 20px;
+  }
 
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
