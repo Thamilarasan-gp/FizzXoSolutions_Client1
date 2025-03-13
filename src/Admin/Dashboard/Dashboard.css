@@ -11,10 +11,10 @@
   
   /* Content Box */
   .dashboard-admin-content {
-    background-color: #1a1a1a; /* Dark gray */
+   
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+ 
     width: 450px; /* Laptop friendly */
   }
   

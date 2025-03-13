@@ -10,7 +10,6 @@ import HeroForm from "../HeroForm";
 import AddPathippagamBooks from "../AddPathippagamBooks";
 import AddPathipagamEventForm from "../AddPathipagamEventForm";
 import AddNewsletterForm from "../AddNewsletterForm";
-import NavBar from "../../User/NavBar";
 import Dashboard from "./Dashboard";
 
 export default function DashNavbar() {
