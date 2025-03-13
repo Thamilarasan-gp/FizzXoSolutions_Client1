@@ -168,12 +168,12 @@ const AddPathippagamBooks = () => {
         </form>
       </div>
 
-      <div className="ad-bk-ds-cont">
+      <div  className="ad-bk-ds-cont">
         <ul className="book-list">
           {filteredBooks.map((book) => (
             <li key={book._id} className={`book-item ${selectedBookId === book._id ? "selected" : ""}`} onClick={() => handleSelectBook(book)}>
-              <strong>{book.bookname}</strong> - {book.title} by {book.author} (Category: {book.category})
-           
+              <p style={{height:"39px" , width:"200px",overflow:"hidden",fontWeight:'600'}}>{book.bookname}</p> -
+             <p style={{height:"60px" , width:"200px",overflow:"hidden",fontWeight:'600'}}>{book.title} by {book.author} (Category: {book.category})</p>
               {book.image && <img src={book.image} alt={book.bookname} className="book-image"  style={{ width: "200px", height: "150px", objectFit: "cover" }}  />}
             </li>
           ))}

@@ -271,14 +271,15 @@ const AddBooks = () => {
               onClick={() => handleSelectBook(book)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
-              <strong>{book.bookname}</strong> - {book.title} by {book.author}
+              <p style={{height:"39px" , width:"200px",overflow:"hidden",fontWeight:'600'}} className="title_ab">{book.bookname}</p> - <p style={{height:"45px" , width:"200px",overflow:"hidden"}} className="auth_ab">{book.title} by {book.author}</p>
            
               {book.image && (
                 <img
+                
                   src={book.image}
                   alt={book.bookname}
                   className="book-image-preview"
-                  style={{ width: "200px", height: "150px", objectFit: "cover" }} 
+                  style={{ width: "200px", height: "150px" }} 
                 />
               )}
             </li>

@@ -213,8 +213,8 @@ const HeroForm = () => {
               onClick={() => handleSelectPost(post)}
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
-              <strong>{post.title}</strong>
-              <p>{post.description}</p>
+              <p style={{height:"20px" , width:"200px",overflow:"hidden",fontWeight:'600'}} >{post.title}</p>
+              <p style={{height:"45px" , width:"200px",overflow:"hidden"}}>{post.description}</p>
               {post.imageUrl && (
                 <img src={post.imageUrl} alt={post.title} className="book-image" />
               )}
