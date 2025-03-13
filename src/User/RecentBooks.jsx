@@ -68,7 +68,7 @@ export default function RecentBooks() {
       <div className={`recent-books-container ${selectedBook ? "shrink" : ""}`}>
         <h2 className="title">Recent Books</h2>
         <div className="scroll-container">
-          <button onClick={() => scroll("left")} className="arrow left">
+          <button onClick={() => scroll("left")} className="rcbook-arrow">
             <ChevronLeft size={24} />
           </button>
 
@@ -101,7 +101,7 @@ export default function RecentBooks() {
             )}
           </div>
 
-          <button onClick={() => scroll("right")} className="arrow right">
+          <button onClick={() => scroll("right")} className="rcbook-arrow">
             <ChevronRight size={24} />
           </button>
         </div>
