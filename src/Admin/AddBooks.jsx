@@ -68,34 +68,8 @@ const AddBooks = () => {
     }
   };
 
-  const validateForm = () => {
-    if (formData.bookname.length < 3) {
-      alert("Book Name must be at least 3 characters long.");
-      return false;
-    }
-    if (formData.title.length < 3) {
-      alert("Title must be at least 3 characters long.");
-      return false;
-    }
-    if (formData.author.length < 3) {
-      alert("Author must be at least 3 characters long.");
-      return false;
-    }
-    if (formData.description.length < 10) {
-      alert("Description must be at least 10 characters long.");
-      return false;
-    }
-    return true;
-  };
-
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
-    if (!formData.image) {
-      alert("Please upload an image for the book.");
-      return;
-    }
-
     setLoading(true);
     try {
       const bookData = new FormData();
@@ -103,7 +77,9 @@ const AddBooks = () => {
       bookData.append("title", formData.title);
       bookData.append("author", formData.author);
       bookData.append("description", formData.description);
-      bookData.append("image", formData.image);
+      if (formData.image) {
+        bookData.append("image", formData.image);
+      }
 
       await axios.post(`${API_BASE_URL}/books/add`, bookData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -132,8 +108,6 @@ const AddBooks = () => {
       alert("Please select a book to update.");
       return;
     }
-    if (!validateForm()) return;
-
     setLoading(true);
     try {
       const bookData = new FormData();
@@ -145,9 +119,13 @@ const AddBooks = () => {
         bookData.append("image", formData.image);
       }
 
-      await axios.put(`${API_BASE_URL}/books/update/${selectedBookId}`, bookData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axios.put(
+        `${API_BASE_URL}/books/update/${selectedBookId}`,
+        bookData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       fetchBooks();
       setFormData({
@@ -174,7 +152,9 @@ const AddBooks = () => {
     }
     setLoading(true);
     try {
-      await axios.delete(`${API_BASE_URL}/books/delete/${selectedBookId}`);
+      await axios.delete(
+        `${API_BASE_URL}/books/delete/${selectedBookId}`
+      );
       fetchBooks();
       setFormData({
         bookname: "",
@@ -205,7 +185,10 @@ const AddBooks = () => {
   };
 
   return (
-    <div className="adbook-container" style={{ cursor: loading ? "wait" : "default" }}>
+    <div
+      className="adbook-container"
+      style={{ cursor: loading ? "wait" : "default" }}
+    >
       <div className="ad-bk-fm">
         <h2>Bookstore Management</h2>
 
@@ -217,12 +200,45 @@ const AddBooks = () => {
           className="search-bar"
         />
 
+
         <form className="book-form" onSubmit={(e) => e.preventDefault()}>
-          <input type="text" name="bookname" placeholder="Book Name" value={formData.bookname} onChange={handleChange} required />
-          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
-          <input type="text" name="author" placeholder="Author" value={formData.author} onChange={handleChange} required />
-          <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required></textarea>
-          <input type="file" name="image" accept="image/*" onChange={handleChange} />
+          <input
+            type="text"
+            name="bookname"
+            placeholder="Book Name"
+            value={formData.bookname}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="author"
+            placeholder="Author"
+            value={formData.author}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          ></textarea>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+          />
 
           {previewImage && (
             <div className="ad-image-preview">
@@ -231,9 +247,15 @@ const AddBooks = () => {
           )}
 
           <div className="adbk-button-group">
-            <button type="button" onClick={handleAdd}>Add</button>
-            <button type="button" onClick={handleUpdate}>Update</button>
-            <button type="button" onClick={handleDelete}>Delete</button>
+            <button type="button" onClick={handleAdd}>
+              Add
+            </button>
+            <button type="button" onClick={handleUpdate}>
+              Update
+            </button>
+            <button type="button" onClick={handleDelete}>
+              Delete
+            </button>
           </div>
         </form>
       </div>
@@ -241,10 +263,23 @@ const AddBooks = () => {
       <div className="ad-bk-ds-cont">
         <ul className="book-list">
           {filteredBooks.map((book) => (
-           <li key={book._id} className={`book-item_2 ${selectedBookId === book._id ? "selected" : ""}`} onClick={() => handleSelectBook(book)}>
-           <p className="tit_an">{book.bookname}</p> - {book.title} by {book.author}
-              <p className="con_an">{book.description}</p>
-              {book.image && <img src={book.image} alt={book.bookname} className="book-imag" />}
+            <li
+              key={book._id}
+              className={`book-item ${
+                selectedBookId === book._id ? "selected" : ""
+              }`}
+              onClick={() => handleSelectBook(book)}
+              style={{ pointerEvents: loading ? "none" : "auto" }}
+            >
+              <strong>{book.bookname}</strong> - {book.title} by {book.author}
+           
+              {book.image && (
+                <img
+                  src={book.image}
+                  alt={book.bookname}
+                  className="book-image"
+                />
+              )}
             </li>
           ))}
         </ul>

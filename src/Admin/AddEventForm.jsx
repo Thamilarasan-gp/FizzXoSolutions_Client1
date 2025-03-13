@@ -251,7 +251,7 @@ const AddEventForm = () => {
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
               <strong>{event.name}</strong> — {event.date.split("T")[0]} at {event.location}
-              <p>{event.description}</p>
+             
               {event.photoUrl && (
                 <img src={event.photoUrl} alt={event.name} className="book-image" />
               )}

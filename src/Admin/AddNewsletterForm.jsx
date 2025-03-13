@@ -245,7 +245,7 @@ const AddNewsletterForm = () => {
               style={{ pointerEvents: loading ? "none" : "auto" }}
             >
               <p  className="tit_an">{news.title}</p>
-              <p className="con_an">{news.content}</p>
+             
               <p><em>{news.date.split("T")[0]}</em></p>
               {news.imageUrl && <img src={news.imageUrl} alt={news.title} className="book-image" />}
             </li>
