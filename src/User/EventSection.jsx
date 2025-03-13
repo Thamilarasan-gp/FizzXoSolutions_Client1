@@ -41,8 +41,8 @@ const EventSection = () => {
                         events.map((event) => (
                             <Link to={`/event/${event._id}`} key={event._id} className="event-card">
                                 <img src={event.photoUrl || "default-image.jpg"} alt={event.name} />
-                                <h3>{event.title}</h3>
-                                <p>{event.description}</p>
+                                <p>{event.name}</p>
+
                                 <p><strong>Date:</strong> {event.date}</p>
                                 <p>{event.location}</p>
                             </Link>

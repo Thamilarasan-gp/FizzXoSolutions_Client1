@@ -39,30 +39,30 @@ export default function RecentBooks() {
   return (
     <div className={`rcbk-container ${selectedBook ? "expanded" : ""}`}>
       {/* Left Section: Book Details */}
-      <div className={`book-details ${selectedBook ? "show" : "hide"}`}>
-        {selectedBook && (
-          <div>
-            <button
-              className="rc-close-btn"
-              onClick={() => setSelectedBook(null)}
-            >
-              <X size={24} />
-            </button>
-            <div className="bk-sh-cont">
-              <img
-                src={selectedBook.image}
-                alt={selectedBook.title}
-                className="selected-book-image"
-              />
-              <div>
-                <h2>{selectedBook.title}</h2>
-                <h3>{selectedBook.author}</h3>
-                <p>{selectedBook.description}</p>
-              </div>
-            </div>
-          </div>
-        )}
+   <div className={`book-details ${selectedBook ? "show" : "hide"}`}>
+  {selectedBook && (
+    <div className="book-details-content">
+      <button
+        className="rc-close-btn"
+        onClick={() => setSelectedBook(null)}
+      >
+        <X size={24} />
+      </button>
+      <div className="bk-sh-cont">
+        <img
+          src={selectedBook.image}
+          alt={selectedBook.title}
+          className="selected-book-image"
+        />
+        <div className="book-info-scroll">
+          <h2>{selectedBook.title}</h2>
+          <h3>{selectedBook.author}</h3>
+          <p>{selectedBook.description}</p>
+        </div>
       </div>
+    </div>
+  )}
+</div>
 
       {/* Right Section: Book Carousel */}
       <div className={`recent-books-container ${selectedBook ? "shrink" : ""}`}>
