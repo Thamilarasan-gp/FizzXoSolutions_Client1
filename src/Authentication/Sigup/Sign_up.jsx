@@ -41,7 +41,7 @@ function Sign_up() {
     console.log("Form Data:", formData);
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/signup/sigin/add`, formData);
+      const response = await axios.post(`${API_BASE_URL}/signup/sigin/sigin/add`, formData);
 
       setResponseMessage("Registration successful!");
       console.log("Server Response:", response.data);

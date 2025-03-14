@@ -97,14 +97,14 @@
   content: '';
   width: 4px;
   height: 100%;
-  background: white; /* White active indicator */
+  background: rgb(235, 229, 229); /* White active indicator */
   position: absolute;
   left: 0;
   top: 0;
   border-radius: 6px 0 0 6px;
 }
 .dash-nav-con{
-  background-color: #141212;
+ 
   height: 100px;
   position:absolute;
   width:100%;
