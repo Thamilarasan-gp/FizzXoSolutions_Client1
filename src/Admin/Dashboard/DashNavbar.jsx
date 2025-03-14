@@ -48,7 +48,7 @@ export default function DashNavbar() {
         <>
         <div className="dash-nav-con">
           <a href="/" className="dash-logo">
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" className="dash-logo-img" />
           </a>
           {/* Menu Button (Only on Mobile) */}
           <button className="menu-button" onClick={() => setSidebarOpen(!sidebarOpen)}>

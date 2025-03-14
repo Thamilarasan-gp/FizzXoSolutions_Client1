@@ -55,7 +55,11 @@
   display: flex;
   align-items: center;
 }
-
+.dash-logo-img{
+  width: 200px;
+  height: 200px;
+  margin-top: -60px;
+}
 /* Active & Hover State */
 .admin-nav-item:hover,
 .admin-nav-item.active {
@@ -158,7 +162,6 @@
     margin: 0 auto;
     width: 50%;
     height: 10%;
-    position:fixed;
-
-  }
+    position: fixed;
+  }
 }

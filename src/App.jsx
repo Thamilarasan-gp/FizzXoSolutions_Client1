@@ -49,7 +49,7 @@ function App() {
           <Route path="/add_p_events" element={<AddPathipagamEventForm />} />
           <Route path="/pathipagamHome" element={<PathipagamHome />} />
           <Route
-            path="/pathipagamevent"
+            path="/pathipagamevent/:id"
             element={<PathipagamEventPage />}
           />
           <Route path="/pathipagam-event" element={<PathipagamEvent />} />

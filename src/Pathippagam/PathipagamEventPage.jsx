@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa6";
 import "./PathipagamEventPage.css";
@@ -7,7 +7,7 @@ import { API_BASE_URL } from "../api";
 
 const PathipagamEventPage = () => {
     const location = useLocation();
-    const { id } = location.state;
+    const { id } = useParams();
 
     const [event, setEvent] = useState(null);
     const [error, setError] = useState(null);

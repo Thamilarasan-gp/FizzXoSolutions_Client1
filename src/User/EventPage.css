@@ -5,7 +5,7 @@
     align-items: center;
     text-align: center;
     max-width: 800px;
-    margin: 50px auto;
+  
     padding: 25px;
     background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
     border-radius: 12px;
@@ -13,6 +13,8 @@
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.8s ease-out forwards;
+    margin-left: 50%;
+    margin-top: 20%;
 }
 
 /* Fade-in Animation */
@@ -197,19 +199,70 @@
     line-height: 1.6;
     max-width: 90%;
 }
-
-/* Responsive */
+/* General Responsive Styles */
 @media (max-width: 768px) {
     .event-page {
+        max-width: 90%;
         padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+    }
+
+    .event-page h2 {
+        font-size: 26px;
+    }
+
+    .event-page p {
+        font-size: 16px;
+    }
+
+    /* Video and Image Adjustments */
+    .video-container, .event-page img {
+        max-width: 100%;
     }
 
     .video-container iframe {
-        height: 280px;
+        height: 220px;
     }
 
+    /* Button Container */
     .video-actions {
         flex-direction: column;
         gap: 10px;
+    }
+
+    .video-actions button {
+        width: 100%;
+        justify-content: center;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* Extra Small Screens (Mobile Phones) */
+@media (max-width: 480px) {
+    .event-page {
+        padding: 10px;
+        width: 100%;
+        margin-left: 220px;
+        margin-top: 450px;
+    }
+
+    .event-page h2 {
+        font-size: 22px;
+    }
+
+    .event-page p {
+        font-size: 14px;
+    }
+
+    .video-container iframe {
+        height: 180px;
+    }
+
+    .video-actions button {
+        font-size: 14px;
+        padding: 8px;
     }
 }

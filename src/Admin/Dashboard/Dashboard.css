@@ -23,13 +23,14 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-   z-index: -1;
+
   }
   
   .dashboard-admin-icon {
     width: 80px;
     height: 80px;
     animation: dashboard-admin-bounce 2s infinite;
+    display: none;
   }
   
   /* Title */
